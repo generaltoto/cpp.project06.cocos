@@ -785,21 +785,21 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "SYNC_RESOURCE-cpp.project06.cocos::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-SYNC_RESOURCE-cpp.project06.cocos-Debug-f826b960e2a8bc16beaa.json",
+					"jsonFile" : "target-SYNC_RESOURCE-cpp.project06.cocos-Debug-976a25e1550ad2bd4086.json",
 					"name" : "SYNC_RESOURCE-cpp.project06.cocos",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 1,
 					"id" : "cocos2d::@b17589fc6237857a1771",
-					"jsonFile" : "target-cocos2d-Debug-7a26a0bf51b1eff52dcf.json",
+					"jsonFile" : "target-cocos2d-Debug-13e9b3b86f6a29f3a61c.json",
 					"name" : "cocos2d",
 					"projectIndex" : 1
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "cpp.project06.cocos::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-cpp.project06.cocos-Debug-caf598e5bd3d4efbabdd.json",
+					"jsonFile" : "target-cpp.project06.cocos-Debug-8dc9442583b076a41438.json",
 					"name" : "cpp.project06.cocos",
 					"projectIndex" : 0
 				},
@@ -876,7 +876,7 @@
 				{
 					"directoryIndex" : 2,
 					"id" : "external::@62470bbe2074d04a1904",
-					"jsonFile" : "target-external-Debug-2097e784f2d33540f09e.json",
+					"jsonFile" : "target-external-Debug-8dc261b46a443a90fbc4.json",
 					"name" : "external",
 					"projectIndex" : 2
 				}

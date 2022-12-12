@@ -47,7 +47,7 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 87,
+				"line" : 75,
 				"parent" : 0
 			},
 			{
@@ -59,25 +59,13 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 95,
+				"line" : 87,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 83,
-				"parent" : 0
-			},
-			{
-				"command" : 1,
-				"file" : 0,
-				"line" : 100,
-				"parent" : 0
-			},
-			{
-				"command" : 1,
-				"file" : 0,
-				"line" : 75,
+				"line" : 71,
 				"parent" : 0
 			},
 			{
@@ -89,7 +77,19 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 71,
+				"line" : 100,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 83,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 95,
 				"parent" : 0
 			},
 			{
@@ -207,11 +207,11 @@
 					"path" : "T:/cpp.project06.cocos/cocos2d/external/recast/.."
 				},
 				{
-					"backtrace" : 10,
+					"backtrace" : 6,
 					"path" : "T:/cpp.project06.cocos/cocos2d/external/tinyxml2/."
 				},
 				{
-					"backtrace" : 8,
+					"backtrace" : 3,
 					"path" : "T:/cpp.project06.cocos/cocos2d/external/xxhash/."
 				},
 				{
@@ -219,23 +219,23 @@
 					"path" : "T:/cpp.project06.cocos/cocos2d/external/xxtea/."
 				},
 				{
-					"backtrace" : 6,
+					"backtrace" : 9,
 					"path" : "T:/cpp.project06.cocos/cocos2d/external/clipper/."
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 5,
 					"path" : "T:/cpp.project06.cocos/cocos2d/external/edtaa3func/."
 				},
 				{
-					"backtrace" : 9,
+					"backtrace" : 7,
 					"path" : "T:/cpp.project06.cocos/cocos2d/external/ConvertUTF/."
 				},
 				{
-					"backtrace" : 5,
+					"backtrace" : 10,
 					"path" : "T:/cpp.project06.cocos/cocos2d/external/poly2tri/.."
 				},
 				{
-					"backtrace" : 7,
+					"backtrace" : 8,
 					"path" : "T:/cpp.project06.cocos/cocos2d/external/md5/.."
 				},
 				{
@@ -361,7 +361,7 @@
 		},
 		{
 			"backtrace" : 3,
-			"id" : "ext_edtaa3func::@f3d42e550923b89477b0"
+			"id" : "ext_xxhash::@11e20b8b9139209a045a"
 		},
 		{
 			"backtrace" : 4,
@@ -369,27 +369,27 @@
 		},
 		{
 			"backtrace" : 5,
-			"id" : "ext_poly2tri::@ce0bfd23a4070be0c5de"
+			"id" : "ext_edtaa3func::@f3d42e550923b89477b0"
 		},
 		{
 			"backtrace" : 6,
-			"id" : "ext_clipper::@33abc919e86db66c28b8"
+			"id" : "ext_tinyxml2::@fd6ab661f4ee25a21ef0"
 		},
 		{
 			"backtrace" : 7,
-			"id" : "ext_md5::@82bef7d6fa8c2aa61808"
-		},
-		{
-			"backtrace" : 8,
-			"id" : "ext_xxhash::@11e20b8b9139209a045a"
-		},
-		{
-			"backtrace" : 9,
 			"id" : "ext_convertUTF::@205c2f0e44a3b06b9b59"
 		},
 		{
+			"backtrace" : 8,
+			"id" : "ext_md5::@82bef7d6fa8c2aa61808"
+		},
+		{
+			"backtrace" : 9,
+			"id" : "ext_clipper::@33abc919e86db66c28b8"
+		},
+		{
 			"backtrace" : 10,
-			"id" : "ext_tinyxml2::@fd6ab661f4ee25a21ef0"
+			"id" : "ext_poly2tri::@ce0bfd23a4070be0c5de"
 		},
 		{
 			"backtrace" : 11,

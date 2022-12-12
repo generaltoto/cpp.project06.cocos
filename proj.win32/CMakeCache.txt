@@ -299,6 +299,18 @@ OpenalSoft_SOURCE_DIR:STATIC=T:/cpp.project06.cocos/cocos2d/external/win32-speci
 //Path to a program.
 PYTHON_COMMAND:FILEPATH=C:/Python27/python.exe
 
+//Turn on Box2D for 2D physics
+USE_BOX2D:BOOL=OFF
+
+//Turn off Bullet (3d physics)
+USE_BULLET:BOOL=OFF
+
+//Turn off Recast (3d pathfinding)
+USE_RECAST:BOOL=OFF
+
+//Use some libraries from cocos2dx externals
+USE_SOURCES_EXTERNAL:BOOL=ON
+
 //Value Computed by CMake
 box2d_BINARY_DIR:STATIC=T:/cpp.project06.cocos/proj.win32/engine/external/Box2D
 

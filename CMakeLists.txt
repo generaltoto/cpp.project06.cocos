@@ -40,6 +40,10 @@ if(NOT DEFINED BUILD_ENGINE_DONE) # to test cpp.project06.cocos into root projec
     set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
 
     include(CocosBuildSet)
+    set( USE_SOURCES_EXTERNAL ON CACHE BOOL "Use some libraries from cocos2dx externals" )
+    set( USE_BULLET OFF CACHE BOOL "Turn off Bullet (3d physics)" )
+    set( USE_RECAST OFF CACHE BOOL "Turn off Recast (3d pathfinding)" )
+    SET( USE_BOX2D OFF CACHE BOOL "Turn on Box2D for 2D physics" )
     add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
 endif()
 
