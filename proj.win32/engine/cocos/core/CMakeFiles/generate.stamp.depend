@@ -1,0 +1,16 @@
+# CMake generation dependency list for this directory.
+T:/cpp.project06.cocos/cocos2d/cocos/2d/CMakeLists.txt
+T:/cpp.project06.cocos/cocos2d/cocos/3d/CMakeLists.txt
+T:/cpp.project06.cocos/cocos2d/cocos/CMakeLists.txt
+T:/cpp.project06.cocos/cocos2d/cocos/audio/CMakeLists.txt
+T:/cpp.project06.cocos/cocos2d/cocos/base/CMakeLists.txt
+T:/cpp.project06.cocos/cocos2d/cocos/editor-support/cocostudio/CMakeLists.txt
+T:/cpp.project06.cocos/cocos2d/cocos/math/CMakeLists.txt
+T:/cpp.project06.cocos/cocos2d/cocos/navmesh/CMakeLists.txt
+T:/cpp.project06.cocos/cocos2d/cocos/network/CMakeLists.txt
+T:/cpp.project06.cocos/cocos2d/cocos/physics/CMakeLists.txt
+T:/cpp.project06.cocos/cocos2d/cocos/physics3d/CMakeLists.txt
+T:/cpp.project06.cocos/cocos2d/cocos/platform/CMakeLists.txt
+T:/cpp.project06.cocos/cocos2d/cocos/renderer/CMakeLists.txt
+T:/cpp.project06.cocos/cocos2d/cocos/ui/CMakeLists.txt
+T:/cpp.project06.cocos/cocos2d/extensions/CMakeLists.txt
