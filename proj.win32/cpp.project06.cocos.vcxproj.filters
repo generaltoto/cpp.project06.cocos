@@ -13,6 +13,12 @@
     <ClCompile Include="T:\cpp.project06.cocos\cocos2d\cocos\precheader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\MainMenu.cpp">
+      <Filter>Source Files\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\LevelMenu.cpp">
+      <Filter>Source Files\Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="T:\cpp.project06.cocos\Classes\AppDelegate.h">
@@ -45,6 +51,12 @@
     <ClInclude Include="T:\cpp.project06.cocos\Resources\res\.gitkeep">
       <Filter>Resources\res</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\MainMenu.h">
+      <Filter>Source Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\LevelMenu.h">
+      <Filter>Source Files\Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="T:\cpp.project06.cocos\CMakeLists.txt" />
@@ -73,5 +85,10 @@
     <Filter Include="Source Files\proj.win32">
       <UniqueIdentifier>{478824AC-996F-3059-B44C-4C4A18F0CF16}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Resources\main_menu.jpg">
+      <Filter>Resources</Filter>
+    </Image>
   </ItemGroup>
 </Project>
