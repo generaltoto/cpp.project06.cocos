@@ -3,16 +3,14 @@
 
 #include "cocos2d.h"
 
-class HelloWorld : public cocos2d::Scene
+class MainScene : public cocos2d::Scene
 {
 public:
     static cocos2d::Scene* createScene();
 
     bool init() override;
-    
-    void menuCloseCallback(cocos2d::Ref* pSender);
-    
-    CREATE_FUNC(HelloWorld);
+
+    CREATE_FUNC(MainScene);
 };
 
 #endif // __HELLOWORLD_SCENE_H__

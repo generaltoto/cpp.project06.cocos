@@ -65,7 +65,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     register_all_packages();
 
-    const auto scene = HelloWorld::createScene();
+    const auto scene = MainScene::createScene();
 	director->runWithScene(scene);
 
     return true;
