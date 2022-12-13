@@ -1,4 +1,4 @@
-#include "HelloWorldScene.h"
+#include "MainScene.h"
 
 USING_NS_CC;
 
@@ -21,6 +21,8 @@ bool MainScene::init()
 
     const auto visibleSize = Director::getInstance()->getVisibleSize();
     const Vec2 origin = Director::getInstance()->getVisibleOrigin();
+
+
 
     return true;
 }
