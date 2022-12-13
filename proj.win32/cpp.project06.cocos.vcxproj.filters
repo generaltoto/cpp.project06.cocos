@@ -63,6 +63,9 @@
     <ClInclude Include="..\Classes\Entities\Lemming.h">
       <Filter>Source Files\Classes\Entities</Filter>
     </ClInclude>
+    <ClInclude Include="Constants.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="T:\cpp.project06.cocos\proj.win32\game.rc" />

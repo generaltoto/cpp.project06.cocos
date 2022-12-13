@@ -2,9 +2,7 @@
 
 #include "Entities/Lemming.h"
 #include "Box2D/Box2D.h"
-
-const int lemmingCollisionMaskId = 0x01;
-const int windowCollisionMaskId = 0x02;
+#include "../proj.win32/Constants.h"
 
 class MainScene : public cocos2d::Layer
 {
@@ -35,9 +33,11 @@ public:
     CREATE_FUNC(MainScene)
 
 private:
-	std::vector<Lemming> lemmings;
+	std::vector<Lemming*> lemmings;
 
     cocos2d::Size visibleSize;
+
+	cocos2d::Vec2 visibleOrigin;
 
 	/**
 	 * \brief Creates a collision box with the window borders
@@ -50,4 +50,6 @@ private:
 	 * \param positionY Y Position of the Lemming (cannot be greater than the ScreenHeight)
 	 */
 	void addLemming(float positionX, float positionY);
+
+	bool onContact(const cocos2d::PhysicsContact &contact);
 };
