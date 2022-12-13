@@ -4,7 +4,6 @@ USING_NS_CC;
 
 MainScene::MainScene()
 {
-    this->spLemming = nullptr;
 }
 
 Scene* MainScene::createScene()
@@ -24,13 +23,20 @@ bool MainScene::init()
 
     this->visibleSize = Director::getInstance()->getVisibleSize();
 
+    this->scheduleUpdate();
+
     return true;
 }
 
 void MainScene::onEnter()
 {
     cocos2d::Layer::onEnter();
-	this->addLemming(visibleSize.width / 2, visibleSize.height / 2);
+    const Vec2 _middleScreen = {visibleSize.width / 2, visibleSize.height / 2};
+    for (int i=0; i<3; i++)
+    {
+	    this->lemmings.push_back(this->addLemming(_middleScreen.x + (60.f * i), _middleScreen.y));
+    }
+
 	this->addWindowsEdgesCollider();
 }
 
@@ -38,8 +44,22 @@ void MainScene::update(float delta)
 {
     Node::update(delta);
 
-    const float _curPosX = this->spLemming->getPositionX();
-    this->spLemming->setPositionX(_curPosX + 10 * delta);
+    for(const auto &spLemming : this->lemmings)
+    {
+	    const Vec2 _objPos = spLemming->getPosition();
+		const Vec2 _objSize = spLemming->getContentSize();
+
+        // Change direction when hitting a wall 
+		if ((_objPos.x + _objSize.x) >= this->visibleSize.width || (_objPos.x + _objSize.x) <= 0) this->lemmingAcceleration *= -1;
+
+        // Change acceleration to null if lemming is in the air (vertical fall)
+        //if (_objPos.y > 0) this->lemmingAcceleration *= 0;
+
+		const float _movementDelta = this->lemmingVelocity * delta;
+		const float _newObjPosX = (_objPos.x + _movementDelta) * this->lemmingAcceleration;
+
+		spLemming->setPositionX(_newObjPosX);
+    }
 }
 
 void MainScene::addWindowsEdgesCollider()
@@ -52,19 +72,22 @@ void MainScene::addWindowsEdgesCollider()
     this->addChild(edgeShape);
 }
 
-void MainScene::addLemming(float positionX, float positionY)
+cocos2d::Sprite* MainScene::addLemming(float positionX, float positionY)
 {
-    this->spLemming = Sprite::create("HelloWorld.png");
-    if (this->spLemming == nullptr) throw ERROR_BAD_PATHNAME;
+    const auto _sp = Sprite::create("HelloWorld.png");
+    if (_sp == nullptr) throw ERROR_BAD_PATHNAME;
 
-    this->spLemming->setPosition(positionX, positionY);
-    this->addChild(this->spLemming);
+    _sp->setScale(0.5f);
+    _sp->setPosition(positionX, positionY);
+    this->addChild(_sp);
 
     const auto _lemmingPhysicBody = cocos2d::PhysicsBody::createBox(
-        cocos2d::Size(this->spLemming->getContentSize()),
+        cocos2d::Size(_sp->getContentSize()),
         cocos2d::PhysicsMaterial(0.1f,1.0f,0.0f)
     );
     _lemmingPhysicBody->setDynamic(true);
     _lemmingPhysicBody->setGravityEnable(true);
-	this->spLemming->addComponent(_lemmingPhysicBody);
+	_sp->addComponent(_lemmingPhysicBody);
+
+    return _sp;
 }

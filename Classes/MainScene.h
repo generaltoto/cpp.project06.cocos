@@ -31,7 +31,9 @@ public:
     CREATE_FUNC(MainScene)
 
 private:
-    cocos2d::Sprite *spLemming;
+	std::vector<cocos2d::Sprite*> lemmings;
+	const float lemmingVelocity = 30;
+	float lemmingAcceleration = 1;
 
     cocos2d::Size visibleSize;
 
@@ -45,7 +47,7 @@ private:
 	 * \param positionX X Position of the Lemming (cannot be greater than the ScreenWidth)
 	 * \param positionY Y Position of the Lemming (cannot be greater than the ScreenHeight)
 	 */
-	void addLemming(float positionX, float positionY);
+	cocos2d::Sprite* addLemming(float positionX, float positionY);
 };
 
 #endif // __HELLOWORLD_SCENE_H__
