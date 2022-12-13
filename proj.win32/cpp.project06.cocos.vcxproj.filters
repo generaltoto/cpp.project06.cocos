@@ -11,6 +11,9 @@
     <ClCompile Include="T:\cpp.project06.cocos\Classes\AppDelegate.cpp">
       <Filter>Source Files\Classes</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Entities\Lemming.cpp">
+      <Filter>Source Files\Classes\Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="T:\cpp.project06.cocos\CMakeLists.txt" />
@@ -27,6 +30,9 @@
     </Filter>
     <Filter Include="Ressources">
       <UniqueIdentifier>{9071fe01-a5c8-42f6-9071-e9c41c91c535}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Classes\Entities">
+      <UniqueIdentifier>{7b990328-1fc7-420c-afa2-39dece25d709}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -53,6 +59,9 @@
     </ClInclude>
     <ClInclude Include="T:\cpp.project06.cocos\Resources\fonts\arial.ttf">
       <Filter>Ressources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Entities\Lemming.h">
+      <Filter>Source Files\Classes\Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

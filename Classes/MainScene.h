@@ -1,14 +1,14 @@
-#ifndef __HELLOWORLD_SCENE_H__
-#define __HELLOWORLD_SCENE_H__
+#pragma once
 
-#include "cocos2d.h"
+#include "Entities/Lemming.h"
 #include "Box2D/Box2D.h"
+
+const int lemmingCollisionMaskId = 0x01;
+const int windowCollisionMaskId = 0x02;
 
 class MainScene : public cocos2d::Layer
 {
 public:
-	MainScene();
-
 	/**
 	 * \brief Creates the scene
 	 * \return The scene created with physics
@@ -26,14 +26,16 @@ public:
 	 */
 	void onEnter() override;
 
+	/**
+	 * \brief Function called in the game loop
+	 * \param delta advancement in the framerate render
+	 */
 	void update(float delta) override;
 
     CREATE_FUNC(MainScene)
 
 private:
-	std::vector<cocos2d::Sprite*> lemmings;
-	const float lemmingVelocity = 30;
-	float lemmingAcceleration = 1;
+	std::vector<Lemming> lemmings;
 
     cocos2d::Size visibleSize;
 
@@ -47,7 +49,5 @@ private:
 	 * \param positionX X Position of the Lemming (cannot be greater than the ScreenWidth)
 	 * \param positionY Y Position of the Lemming (cannot be greater than the ScreenHeight)
 	 */
-	cocos2d::Sprite* addLemming(float positionX, float positionY);
+	void addLemming(float positionX, float positionY);
 };
-
-#endif // __HELLOWORLD_SCENE_H__
