@@ -20,9 +20,24 @@ bool MainScene::init()
 	this->visibleSize = designResolutionSize;
 	this->visibleOrigin = { 0, 0 };
 
-	const auto _contactListener = cocos2d::EventListenerPhysicsContact::create();
-	_contactListener->onContactBegin = CC_CALLBACK_1(MainScene::onContact, this);
-	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(_contactListener, this);
+	const auto _contactListener = EventListenerPhysicsContact::create();
+    _contactListener->onContactBegin = [this](const PhysicsContact &contact)->bool
+    {
+	    const cocos2d::PhysicsBody* a = contact.getShapeA()->getBody();
+		const cocos2d::PhysicsBody* b = contact.getShapeB()->getBody();
+
+		// Checking if a Lemming collided with a window border
+		if (
+			(a->getCollisionBitmask() == lemming_collision_mask_id && b->getCollisionBitmask() == window_collision_mask_id) ||
+			(a->getCollisionBitmask() == window_collision_mask_id && b->getCollisionBitmask() == lemming_collision_mask_id)
+			)
+		{
+			CCLOG("Collision has occured !!!");
+			return true;
+		}
+		return false;
+    };
+	this->_eventDispatcher->addEventListenerWithSceneGraphPriority(_contactListener, this);
 
 	this->scheduleUpdate();
 
@@ -44,7 +59,7 @@ void MainScene::update(float delta)
 
 	for (const auto& lem : this->lemmings)
 	{
-		lem->updateVelocity(delta, this->visibleSize, this->visibleOrigin, 0.f);
+		lem->updateForces(delta, 0.f);
 	}
 }
 
@@ -66,22 +81,17 @@ void MainScene::addWindowsEdgesCollider()
 void MainScene::addLemming(float positionX, float positionY)
 {
 	const auto _l = Lemming::create("HelloWorld.png", { positionX, positionY });
-	this->addChild(_l->sprite);
+	this->addChild(_l);
 	this->lemmings.push_back(_l);
 }
 
-bool MainScene::onContact(const cocos2d::PhysicsContact& contact)
+void MainScene::lemmingContactWithWindowBordersCallback() const
 {
-	const cocos2d::PhysicsBody* a = contact.getShapeA()->getBody();
-	const cocos2d::PhysicsBody* b = contact.getShapeB()->getBody();
+	CCLOG("Collision has occured !!!");
 
-	// Checking if the Lemming collided with a window border
-	if (
-		(a->getCollisionBitmask() == lemming_collision_mask_id && b->getCollisionBitmask() == window_collision_mask_id) ||
-		(a->getCollisionBitmask() == window_collision_mask_id && b->getCollisionBitmask() == lemming_collision_mask_id)
-		)
-	{
-		CCLOG("Collision has occured !!!");
-	}
-	return true;
+
+	const auto _spritePhysicalBody = this->getPhysicsBody();
+	const auto _curVelocity = _spritePhysicalBody->getVelocity();
+
+	_spritePhysicalBody->setVelocity({_curVelocity.x * -1, _curVelocity.y});
 }

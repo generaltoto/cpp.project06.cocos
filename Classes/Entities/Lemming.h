@@ -22,5 +22,5 @@ public:
 
 	const float lemmingVelocity = 75;
 
-	void updateVelocity(float delta, cocos2d::Size vSize, cocos2d::Vec2 vOrigin, float platformHeight);
+	void updateForces(float delta, float platformHeight) const;
 };

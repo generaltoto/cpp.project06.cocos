@@ -51,5 +51,5 @@ private:
 	 */
 	void addLemming(float positionX, float positionY);
 
-	bool onContact(const cocos2d::PhysicsContact &contact);
+	void lemmingContactWithWindowBordersCallback() const;
 };
