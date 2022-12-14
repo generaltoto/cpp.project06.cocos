@@ -28,9 +28,11 @@ public:
 	 */
 	void update(float delta) override;
 
-	bool onContactBegin(const cocos2d::PhysicsContact &contact) const;
+	bool onContactPreSolve(cocos2d::PhysicsContact&) const;
 
-	static void lemmingContactWithWindowBordersCallback(const Lemming*);
+	bool onContactPostSolve(const cocos2d::PhysicsContact&) const;
+
+	static void lemmingContactWithWindowBordersCallback(Lemming*);
 
 	Lemming* getLemmingWithName(const std::string&) const;
 

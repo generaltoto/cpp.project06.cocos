@@ -2,6 +2,5 @@
 
 bool isFloatNull(float f)
 {
-	if (abs(f) <= FLT_EPSILON) return true;
-	return false;
+	return ((static_cast<int>(f) * 100) * 0.01 == 0);
 }

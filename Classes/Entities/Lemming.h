@@ -14,6 +14,8 @@ public:
 
 	LemmingState currentState;
 
+	int currentAcceleration;
+
 	/**
 	 * \brief Creates the lemming
 	 * \return The sprite created with physic body
@@ -26,7 +28,7 @@ public:
 	 */
 	bool init() override;
 
-	const float lemmingVelocity = 75;
+	const float lemmingVelocity = 50;
 
 	void updateForces(float delta, float platformHeight);
 };
