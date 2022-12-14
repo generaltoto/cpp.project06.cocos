@@ -811,12 +811,14 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   <ItemGroup>
     <ClInclude Include="..\Classes\LevelMenu.h" />
     <ClInclude Include="..\Classes\MainMenu.h" />
+    <ClInclude Include="..\Classes\SettingMenu.h" />
     <ClInclude Include="T:\cpp.project06.cocos\Classes\AppDelegate.h" />
     <ClInclude Include="T:\cpp.project06.cocos\Classes\HelloWorldScene.h" />
     <ClInclude Include="T:\cpp.project06.cocos\proj.win32\main.h" />
     <ClInclude Include="T:\cpp.project06.cocos\proj.win32\resource.h" />
     <ClCompile Include="..\Classes\LevelMenu.cpp" />
     <ClCompile Include="..\Classes\MainMenu.cpp" />
+    <ClCompile Include="..\Classes\SettingMenu.cpp" />
     <ClCompile Include="T:\cpp.project06.cocos\Classes\AppDelegate.cpp" />
     <ClCompile Include="T:\cpp.project06.cocos\Classes\HelloWorldScene.cpp" />
     <ClCompile Include="T:\cpp.project06.cocos\proj.win32\main.cpp" />

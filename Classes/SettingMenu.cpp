@@ -1,15 +1,13 @@
-#include "MainMenu.h"
-#include "LevelMenu.h"
 #include "SettingMenu.h"
 
 USING_NS_CC;
 
-Scene* MainMenu::createScene()
+Scene* SettingMenu::createScene()
 {
-   return MainMenu::create();
+   return SettingMenu::create();
 }
 
-bool MainMenu::init()
+bool SettingMenu::init()
 {
    if (!Scene::init())
    {
@@ -22,7 +20,7 @@ bool MainMenu::init()
    auto _closeItem = MenuItemImage::create(
       "CloseNormal.png",
       "CloseSelected.png",
-      CC_CALLBACK_1(MainMenu::menuCloseCallback, this));
+      CC_CALLBACK_1(SettingMenu::menuCloseCallback, this));
 
    if (_closeItem == nullptr ||
       _closeItem->getContentSize().width <= 0 ||
@@ -55,31 +53,13 @@ bool MainMenu::init()
       this->addChild(_bg, 0);
    }
 
-   auto _menuPlay = MenuItemFont::create("Play", CC_CALLBACK_1(MainMenu::Play, this));
-   _menuPlay->setPosition(Vec2((_visibleSize.width / 3), (_visibleSize.height / 2.5)));
-
-   auto _menuSettings = MenuItemFont::create("Settings", CC_CALLBACK_1(MainMenu::Settings, this));
-   _menuSettings->setPosition(Vec2((_visibleSize.width / 3) * 2, (_visibleSize.height / 2.5)));
-
-   auto _menu = Menu::create(_closeItem, _menuPlay, _menuSettings, NULL);
+   auto _menu = Menu::create(_closeItem, NULL);
    _menu->setPosition(Vec2::ZERO);
    this->addChild(_menu, 1);
 
    return true;
 }
 
-void MainMenu::Play(cocos2d::Ref* pSender)
-{
-   auto _levelScene = LevelMenu::create();
-   Director::getInstance()->replaceScene(TransitionFade::create(0.5, _levelScene, Color3B(255, 255, 255)));
-}
+void SettingMenu::update(float delta) { Node::update(delta); }
 
-void MainMenu::Settings(cocos2d::Ref* pSender)
-{
-   auto _settingScene = SettingMenu::create();
-   Director::getInstance()->replaceScene(_settingScene);
-}
-
-void MainMenu::update(float delta) { Node::update(delta); }
-
-void MainMenu::menuCloseCallback(Ref* pSender) { Director::getInstance()->end(); }
+void SettingMenu::menuCloseCallback(Ref* pSender) { Director::getInstance()->end(); }

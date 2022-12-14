@@ -8,22 +8,29 @@
 class LevelMenu : public cocos2d::Scene
 {
 private:
-   cocos2d::Sprite* levelCursor;
-   int indexLevel;
+   cocos2d::Sprite* _levelCursor;
+   int _idLevel;
 
 public:
+   /// Creates the scene.
    static cocos2d::Scene* createScene();
 
+   /// Inits the different elements of the scene.
    virtual bool init();
 
-   void update(float delta) override;
+   /// Updates the scene with a given time.
+   void update(float) override;
 
-   // a selector callback
-   void menuCloseCallback(cocos2d::Ref* pSender);
+   /// Closes the window.
+   void menuCloseCallback(cocos2d::Ref*);
 
-   void PlayLevel(cocos2d::Ref* pSender, int);
+   /// Lunchs a new playing scene with a given level index.
+   void playLevel(cocos2d::Ref*, int);
 
-   void SelectLevel(cocos2d::Ref* pSender, cocos2d::Vec2, int);
+   /// Changes the current selected level and updates the cursor on the map.
+   void selectLevel(cocos2d::Ref*, cocos2d::Vec2, int);
+
+   void returnToMain(cocos2d::Ref*);
 
    // implement the "static create()" method manually
    CREATE_FUNC(LevelMenu);

@@ -1,11 +1,11 @@
 #pragma once
 
-#ifndef __MAINMENU_SCENE_H__
-#define __MAINMENU_SCENE_H__
+#ifndef __SETTINGMENU_SCENE_H__
+#define __SETTINGMENU_SCENE_H__
 
 #include "cocos2d.h"
 
-class MainMenu : public cocos2d::Scene
+class SettingMenu : public cocos2d::Scene
 {
 public:
    /// Creates the scenes.
@@ -20,14 +20,8 @@ public:
    /// Closes the window.
    void menuCloseCallback(cocos2d::Ref*);
 
-   /// Switchs scene to the LevelMenu one.
-   void Play(cocos2d::Ref*);
-
-   /// Switchs scene to the SettingMenu one.
-   void Settings(cocos2d::Ref*);
-
    // implement the "static create()" method manually
-   CREATE_FUNC(MainMenu);
+   CREATE_FUNC(SettingMenu);
 };
 
-#endif // __MAINMENU_SCENE_H__
+#endif // __SETTINGMENU_SCENE_H__

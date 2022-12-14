@@ -19,6 +19,9 @@
     <ClCompile Include="..\Classes\LevelMenu.cpp">
       <Filter>Source Files\Classes</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\SettingMenu.cpp">
+      <Filter>Source Files\Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="T:\cpp.project06.cocos\Classes\AppDelegate.h">
@@ -55,6 +58,9 @@
       <Filter>Source Files\Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\LevelMenu.h">
+      <Filter>Source Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SettingMenu.h">
       <Filter>Source Files\Classes</Filter>
     </ClInclude>
   </ItemGroup>
