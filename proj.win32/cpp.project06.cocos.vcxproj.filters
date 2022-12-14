@@ -14,6 +14,9 @@
     <ClCompile Include="..\Classes\Entities\Lemming.cpp">
       <Filter>Source Files\Classes\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="UtilityFunctions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="T:\cpp.project06.cocos\CMakeLists.txt" />
@@ -64,6 +67,9 @@
       <Filter>Source Files\Classes\Entities</Filter>
     </ClInclude>
     <ClInclude Include="Constants.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UtilityFunctions.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

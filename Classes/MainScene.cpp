@@ -4,18 +4,15 @@ USING_NS_CC;
 
 Scene* MainScene::createScene()
 {
-	const auto _sceneWithPhysics = cocos2d::Scene::createWithPhysics();
+	const auto _sceneWithPhysics = MainScene::create();
+	_sceneWithPhysics->initWithPhysics();
 	_sceneWithPhysics->getPhysicsWorld()->setDebugDrawMask(cocos2d::PhysicsWorld::DEBUGDRAW_ALL);
-
-	const auto _layerWithPhysics = MainScene::create();
-	_sceneWithPhysics->addChild(_layerWithPhysics);
-
 	return _sceneWithPhysics;
 }
 
 bool MainScene::init()
 {
-	if (!Layer::init()) return false;
+	if (!Scene::initWithPhysics()) return false;
 
 	this->visibleSize = designResolutionSize;
 	this->visibleOrigin = { 0, 0 };
@@ -31,7 +28,7 @@ bool MainScene::init()
 
 void MainScene::onEnter()
 {
-	cocos2d::Layer::onEnter();
+	cocos2d::Scene::onEnter();
 
 	const Vec2 _middleScreen = { visibleSize.width / 2, visibleSize.height / 2 };
 	for (int i = 0; i < 3; i++) this->addLemming(i, _middleScreen.x + (300.f * i), _middleScreen.y);
@@ -48,20 +45,18 @@ void MainScene::update(float delta)
 	}
 }
 
-bool MainScene::onContactBegin(cocos2d::PhysicsContact& contact)
+bool MainScene::onContactBegin(const cocos2d::PhysicsContact& contact) const
 {
-	cocos2d::PhysicsBody* a = contact.getShapeA()->getBody();
-	cocos2d::PhysicsBody* b = contact.getShapeB()->getBody();
+	const cocos2d::PhysicsBody* shapeA = contact.getShapeA()->getBody();
+	const cocos2d::PhysicsBody* shapeB = contact.getShapeB()->getBody();
+
 
 	// Checking if a Lemming collided with a window border
-	if (a->getCollisionBitmask() == lemming_collision_mask_id && b->getCollisionBitmask() == window_collision_mask_id)
+	if (shapeA->getCollisionBitmask() == lemming_collision_mask_id && shapeB->getCollisionBitmask() == window_collision_mask_id)
 	{
-		MainScene::lemmingContactWithWindowBordersCallback(a);
-		return true;
-	}
-	if (a->getCollisionBitmask() == window_collision_mask_id && b->getCollisionBitmask() == lemming_collision_mask_id)
-	{
-		MainScene::lemmingContactWithWindowBordersCallback(b);
+		const Lemming* _l = getLemmingWithName(shapeB->getName());
+		if (_l == nullptr) return false;
+		MainScene::lemmingContactWithWindowBordersCallback(_l);
 		return true;
 	}
 	return false;
@@ -76,6 +71,8 @@ void MainScene::addWindowsEdgesCollider()
 	);
 	_body->setCategoryBitmask(window_collision_mask_id);
 	_body->setCollisionBitmask(lemming_collision_mask_id);
+	_body->setContactTestBitmask(test_collision_mask_id);
+	_body->setName(window_collision_name_template);
 
 	const auto _edgeShape = cocos2d::Node::create();
 	_edgeShape->setPhysicsBody(_body);
@@ -83,22 +80,30 @@ void MainScene::addWindowsEdgesCollider()
 		this->visibleOrigin.x + this->visibleSize.width / 2,
 		this->visibleOrigin.y + this->visibleSize.height / 2
 	);
-	_edgeShape->setName(window_collision_name_template);
 	this->addChild(_edgeShape);
 }
 
 void MainScene::addLemming(int index, float positionX, float positionY)
 {
-	const auto _l = Lemming::create("HelloWorld.png", { positionX, positionY }, index);
-	this->addChild(_l);
-	this->lemmings.push_back(_l);
+	Lemming* _l = Lemming::create("HelloWorld.png", { positionX, positionY });
+	addChild(_l);
+	lemmings.push_back(_l);
+	indexedLemmings.insert(std::make_pair(_l->getName(), _l));
 }
 
-void MainScene::lemmingContactWithWindowBordersCallback(PhysicsBody* target)
+void MainScene::lemmingContactWithWindowBordersCallback(const Lemming* lemming)
 {
-	CCLOG("Collision has occured !!!");
-
-	const auto _curVelocity = target->getVelocity();
-
-	target->setVelocity({ _curVelocity.x * -1, _curVelocity.y });
+	PhysicsBody* _body = lemming->getPhysicsBody();
+	Vec2 _curVelocity = _body->getVelocity();
+	if(isFloatNull(_curVelocity.x) && isFloatNull(_curVelocity.y) && lemming->currentState != SPAWNING)
+	{
+		_body->setVelocity({ _curVelocity.x * -1, _curVelocity.y });
+	}
 }
+
+Lemming* MainScene::getLemmingWithName(const std::string &name) const
+{
+	const auto it = indexedLemmings.find(name);
+	if ( it==indexedLemmings.end()) return nullptr;
+	return it->second;
+ }

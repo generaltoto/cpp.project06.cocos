@@ -1,9 +1,8 @@
 #pragma once
 
 #include "Entities/Lemming.h"
-#include "Box2D/Box2D.h"
 
-class MainScene : public cocos2d::Layer
+class MainScene : public cocos2d::Scene
 {
 public:
 	/**
@@ -29,15 +28,18 @@ public:
 	 */
 	void update(float delta) override;
 
-	bool onContactBegin(cocos2d::PhysicsContact &contact);
+	bool onContactBegin(const cocos2d::PhysicsContact &contact) const;
 
-	static void lemmingContactWithWindowBordersCallback(cocos2d::PhysicsBody *target);
+	static void lemmingContactWithWindowBordersCallback(const Lemming*);
+
+	Lemming* getLemmingWithName(const std::string&) const;
 
 
     CREATE_FUNC(MainScene)
 
 private:
 	std::vector<Lemming*> lemmings;
+	std::map<std::string, Lemming*> indexedLemmings;
 
     cocos2d::Size visibleSize;
 

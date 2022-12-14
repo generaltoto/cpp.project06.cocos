@@ -809,6 +809,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="UtilityFunctions.cpp" />
     <ClInclude Include="..\Classes\Entities\Lemming.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="T:\cpp.project06.cocos\Classes\AppDelegate.h" />
@@ -819,6 +820,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="T:\cpp.project06.cocos\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\MainScene.cpp" />
     <ClCompile Include="T:\cpp.project06.cocos\proj.win32\main.cpp" />
+    <ClInclude Include="UtilityFunctions.h" />
     <ResourceCompile Include="T:\cpp.project06.cocos\proj.win32\game.rc" />
     <ClInclude Include="T:\cpp.project06.cocos\Resources\CloseNormal.png" />
     <ClInclude Include="T:\cpp.project06.cocos\Resources\CloseSelected.png" />
