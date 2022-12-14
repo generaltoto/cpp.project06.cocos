@@ -90,5 +90,11 @@
     <Image Include="..\Resources\main_menu.jpg">
       <Filter>Resources</Filter>
     </Image>
+    <Image Include="..\Resources\map_level.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\map_cursor.png">
+      <Filter>Resources</Filter>
+    </Image>
   </ItemGroup>
 </Project>

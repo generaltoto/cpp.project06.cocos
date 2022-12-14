@@ -75,7 +75,7 @@ void MainMenu::Play(cocos2d::Ref* pSender)
    auto levelScene = LevelMenu::create();
 
    // Transition Fade
-   Director::getInstance()->replaceScene(TransitionFade::create(0.5, levelScene, Color3B(0, 255, 255)));
+   Director::getInstance()->replaceScene(TransitionFade::create(0.5, levelScene, Color3B(255, 255, 255)));
 }
 
 void MainMenu::Settings(cocos2d::Ref* pSender)

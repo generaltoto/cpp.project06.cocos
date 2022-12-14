@@ -893,6 +893,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Resources\main_menu.jpg" />
+    <Image Include="..\Resources\map_cursor.png" />
+    <Image Include="..\Resources\map_level.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -7,6 +7,10 @@
 
 class LevelMenu : public cocos2d::Scene
 {
+private:
+   cocos2d::Sprite* levelCursor;
+   int indexLevel;
+
 public:
    static cocos2d::Scene* createScene();
 
@@ -16,6 +20,10 @@ public:
 
    // a selector callback
    void menuCloseCallback(cocos2d::Ref* pSender);
+
+   void PlayLevel(cocos2d::Ref* pSender, int);
+
+   void SelectLevel(cocos2d::Ref* pSender, cocos2d::Vec2, int);
 
    // implement the "static create()" method manually
    CREATE_FUNC(LevelMenu);
