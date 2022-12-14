@@ -9,12 +9,30 @@ enum LemmingState { SPAWNING, FALLING, WALKING };
 class Lemming : public cocos2d::Node
 {
 public:
-	int id{};
-	static int nextId;
+	/**
+	 * \brief Id of this Lemming
+	 */
+	int m_id{};
 
-	LemmingState currentState;
+	/**
+	 * \brief Id of the next Lemming
+	 */
+	static int m_nextId;
 
-	int currentAcceleration;
+	/**
+	 * \brief Current state of the Lemming
+	 */
+	LemmingState m_currentState;
+
+	/**
+	 * \brief Current acceleration of the Lemming. -1 for left and 1 for right.
+	 */
+	int m_currentAcceleration;
+
+	/**
+	 * \brief The Lemming's velocity
+	 */
+	const float m_lemmingVelocity = 35;
 
 	/**
 	 * \brief Creates the lemming
@@ -28,7 +46,8 @@ public:
 	 */
 	bool init() override;
 
-	const float lemmingVelocity = 50;
-
-	void updateForces(float delta, float platformHeight);
+	/**
+	 * \brief Checks if the Lemming in currently in the air to modify its [currentState]
+	 */
+	void checkIfFalling();
 };

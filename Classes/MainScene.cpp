@@ -4,7 +4,7 @@ USING_NS_CC;
 
 Scene* MainScene::createScene()
 {
-	const auto _sceneWithPhysics = MainScene::create();
+	MainScene* _sceneWithPhysics = MainScene::create();
 	_sceneWithPhysics->initWithPhysics();
 	_sceneWithPhysics->getPhysicsWorld()->setDebugDrawMask(cocos2d::PhysicsWorld::DEBUGDRAW_ALL);
 	return _sceneWithPhysics;
@@ -14,17 +14,17 @@ bool MainScene::init()
 {
 	if (!Scene::initWithPhysics()) return false;
 
-	this->visibleSize = designResolutionSize;
-	this->visibleOrigin = { 0, 0 };
+	m_visibleSize = designResolutionSize;
+	m_visibleOrigin = { 0, 0 };
 
-	const auto _contactListener = EventListenerPhysicsContact::create();
+	cocos2d::EventListenerPhysicsContact* _contactListener = EventListenerPhysicsContact::create();
 
 	_contactListener->onContactPostSolve = CC_CALLBACK_1(MainScene::onContactPostSolve, this);
 	_contactListener->onContactPreSolve = CC_CALLBACK_1(MainScene::onContactPreSolve, this);
 
-	this->_eventDispatcher->addEventListenerWithSceneGraphPriority(_contactListener, this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(_contactListener, this);
 
-	this->scheduleUpdate();
+	scheduleUpdate();
 
 	return true;
 }
@@ -33,18 +33,18 @@ void MainScene::onEnter()
 {
 	cocos2d::Scene::onEnter();
 
-	const Vec2 _middleScreen = { visibleSize.width / 2, visibleSize.height / 2 };
-	for (int i = 0; i < 3; i++) this->addLemming(i, _middleScreen.x + (300.f * i), _middleScreen.y);
-	this->addWindowsEdgesCollider();
+	const Vec2 _middleScreen = { m_visibleSize.width / 2, m_visibleSize.height / 2 };
+	for (int i = 0; i < 3; i++) addLemming(_middleScreen.x + (300.f * i), _middleScreen.y);
+	addWindowsEdgesCollider();
 }
 
 void MainScene::update(float delta)
 {
 	Node::update(delta);
 
-	for (const auto& lem : this->lemmings)
+	for (const auto& lem : this->m_lemmings)
 	{
-		lem->updateForces(delta, 0.f);
+		lem->checkIfFalling();
 	}
 }
 
@@ -95,8 +95,8 @@ bool MainScene::onContactPostSolve(const cocos2d::PhysicsContact& contact) const
 
 void MainScene::addWindowsEdgesCollider()
 {
-	const auto _body = cocos2d::PhysicsBody::createEdgeBox(
-		{ visibleSize.width, visibleSize.height + 2 },
+	cocos2d::PhysicsBody* _body = cocos2d::PhysicsBody::createEdgeBox(
+		{ m_visibleSize.width, m_visibleSize.height + 2 },
 		cocos2d::PhysicsMaterial(cocos2d::PHYSICSBODY_MATERIAL_DEFAULT),
 		1
 	);
@@ -105,21 +105,21 @@ void MainScene::addWindowsEdgesCollider()
 	_body->setContactTestBitmask(test_collision_mask_id);
 	_body->setName(window_collision_name_template);
 
-	const auto _edgeShape = cocos2d::Node::create();
+	cocos2d::Node* _edgeShape = cocos2d::Node::create();
 	_edgeShape->setPhysicsBody(_body);
 	_edgeShape->setPosition(
-		this->visibleOrigin.x + this->visibleSize.width / 2,
-		this->visibleOrigin.y + this->visibleSize.height / 2
+		m_visibleOrigin.x + m_visibleSize.width / 2,
+		m_visibleOrigin.y + m_visibleSize.height / 2
 	);
-	this->addChild(_edgeShape);
+	addChild(_edgeShape);
 }
 
-void MainScene::addLemming(int index, float positionX, float positionY)
+void MainScene::addLemming(float positionX, float positionY)
 {
 	Lemming* _l = Lemming::create("HelloWorld.png", { positionX, positionY });
 	addChild(_l);
-	lemmings.push_back(_l);
-	indexedLemmings.insert(std::make_pair(_l->getName(), _l));
+	m_lemmings.push_back(_l);
+	m_indexedLemmings.insert(std::make_pair(_l->getName(), _l));
 }
 
 void MainScene::lemmingContactWithWindowBordersCallback(Lemming* lemming)
@@ -127,24 +127,21 @@ void MainScene::lemmingContactWithWindowBordersCallback(Lemming* lemming)
 	PhysicsBody* _body = lemming->getPhysicsBody();
 	Vec2 _curVelocity = _body->getVelocity();
 
-	const bool a = isFloatNull(_curVelocity.x);
-	const bool b = isFloatNull(_curVelocity.y);
-
-	if (isFloatNull(_curVelocity.x) && isFloatNull(_curVelocity.y) && lemming->currentState == WALKING)
+	if (isFloatNull(_curVelocity.x) && isFloatNull(_curVelocity.y) && lemming->m_currentState == WALKING)
 	{
-		lemming->currentAcceleration *= -1;
-		_body->setVelocity({ _curVelocity.x * lemming->currentAcceleration, _curVelocity.y });
+		lemming->m_currentAcceleration *= -1;
+		_body->setVelocity({ _curVelocity.x * lemming->m_currentAcceleration, _curVelocity.y });
 	}
-	if (isFloatNull(_curVelocity.y) && lemming->currentState == FALLING)
+	if (isFloatNull(_curVelocity.y) && lemming->m_currentState == FALLING)
 	{
-		_body->setVelocity({ lemming->lemmingVelocity,0 });
-		lemming->currentState = WALKING;
+		_body->setVelocity({ lemming->m_lemmingVelocity,0 });
+		lemming->m_currentState = WALKING;
 	}
 }
 
 Lemming* MainScene::getLemmingWithName(const std::string& name) const
 {
-	const auto it = indexedLemmings.find(name);
-	if (it == indexedLemmings.end()) return nullptr;
+	const auto it = m_indexedLemmings.find(name);
+	if (it == m_indexedLemmings.end()) return nullptr;
 	return it->second;
 }

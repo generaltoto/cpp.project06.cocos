@@ -28,24 +28,38 @@ public:
 	 */
 	void update(float delta) override;
 
+	/**
+	 * \brief Callback called when a collision occurs in this scene.
+	 * \return true if the collision is acknowledged.
+	 */
 	bool onContactPreSolve(cocos2d::PhysicsContact&) const;
 
+	/**
+	 * \brief Callback called when a collision occurs and has been managed in this scene.
+	 * \return true if the collision is acknowledged.
+	 */
 	bool onContactPostSolve(const cocos2d::PhysicsContact&) const;
 
-	static void lemmingContactWithWindowBordersCallback(Lemming*);
+	/**
+	 * \brief Callback called if the collision concerns a Lemming and the window border or wall.
+	 * \param l The concerned lemming.
+	 */
+	static void lemmingContactWithWindowBordersCallback(Lemming* l);
 
+	/**
+	 * \brief Finds the Lemming corresponding to a given [lemming_name_template] name 
+	 * \return The found lemming or nullptr if no Lemming was found.
+	 */
 	Lemming* getLemmingWithName(const std::string&) const;
-
 
     CREATE_FUNC(MainScene)
 
 private:
-	std::vector<Lemming*> lemmings;
-	std::map<std::string, Lemming*> indexedLemmings;
+	std::vector<Lemming*> m_lemmings;
+	std::map<std::string, Lemming*> m_indexedLemmings;
 
-    cocos2d::Size visibleSize;
-
-	cocos2d::Vec2 visibleOrigin;
+    cocos2d::Size m_visibleSize;
+	cocos2d::Vec2 m_visibleOrigin;
 
 	/**
 	 * \brief Creates a collision box with the window borders
@@ -57,6 +71,6 @@ private:
 	 * \param positionX X Position of the Lemming (cannot be greater than the ScreenWidth)
 	 * \param positionY Y Position of the Lemming (cannot be greater than the ScreenHeight)
 	 */
-	void addLemming(int index, float positionX, float positionY);
+	void addLemming(float positionX, float positionY);
 
 };

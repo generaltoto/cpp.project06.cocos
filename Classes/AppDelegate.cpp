@@ -60,8 +60,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     register_all_packages();
 
-    Lemming::nextId = 1;
-    const auto scene = MainScene::createScene();
+	const auto scene = MainScene::createScene();
 	director->runWithScene(scene);
 
     return true;

@@ -1,6 +1,6 @@
 #include "Lemming.h"
 
-int Lemming::nextId = 1;
+int Lemming::m_nextId = 1;
 
 Lemming* Lemming::create(const char* filePath, cocos2d::Vec2 pos)
 {
@@ -11,16 +11,16 @@ Lemming* Lemming::create(const char* filePath, cocos2d::Vec2 pos)
 		_ret->setScale(0.5f);
 		_ret->setAnchorPoint({ 0,0 });
 		_ret->setPosition(pos.x, pos.y);
-		_ret->id = nextId++;
-		_ret->setName(lemming_name_template + std::to_string(_ret->id));
-		_ret->currentState = SPAWNING;
-		_ret->currentAcceleration = 1;
+		_ret->m_id = m_nextId++;
+		_ret->setName(lemming_name_template + std::to_string(_ret->m_id));
+		_ret->m_currentState = SPAWNING;
+		_ret->m_currentAcceleration = 1;
 
-		const auto _sp = cocos2d::Sprite::create(filePath);
+		cocos2d::Sprite* _sp = cocos2d::Sprite::create(filePath);
 		if (_sp == nullptr) throw ERROR_BAD_PATHNAME;
 		_ret->addChild(_sp);
 
-		const auto _lemmingPhysicBody = cocos2d::PhysicsBody::createBox(
+		cocos2d::PhysicsBody* _lemmingPhysicBody = cocos2d::PhysicsBody::createBox(
 			cocos2d::Size(_sp->getContentSize()),
 			cocos2d::PhysicsMaterial(cocos2d::PHYSICSBODY_MATERIAL_DEFAULT)
 		);
@@ -31,7 +31,7 @@ Lemming* Lemming::create(const char* filePath, cocos2d::Vec2 pos)
 		_lemmingPhysicBody->setCategoryBitmask(lemming_collision_mask_id);
 		_lemmingPhysicBody->setCollisionBitmask(window_collision_mask_id);
 		_lemmingPhysicBody->setContactTestBitmask(test_collision_mask_id);
-		_lemmingPhysicBody->setName(lemming_name_template + std::to_string(_ret->id));
+		_lemmingPhysicBody->setName(lemming_name_template + std::to_string(_ret->m_id));
 		_ret->setPhysicsBody(_lemmingPhysicBody);
 	}
 	else CC_SAFE_DELETE(_ret);
@@ -44,11 +44,8 @@ bool Lemming::init()
 	return true;
 }
 
-void Lemming::updateForces(float delta, float platformHeight)
+void Lemming::checkIfFalling()
 {
-	cocos2d::PhysicsBody* _body = this->getPhysicsBody();
-	const cocos2d::Vec2 _curVelocity = _body->getVelocity();
-
-	CCLOG("%f\t%f", _curVelocity.x, _curVelocity.y);
-	if(!isFloatNull(_curVelocity.y) && currentState != FALLING) currentState = FALLING;
+	const cocos2d::Vec2 _curVelocity = this->getPhysicsBody()->getVelocity();
+	if(!isFloatNull(_curVelocity.y) && m_currentState != FALLING) m_currentState = FALLING;
 }
