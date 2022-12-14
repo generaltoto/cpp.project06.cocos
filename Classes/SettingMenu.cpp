@@ -53,11 +53,20 @@ bool SettingMenu::init()
       this->addChild(_bg, 0);
    }
 
-   auto _menu = Menu::create(_closeItem, NULL);
+   auto _menuQuit = MenuItemFont::create("Quit", CC_CALLBACK_1(SettingMenu::returnToMain, this));
+   _menuQuit->setPosition(Vec2((_visibleSize.width / 5) * 4.5, _visibleSize.height));
+   _menuQuit->setFontSizeObj(20);
+
+   auto _menu = Menu::create(_closeItem, _menuQuit, NULL);
    _menu->setPosition(Vec2::ZERO);
    this->addChild(_menu, 1);
 
    return true;
+}
+
+void SettingMenu::returnToMain(cocos2d::Ref* pSender) 
+{
+   Director::getInstance()->popScene();
 }
 
 void SettingMenu::update(float delta) { Node::update(delta); }

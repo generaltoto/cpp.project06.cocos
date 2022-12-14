@@ -30,6 +30,7 @@ public:
    /// Changes the current selected level and updates the cursor on the map.
    void selectLevel(cocos2d::Ref*, cocos2d::Vec2, int);
 
+   /// Changes the scene to return to the main one.
    void returnToMain(cocos2d::Ref*);
 
    // implement the "static create()" method manually

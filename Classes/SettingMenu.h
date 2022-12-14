@@ -20,6 +20,9 @@ public:
    /// Closes the window.
    void menuCloseCallback(cocos2d::Ref*);
 
+   /// Changes the scene to return to the main one.
+   void returnToMain(cocos2d::Ref*);
+
    // implement the "static create()" method manually
    CREATE_FUNC(SettingMenu);
 };

@@ -71,7 +71,11 @@ bool LevelMenu::init()
    _lvl2->setPosition(Vec2((_visibleSize.width / 5) * 4.5, _visibleSize.height/2));
    _lvl2->setFontSizeObj(20);
 
-   auto _menu = Menu::create(_closeItem, _lvl1, _lvl2, NULL);
+   auto _menuQuit = MenuItemFont::create("Quit", CC_CALLBACK_1(LevelMenu::returnToMain, this));
+   _menuQuit->setPosition(Vec2((_visibleSize.width / 5) * 4.5, _origin.y + +_menuQuit->getContentSize().height / 2));
+   _menuQuit->setFontSizeObj(15);
+
+   auto _menu = Menu::create(_closeItem, _lvl1, _lvl2, _menuQuit, NULL);
    _menu->setPosition(Vec2::ZERO);
    this->addChild(_menu, 1);
    this->addChild(_levelCursor, 1);
@@ -94,7 +98,7 @@ void LevelMenu::selectLevel(cocos2d::Ref* pSender, cocos2d::Vec2 coor, int index
 
 void LevelMenu::returnToMain(cocos2d::Ref* pSender)
 {
-   
+   Director::getInstance()->popScene();
 }
 
 void LevelMenu::update(float delta) { Node::update(delta); }

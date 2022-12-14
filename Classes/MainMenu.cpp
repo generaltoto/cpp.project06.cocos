@@ -71,13 +71,13 @@ bool MainMenu::init()
 void MainMenu::Play(cocos2d::Ref* pSender)
 {
    auto _levelScene = LevelMenu::create();
-   Director::getInstance()->replaceScene(TransitionFade::create(0.5, _levelScene, Color3B(255, 255, 255)));
+   Director::getInstance()->pushScene(TransitionFade::create(0.5, _levelScene, Color3B(255, 255, 255)));
 }
 
 void MainMenu::Settings(cocos2d::Ref* pSender)
 {
    auto _settingScene = SettingMenu::create();
-   Director::getInstance()->replaceScene(_settingScene);
+   Director::getInstance()->pushScene(_settingScene);
 }
 
 void MainMenu::update(float delta) { Node::update(delta); }
