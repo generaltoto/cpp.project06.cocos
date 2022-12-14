@@ -10,7 +10,7 @@ public:
 	 * \brief Creates the lemming
 	 * \return The sprite created with physic body
 	 */
-	static Lemming* create(const char* filePath, cocos2d::Vec2 pos);
+	static Lemming* create(const char* filePath, cocos2d::Vec2 pos, int index);
 
 	/**
 	 * \brief Initiates all members

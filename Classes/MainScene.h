@@ -2,7 +2,6 @@
 
 #include "Entities/Lemming.h"
 #include "Box2D/Box2D.h"
-#include "../proj.win32/Constants.h"
 
 class MainScene : public cocos2d::Layer
 {
@@ -30,6 +29,11 @@ public:
 	 */
 	void update(float delta) override;
 
+	bool onContactBegin(cocos2d::PhysicsContact &contact);
+
+	static void lemmingContactWithWindowBordersCallback(cocos2d::PhysicsBody *target);
+
+
     CREATE_FUNC(MainScene)
 
 private:
@@ -49,7 +53,6 @@ private:
 	 * \param positionX X Position of the Lemming (cannot be greater than the ScreenWidth)
 	 * \param positionY Y Position of the Lemming (cannot be greater than the ScreenHeight)
 	 */
-	void addLemming(float positionX, float positionY);
+	void addLemming(int index, float positionX, float positionY);
 
-	void lemmingContactWithWindowBordersCallback() const;
 };

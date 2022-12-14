@@ -1,6 +1,6 @@
 #include "Lemming.h"
 
-Lemming* Lemming::create(const char* filePath, cocos2d::Vec2 pos)
+Lemming* Lemming::create(const char* filePath, cocos2d::Vec2 pos, int index)
 {
 	auto* _ret = new (std::nothrow) Lemming();
 	if (_ret && _ret->init())
@@ -9,6 +9,7 @@ Lemming* Lemming::create(const char* filePath, cocos2d::Vec2 pos)
 		_ret->setScale(0.5f);
 		_ret->setAnchorPoint({ 0,0 });
 		_ret->setPosition(pos.x, pos.y);
+		_ret->setName(lemming_name_template + std::to_string(index));
 
 		const auto _sp = cocos2d::Sprite::create(filePath);
 		if (_sp == nullptr) throw ERROR_BAD_PATHNAME;
@@ -16,7 +17,7 @@ Lemming* Lemming::create(const char* filePath, cocos2d::Vec2 pos)
 
 		const auto _lemmingPhysicBody = cocos2d::PhysicsBody::createBox(
 			cocos2d::Size(_sp->getContentSize()),
-			cocos2d::PhysicsMaterial(1.f, 0.f, 1.f)
+			cocos2d::PhysicsMaterial(1.f, 0.f, 0.5)
 		);
 		_lemmingPhysicBody->setDynamic(true);
 		_lemmingPhysicBody->setGravityEnable(true);
@@ -42,10 +43,15 @@ void Lemming::updateForces(float delta, float platformHeight) const
 	const auto _physicalBody = this->getPhysicsBody();
 	const auto _curVelocity = _physicalBody->getVelocity();
 
-	if (_curVelocity.y > 0)
+
+	if (_curVelocity.y < 0)
 	{
-		_physicalBody->setVelocity({0,100});
+		_physicalBody->setVelocity({ 0,_curVelocity.y });
 	}
-	
-	
+	else
+	{
+		_physicalBody->setVelocity({ this->lemmingVelocity,0 });
+	}
+
+
 }

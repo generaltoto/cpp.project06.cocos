@@ -1,6 +1,5 @@
 #include "AppDelegate.h"
 #include "MainScene.h"
-#include "../proj.win32/Constants.h"
 
 // #define USE_AUDIO_ENGINE 1
 
