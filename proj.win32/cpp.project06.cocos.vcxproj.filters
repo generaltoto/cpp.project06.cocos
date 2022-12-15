@@ -20,6 +20,15 @@
     <ClCompile Include="..\Classes\TileMap\TileMap.cpp">
       <Filter>Source Files\Classes\TileMap</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\LevelMenu.cpp">
+      <Filter>Source Files\Classes\Scenes\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MainMenu.cpp">
+      <Filter>Source Files\Classes\Scenes\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SettingMenu.cpp">
+      <Filter>Source Files\Classes\Scenes\Menu</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="T:\cpp.project06.cocos\CMakeLists.txt" />
@@ -39,6 +48,9 @@
     </Filter>
     <Filter Include="Source Files\Classes\Entities">
       <UniqueIdentifier>{7b990328-1fc7-420c-afa2-39dece25d709}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Classes\Scenes\Menu">
+      <UniqueIdentifier>{99030b8e-443c-4635-9c2e-9dc2f5b6354e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -78,6 +90,15 @@
     <ClInclude Include="..\Classes\TileMap\TileMap.h">
       <Filter>Source Files\Classes\TileMap</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\LevelMenu.h">
+      <Filter>Source Files\Classes\Scenes\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MainMenu.h">
+      <Filter>Source Files\Classes\Scenes\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SettingMenu.h">
+      <Filter>Source Files\Classes\Scenes\Menu</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="T:\cpp.project06.cocos\CMakeLists.txt" />
@@ -109,5 +130,16 @@
     <Filter Include="Source Files\Classes\TileMap">
       <UniqueIdentifier>{f42ba5d1-473d-4036-adef-3970114e39fe}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Resources\main_menu.jpg">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\map_level.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\map_cursor.png">
+      <Filter>Resources</Filter>
+    </Image>
   </ItemGroup>
 </Project>

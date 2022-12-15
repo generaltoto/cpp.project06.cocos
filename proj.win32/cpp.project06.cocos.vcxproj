@@ -809,6 +809,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Classes\LevelMenu.h" />
+    <ClInclude Include="..\Classes\MainMenu.h" />
+    <ClInclude Include="..\Classes\SettingMenu.h" />
     <ClCompile Include="UtilityFunctions.cpp" />
     <ClInclude Include="..\Classes\Entities\Lemming.h" />
     <ClInclude Include="Constants.h" />
@@ -817,6 +820,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="..\Classes\MainScene.h" />
     <ClInclude Include="T:\cpp.project06.cocos\proj.win32\main.h" />
     <ClInclude Include="T:\cpp.project06.cocos\proj.win32\resource.h" />
+    <ClCompile Include="..\Classes\LevelMenu.cpp" />
+    <ClCompile Include="..\Classes\MainMenu.cpp" />
+    <ClCompile Include="..\Classes\SettingMenu.cpp" />
     <ClCompile Include="..\Classes\Entities\Lemming.cpp" />
     <ClCompile Include="..\Classes\TileMap\TileMap.cpp" />
     <ClCompile Include="T:\cpp.project06.cocos\Classes\AppDelegate.cpp" />
@@ -893,6 +899,11 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <Project>{4D028B93-6794-3965-9CC6-A458D093BB99}</Project>
       <Name>external</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Resources\main_menu.jpg" />
+    <Image Include="..\Resources\map_cursor.png" />
+    <Image Include="..\Resources\map_level.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

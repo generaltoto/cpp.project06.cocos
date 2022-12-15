@@ -1,4 +1,7 @@
 #include "AppDelegate.h"
+#include "MainMenu.h"
+#include "LevelMenu.h"
+#include "SettingMenu.h"
 #include "MainScene.h"
 
 // #define USE_AUDIO_ENGINE 1
@@ -11,7 +14,7 @@ using namespace cocos2d::experimental;
 USING_NS_CC;
 
 
-AppDelegate::AppDelegate() { }
+AppDelegate::AppDelegate() = default;
 
 AppDelegate::~AppDelegate() 
 {
@@ -60,8 +63,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     register_all_packages();
 
-	const auto scene = MainScene::createScene();
-	director->runWithScene(scene);
+    Scene* _mainScene = MainMenu::createScene();
+    director->runWithScene(_mainScene);
 
     return true;
 }
