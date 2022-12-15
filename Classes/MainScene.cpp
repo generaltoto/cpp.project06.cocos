@@ -61,7 +61,9 @@ bool MainScene::onContactPreSolve(cocos2d::PhysicsContact& contact) const
 	// See MainScene::onContactPostSolve for use of saved data
 
 	// Checking if a Lemming collided with a window border
-	if (_shapeA->getCollisionBitmask() == lemming_collision_mask_id && _shapeB->getCollisionBitmask() == window_collision_mask_id)
+	if (_shapeA->getCollisionBitmask() == lemming_collision_mask_id && _shapeB->getCollisionBitmask() == window_collision_mask_id
+		|| _shapeA->getCollisionBitmask() == window_collision_mask_id && _shapeB->getCollisionBitmask() == lemming_collision_mask_id
+		)
 	{
 		Lemming* _l = getLemmingWithName(_shapeB->getName());
 		if (_l == nullptr) return false;
