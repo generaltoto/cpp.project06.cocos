@@ -18,6 +18,9 @@ public:
 	 */
 	bool init() override;
 
+	/**
+	 * \brief Executed when entering the scene. Creates all the needed components.
+	 */
 	void onEnter() override;
 
 	/**

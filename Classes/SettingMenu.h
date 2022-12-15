@@ -1,30 +1,52 @@
 #pragma once
 
-#ifndef __SETTINGMENU_SCENE_H__
-#define __SETTINGMENU_SCENE_H__
-
-#include "cocos2d.h"
+#include "../proj.win32/Constants.h"
 
 class SettingMenu : public cocos2d::Scene
 {
 public:
-   /// Creates the scenes.
-   static cocos2d::Scene* createScene();
+	/**
+	 * \brief Creates the scenes.
+	 * \return The created scene.
+	 */
+	static cocos2d::Scene* createScene();
 
-   /// Inits the different elements of the scene.
-   virtual bool init();
+	/**
+	 * \brief Inits the different elements of the scene.
+	 * \return True if initialized correctly, False if not.
+	 */
+	bool init() override;
 
-   /// Updates the scene with a given time.
-   void update(float) override;
+	/**
+	 * \brief Executed when we enter the scene. Initializes all components
+	 */
+	void onEnter() override;
 
-   /// Closes the window.
-   void menuCloseCallback(cocos2d::Ref*);
+	/**
+	 * \brief Updates the scene with a given time.
+	 */
+	void update(float) override;
 
-   /// Changes the scene to return to the main one.
-   void returnToMain(cocos2d::Ref*);
+	/**
+	 * \brief Changes the scene to return to the main one.
+	 */
+	void returnToMain(cocos2d::Ref*);
 
-   // implement the "static create()" method manually
-   CREATE_FUNC(SettingMenu);
+	CREATE_FUNC(SettingMenu);
+
+private:
+	cocos2d::Size m_visibleSize;
+	cocos2d::Vec2 m_visibleOrigin;
+
+	cocos2d::MenuItemImage* createCloseButton();
+
+	void menuCloseCallback(cocos2d::Ref*);
+
+	void createTitle();
+
+	void createBackground();
+
+	cocos2d::MenuItemFont* createBackToMainButton();
+
+	void createDynamicMenu();
 };
-
-#endif // __SETTINGMENU_SCENE_H__
