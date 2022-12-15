@@ -16,10 +16,10 @@ bool MainMenu::init()
       return false;
    }
 
-   auto _visibleSize = Director::getInstance()->getVisibleSize();
+   cocos2d::Size _visibleSize = Director::getInstance()->getVisibleSize();
    Vec2 _origin = Director::getInstance()->getVisibleOrigin();
 
-   auto _closeItem = MenuItemImage::create(
+   cocos2d::MenuItemImage* _closeItem = MenuItemImage::create(
       "CloseNormal.png",
       "CloseSelected.png",
       CC_CALLBACK_1(MainMenu::menuCloseCallback, this));
@@ -35,48 +35,52 @@ bool MainMenu::init()
       _closeItem->setPosition(Vec2(x, y));
    }
 
-   auto _label = Label::createWithTTF("Save the Steves", "fonts/Marker Felt.ttf", 24);
+   cocos2d::Label* _label = Label::createWithTTF("Save the Steves", "fonts/Marker Felt.ttf", 80);
    if (_label == nullptr)
       throw ERROR_BAD_PATHNAME;
    else
    {
       _label->setPosition(Vec2(_origin.x + _visibleSize.width / 2,
          _origin.y + _visibleSize.height - _label->getContentSize().height));
-      this->addChild(_label, 1);
+      _label->setTextColor(Color4B(0, 0, 0, 255));
+      _label->enableOutline(Color4B(245, 245, 245, 255), 4);
+      addChild(_label, 1);
    }
 
-   auto _bg = Sprite::create("main_menu.jpg");
+   cocos2d::Sprite* _bg = Sprite::create("main_menu.jpg");
    if (_bg == nullptr)
       throw ERROR_BAD_PATHNAME;
    else
    {
       _bg->setPosition(Vec2(_visibleSize.width / 2 + _origin.x, _visibleSize.height / 2 + _origin.y));
       _bg->setScale(1.6);
-      this->addChild(_bg, 0);
+      addChild(_bg, 0);
    }
 
-   auto _menuPlay = MenuItemFont::create("Play", CC_CALLBACK_1(MainMenu::Play, this));
-   _menuPlay->setPosition(Vec2((_visibleSize.width / 3), (_visibleSize.height / 2.5)));
+   cocos2d::MenuItemFont* _menuPlay = MenuItemFont::create("Play", CC_CALLBACK_1(MainMenu::Play, this));
+   _menuPlay->setPosition(Vec2((_visibleSize.width / 3), (_visibleSize.height / 3)));
+   _menuPlay->setFontSizeObj(69);
 
-   auto _menuSettings = MenuItemFont::create("Settings", CC_CALLBACK_1(MainMenu::Settings, this));
-   _menuSettings->setPosition(Vec2((_visibleSize.width / 3) * 2, (_visibleSize.height / 2.5)));
+   cocos2d::MenuItemFont* _menuSettings = MenuItemFont::create("Settings", CC_CALLBACK_1(MainMenu::Settings, this));
+   _menuSettings->setPosition(Vec2((_visibleSize.width / 3) * 2, (_visibleSize.height / 3)));
+   _menuSettings->setFontSizeObj(69);
 
-   auto _menu = Menu::create(_closeItem, _menuPlay, _menuSettings, NULL);
+   cocos2d::Menu* _menu = Menu::create(_closeItem, _menuPlay, _menuSettings, NULL);
    _menu->setPosition(Vec2::ZERO);
-   this->addChild(_menu, 1);
+   addChild(_menu, 1);
 
    return true;
 }
 
 void MainMenu::Play(cocos2d::Ref* pSender)
 {
-   auto _levelScene = LevelMenu::create();
+   cocos2d::Scene* _levelScene = LevelMenu::create();
    Director::getInstance()->pushScene(TransitionFade::create(0.5, _levelScene, Color3B(255, 255, 255)));
 }
 
 void MainMenu::Settings(cocos2d::Ref* pSender)
 {
-   auto _settingScene = SettingMenu::create();
+   cocos2d::Scene* _settingScene = SettingMenu::create();
    Director::getInstance()->pushScene(_settingScene);
 }
 

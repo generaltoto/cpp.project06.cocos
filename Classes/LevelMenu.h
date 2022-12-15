@@ -8,8 +8,8 @@
 class LevelMenu : public cocos2d::Scene
 {
 private:
-   cocos2d::Sprite* _levelCursor;
-   int _idLevel;
+   cocos2d::Sprite* m_levelCursor;
+   int m_idLevel;
 
 public:
    /// Creates the scene.
