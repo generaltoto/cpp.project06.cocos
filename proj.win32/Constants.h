@@ -25,5 +25,6 @@ static const char *tileMap_netherPortal_asset_path = "map/netherPortal.png";
 static const char *menu_closeButton_path = "CloseNormal.png";
 static const char *menu_closeButton_selected_path = "CloseSelected.png";
 static const char *menu_mainMenu_background_path = "main_menu.jpg";
-static const char *menu_levelMenu_background_path = "CloseSelected.png";
+static const char *menu_levelMenu_background_path = "map_level.png";
 static const char *menu_levelMenu_pointer_path = "CloseSelected.png";
+static const char *menu_levelMenu_cursor_path = "map_cursor.png";
