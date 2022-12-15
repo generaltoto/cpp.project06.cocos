@@ -8,8 +8,8 @@
 class LevelMenu : public cocos2d::Scene
 {
 private:
-   cocos2d::Sprite* _levelCursor;
-   int _idLevel;
+   cocos2d::Sprite* m_levelCursor;
+   int m_idLvl;
 
 public:
    /// Creates the scene.
@@ -24,8 +24,8 @@ public:
    /// Closes the window.
    void menuCloseCallback(cocos2d::Ref*);
 
-   /// Lunchs a new playing scene with a given level index.
-   void playLevel(cocos2d::Ref*, int);
+   /// Lunchs a new playing scene with the level index selected.
+   void playLevel(cocos2d::Ref*);
 
    /// Changes the current selected level and updates the cursor on the map.
    void selectLevel(cocos2d::Ref*, cocos2d::Vec2, int);
