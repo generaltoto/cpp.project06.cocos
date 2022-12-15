@@ -74,11 +74,15 @@ bool LevelMenu::init()
    _lvl2->setPosition(Vec2((_visibleSize.width / 5) * 4.5, (_visibleSize.height / 12) * 9));
    _lvl2->setFontSizeObj(55);
 
+   cocos2d::MenuItemFont* _playButt = MenuItemFont::create("Play", CC_CALLBACK_1(LevelMenu::playLevel, this));
+   _playButt->setPosition(Vec2((_visibleSize.width / 5) * 4.5, (_visibleSize.height / 12) * 4));
+   _playButt->setFontSizeObj(40);
+
    cocos2d::MenuItemFont* _menuQuit = MenuItemFont::create("Quit", CC_CALLBACK_1(LevelMenu::returnToMain, this));
    _menuQuit->setPosition(Vec2((_visibleSize.width / 5) * 4.5, _visibleSize.height/12));
    _menuQuit->setFontSizeObj(40);
 
-   cocos2d::Menu* _menu = Menu::create(_closeItem, _lvl1, _lvl2, _menuQuit, NULL);
+   cocos2d::Menu* _menu = Menu::create(_closeItem, _lvl1, _lvl2, _playButt, _menuQuit, NULL);
    _menu->setPosition(Vec2::ZERO);
    addChild(_menu, 1);
    addChild(m_levelCursor, 1);
@@ -86,15 +90,19 @@ bool LevelMenu::init()
    return true;
 }
 
-void LevelMenu::playLevel(cocos2d::Ref* pSender, int level)
+void LevelMenu::playLevel(cocos2d::Ref* pSender)
 {
-   //to edit
+   if (m_idLvl != 0) 
+   {
+      //cocos2d::Scene* _playScene = [Play Scene]::create(m_idlvl);
+      //Director::getInstance()->replaceScene(TransitionFade::create(0.5, _playScene, Color3B(255, 255, 255)));
+   }
 }
 
 void LevelMenu::selectLevel(cocos2d::Ref* pSender, cocos2d::Vec2 coor, int index)
 {
    m_levelCursor->setPosition(coor);
-   m_idLevel = index;
+   m_idLvl = index;
 }
 
 void LevelMenu::returnToMain(cocos2d::Ref* pSender)
