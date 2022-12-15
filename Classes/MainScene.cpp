@@ -51,10 +51,7 @@ void MainScene::update(float delta)
 {
 	Node::update(delta);
 
-	for (const auto& lem : this->m_lemmings)
-	{
-		lem->checkIfFalling();
-	}
+	for (const auto& lem : m_lemmings) lem->checkIfFalling();
 }
 
 bool MainScene::onContactPreSolve(cocos2d::PhysicsContact& contact) const

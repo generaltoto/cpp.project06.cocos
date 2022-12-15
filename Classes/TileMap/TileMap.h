@@ -10,6 +10,9 @@ public:
     cocos2d::TMXTiledMap* getMap();
     cocos2d::Vec2 getSpawnPoint();
 
+    cocos2d::TMXObjectGroup* GetCollisions() const { return m_pCollision; }
+    void updateCollisions(cocos2d::TMXObjectGroup* col) { m_pCollision = col; }
+
 private:
     cocos2d::TMXTiledMap* m_pMap;
     cocos2d::TMXLayer* m_pBackground;

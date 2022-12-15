@@ -74,5 +74,4 @@ private:
 	 * \param positionY Y Position of the Lemming (cannot be greater than the ScreenHeight)
 	 */
 	void addLemming(float positionX, float positionY);
-
 };
