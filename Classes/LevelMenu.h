@@ -4,6 +4,7 @@
 #define __LEVELMENU_SCENE_H__
 
 #include "cocos2d.h"
+#include "MainScene.h"
 
 class LevelMenu : public cocos2d::Scene
 {

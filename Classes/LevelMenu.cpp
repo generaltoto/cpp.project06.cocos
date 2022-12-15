@@ -94,8 +94,8 @@ void LevelMenu::playLevel(cocos2d::Ref* pSender)
 {
    if (m_idLvl != 0) 
    {
-      //cocos2d::Scene* _playScene = [Play Scene]::create(m_idlvl);
-      //Director::getInstance()->replaceScene(TransitionFade::create(0.5, _playScene, Color3B(255, 255, 255)));
+      cocos2d::Scene* _playScene = MainScene::create();
+      Director::getInstance()->replaceScene(TransitionFade::create(0.5, _playScene, Color3B(255, 255, 255)));
    }
 }
 
