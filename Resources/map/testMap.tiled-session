@@ -1,0 +1,44 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "Test.tmx",
+    "expandedProjectPaths": [
+    ],
+    "file.lastUsedOpenFilter": "Tous les Fichiers (*)",
+    "fileStates": {
+        "Test.tmx": {
+            "scale": 0.6333333333333333,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 704.9999999999999,
+                "y": 603.1578947368421
+            }
+        },
+        "Test.tsx": {
+            "scaleInDock": 0.5,
+            "scaleInEditor": 1
+        }
+    },
+    "last.exportedFilePath": "T:/cpp.project06.cocos/Resources/map",
+    "last.imagePath": "T:/cpp.project06.cocos/Resources/map",
+    "map.lastUsedExportFilter": "Tous les Fichiers (*)",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 64,
+    "map.tileWidth": 64,
+    "openFiles": [
+        "Test.tmx",
+        "Test.tsx"
+    ],
+    "project": "testMap.tiled-project",
+    "recentFiles": [
+        "Test.tmx",
+        "Test.tsx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 64,
+        "width": 64
+    }
+}

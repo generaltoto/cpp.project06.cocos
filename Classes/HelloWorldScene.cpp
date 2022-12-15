@@ -22,5 +22,19 @@ bool MainScene::init()
     const auto visibleSize = Director::getInstance()->getVisibleSize();
     const Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
+    m_pMap = new TileMap("../Resources/map/Test.tmx");
+
+    addChild(m_pMap->getMap());
     return true;
+}
+
+void MainScene::onEnter()
+{
+    Scene::onEnter();
+
+    cocos2d::Sprite* mySprite = cocos2d::Sprite::create("../Resources/map/netherPortal.png");
+    mySprite->setPosition(m_pMap->getSpawnPoint());
+    addChild(mySprite);
+    /*_defaultCamera->initOrthographic(200, 200, 1, 2000);
+    _defaultCamera->setPosition(0, 0);*/
 }

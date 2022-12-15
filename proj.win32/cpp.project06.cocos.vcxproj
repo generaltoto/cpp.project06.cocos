@@ -117,7 +117,8 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <PostBuildEvent>
-      <Message>												</Message>
+      <Message>
+      </Message>
       <Command>setlocal
 "C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different T:/cpp.project06.cocos/cocos2d/external/openssl/prebuilt/win32/libssl-1_1.dll T:/cpp.project06.cocos/proj.win32/bin/cpp.project06.cocos/Debug/libssl-1_1.dll
 if %errorlevel% neq 0 goto :cmEnd
@@ -283,7 +284,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <PostBuildEvent>
-      <Message>												</Message>
+      <Message>
+      </Message>
       <Command>setlocal
 "C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different T:/cpp.project06.cocos/cocos2d/external/openssl/prebuilt/win32/libssl-1_1.dll T:/cpp.project06.cocos/proj.win32/bin/cpp.project06.cocos/Release/libssl-1_1.dll
 if %errorlevel% neq 0 goto :cmEnd
@@ -449,7 +451,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <PostBuildEvent>
-      <Message>												</Message>
+      <Message>
+      </Message>
       <Command>setlocal
 "C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different T:/cpp.project06.cocos/cocos2d/external/openssl/prebuilt/win32/libssl-1_1.dll T:/cpp.project06.cocos/proj.win32/bin/cpp.project06.cocos/MinSizeRel/libssl-1_1.dll
 if %errorlevel% neq 0 goto :cmEnd
@@ -614,7 +617,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <PostBuildEvent>
-      <Message>												</Message>
+      <Message>
+      </Message>
       <Command>setlocal
 "C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different T:/cpp.project06.cocos/cocos2d/external/openssl/prebuilt/win32/libssl-1_1.dll T:/cpp.project06.cocos/proj.win32/bin/cpp.project06.cocos/RelWithDebInfo/libssl-1_1.dll
 if %errorlevel% neq 0 goto :cmEnd
@@ -805,10 +809,12 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Classes\TileMap\TileMap.h" />
     <ClInclude Include="T:\cpp.project06.cocos\Classes\AppDelegate.h" />
     <ClInclude Include="T:\cpp.project06.cocos\Classes\HelloWorldScene.h" />
     <ClInclude Include="T:\cpp.project06.cocos\proj.win32\main.h" />
     <ClInclude Include="T:\cpp.project06.cocos\proj.win32\resource.h" />
+    <ClCompile Include="..\Classes\TileMap\TileMap.cpp" />
     <ClCompile Include="T:\cpp.project06.cocos\Classes\AppDelegate.cpp" />
     <ClCompile Include="T:\cpp.project06.cocos\Classes\HelloWorldScene.cpp" />
     <ClCompile Include="T:\cpp.project06.cocos\proj.win32\main.cpp" />
