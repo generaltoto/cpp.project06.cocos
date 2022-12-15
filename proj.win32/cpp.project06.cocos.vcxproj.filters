@@ -17,6 +17,9 @@
     <ClCompile Include="UtilityFunctions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\TileMap\TileMap.cpp">
+      <Filter>Source Files\Classes\TileMap</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="T:\cpp.project06.cocos\CMakeLists.txt" />
@@ -72,8 +75,39 @@
     <ClInclude Include="UtilityFunctions.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\TileMap\TileMap.h">
+      <Filter>Source Files\Classes\TileMap</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="T:\cpp.project06.cocos\proj.win32\game.rc" />
+    <CustomBuild Include="T:\cpp.project06.cocos\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="T:\cpp.project06.cocos\proj.win32\game.rc">
+      <Filter>Source Files\proj.win32</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{E6568009-A915-3737-8EEE-DE8BAB4390DF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\fonts">
+      <UniqueIdentifier>{86F1BFB4-3154-3821-A0DB-D12FEF7FE28A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\res">
+      <UniqueIdentifier>{5CCA28D2-6FA6-3B2C-966E-C836B9931384}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{6C4B846C-E35D-33B1-8AEE-2E5FC886B678}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Classes">
+      <UniqueIdentifier>{EF7064AF-53B5-3DEC-B04A-6CB0371C7B05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\proj.win32">
+      <UniqueIdentifier>{478824AC-996F-3059-B44C-4C4A18F0CF16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Classes\TileMap">
+      <UniqueIdentifier>{f42ba5d1-473d-4036-adef-3970114e39fe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Entities/Lemming.h"
+#include "TileMap/TileMap.h"
 
 class MainScene : public cocos2d::Scene
 {
@@ -55,6 +56,7 @@ public:
     CREATE_FUNC(MainScene)
 
 private:
+	TileMap* m_pMap;
 	std::vector<Lemming*> m_lemmings;
 	std::map<std::string, Lemming*> m_indexedLemmings;
 

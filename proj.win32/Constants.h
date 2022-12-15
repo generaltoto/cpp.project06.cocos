@@ -6,6 +6,7 @@ static cocos2d::Size smallResolutionSize = cocos2d::Size(480, 320);
 static cocos2d::Size mediumResolutionSize = cocos2d::Size(1024, 768);
 static cocos2d::Size largeResolutionSize = cocos2d::Size(2048, 1536);
 
+
 static constexpr int lemming_collision_mask_id = 0x01;
 static constexpr int window_collision_mask_id = 0x02;
 static constexpr int test_collision_mask_id = 0x03;
@@ -14,3 +15,7 @@ static constexpr int test_collision_mask_id = 0x03;
 static const char *in_game_physics_layer_name_template = "physics_layer_";
 static const char *lemming_name_template = "lemming_";
 static const char *window_collision_name_template = "window_collider_";
+
+
+static const char *tileMap_path = "../Resources/map/Test.tmx";
+static const char *tileMap_netherPortal_asset_path = "../Resources/map/netherPortal.png";

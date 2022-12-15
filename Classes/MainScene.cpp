@@ -1,10 +1,8 @@
 #include "MainScene.h"
 
-USING_NS_CC;
-
-Scene* MainScene::createScene()
+cocos2d::Scene* MainScene::createScene()
 {
-	MainScene* _sceneWithPhysics = MainScene::create();
+	MainScene* _sceneWithPhysics = create();
 	_sceneWithPhysics->initWithPhysics();
 	_sceneWithPhysics->getPhysicsWorld()->setDebugDrawMask(cocos2d::PhysicsWorld::DEBUGDRAW_ALL);
 	return _sceneWithPhysics;
@@ -12,12 +10,16 @@ Scene* MainScene::createScene()
 
 bool MainScene::init()
 {
-	if (!Scene::initWithPhysics()) return false;
+	if (!initWithPhysics()) return false;
 
 	m_visibleSize = designResolutionSize;
 	m_visibleOrigin = { 0, 0 };
 
-	cocos2d::EventListenerPhysicsContact* _contactListener = EventListenerPhysicsContact::create();
+	m_pMap = new TileMap(tileMap_path);
+
+    addChild(m_pMap->getMap());
+
+	cocos2d::EventListenerPhysicsContact* _contactListener = cocos2d::EventListenerPhysicsContact::create();
 
 	_contactListener->onContactPostSolve = CC_CALLBACK_1(MainScene::onContactPostSolve, this);
 	_contactListener->onContactPreSolve = CC_CALLBACK_1(MainScene::onContactPreSolve, this);
@@ -33,8 +35,15 @@ void MainScene::onEnter()
 {
 	cocos2d::Scene::onEnter();
 
-	const Vec2 _middleScreen = { m_visibleSize.width / 2, m_visibleSize.height / 2 };
+	const cocos2d::Vec2 _middleScreen = { m_visibleSize.width / 2, m_visibleSize.height / 2 };
+
+	cocos2d::Sprite* _sp = cocos2d::Sprite::create(tileMap_netherPortal_asset_path);
+	assert(_sp);
+    _sp->setPosition(m_pMap->getSpawnPoint());
+    addChild(_sp);
+
 	for (int i = 0; i < 3; i++) addLemming(_middleScreen.x + (300.f * i), _middleScreen.y);
+
 	addWindowsEdgesCollider();
 }
 
@@ -75,15 +84,15 @@ bool MainScene::onContactPreSolve(cocos2d::PhysicsContact& contact) const
 
 bool MainScene::onContactPostSolve(const cocos2d::PhysicsContact& contact) const
 {
-	PhysicsBody* _shapeA = contact.getShapeA()->getBody();
-	PhysicsBody* _shapeB = contact.getShapeB()->getBody();
+	cocos2d::PhysicsBody* _shapeA = contact.getShapeA()->getBody();
+	cocos2d::PhysicsBody* _shapeB = contact.getShapeB()->getBody();
 
 	/*
 	 * Restoring the velocity, keeping the direction of the velocity.
 	 * Does not restore the y velocity. You you want to, replace '{ va.x * v[0], 0 }' by 'va.x * v[0]'.
 	 */
-	Vec2 _va = _shapeA->getVelocity();
-	Vec2 _vb = _shapeB->getVelocity();
+	cocos2d::Vec2 _va = _shapeA->getVelocity();
+	cocos2d::Vec2 _vb = _shapeB->getVelocity();
 	_va.normalize();
 	_vb.normalize();
 
@@ -126,8 +135,8 @@ void MainScene::addLemming(float positionX, float positionY)
 
 void MainScene::lemmingContactWithWindowBordersCallback(Lemming* lemming)
 {
-	PhysicsBody* _body = lemming->getPhysicsBody();
-	Vec2 _curVelocity = _body->getVelocity();
+	cocos2d::PhysicsBody* _body = lemming->getPhysicsBody();
+	cocos2d::Vec2 _curVelocity = _body->getVelocity();
 
 	if (isFloatNull(_curVelocity.x) && isFloatNull(_curVelocity.y) && lemming->m_currentState == WALKING)
 	{
