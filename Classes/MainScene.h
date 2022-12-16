@@ -2,6 +2,7 @@
 
 #include "Entities/Lemming.h"
 #include "TileMap/TileMap.h"
+#include "PauseMenu.h"
 
 class MainScene : public cocos2d::Scene
 {
@@ -60,8 +61,10 @@ private:
 	std::vector<Lemming*> m_lemmings;
 	std::map<std::string, Lemming*> m_indexedLemmings;
 
-    cocos2d::Size m_visibleSize;
+   cocos2d::Size m_visibleSize;
 	cocos2d::Vec2 m_visibleOrigin;
+
+	std::vector<cocos2d::EventKeyboard::KeyCode> keys;
 
 	/**
 	 * \brief Creates a collision box with the window borders
@@ -74,4 +77,6 @@ private:
 	 * \param positionY Y Position of the Lemming (cannot be greater than the ScreenHeight)
 	 */
 	void addLemming(float positionX, float positionY);
+
+	bool isKeyPressed(cocos2d::EventKeyboard::KeyCode);
 };

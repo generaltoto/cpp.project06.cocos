@@ -28,6 +28,22 @@ bool MainScene::init()
 
 	scheduleUpdate();
 
+	//region Keyboard Listener
+	auto keyboardListener = cocos2d::EventListenerKeyboard::create();
+	cocos2d::Director::getInstance()->getOpenGLView()->setIMEKeyboardState(true);
+
+	keyboardListener->onKeyPressed = [=](cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
+		keys.push_back(keyCode);
+		cocos2d::Scene* _pauseScene = PauseMenu::create();
+		cocos2d::Director::getInstance()->pushScene(_pauseScene);
+	};
+	keyboardListener->onKeyReleased = [=](cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
+		// remove the key.
+		keys.erase(std::remove(keys.begin(), keys.end(), keyCode), keys.end());
+	};
+	this->_eventDispatcher->addEventListenerWithSceneGraphPriority(keyboardListener, this);
+	//endregion
+
 	return true;
 }
 
@@ -45,6 +61,13 @@ void MainScene::onEnter()
 	for (int i = 0; i < 3; i++) addLemming(_middleScreen.x + (300.f * i), _middleScreen.y);
 
 	addWindowsEdgesCollider();
+}
+
+bool MainScene::isKeyPressed(cocos2d::EventKeyboard::KeyCode code) {
+	// Check if the key is pressed
+	if (std::find(keys.begin(), keys.end(), code) != keys.end())
+		return true;
+	return false;
 }
 
 void MainScene::update(float delta)
