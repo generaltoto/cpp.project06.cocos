@@ -54,6 +54,11 @@ public:
 	 */
 	static void lemmingContactWithWindowBordersCallback(Lemming* l);
 
+	/**
+	 * \brief Callback to be called when we want to take the Left Click event into account.
+	 * \param mouseCoordinates The mouse coordinates
+	 * \return The selected Lemming
+	 */
 	Lemming* MouseLeftClickCallBack(cocos2d::Vec2 mouseCoordinates);
 
 	/**

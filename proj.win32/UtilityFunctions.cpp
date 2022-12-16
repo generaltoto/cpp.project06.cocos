@@ -11,13 +11,6 @@ bool isInRectCoordinates(
 	const cocos2d::Vec2& pointPosition
 )
 {
-	CCLOG("%i", pointPosition.x >= rectCoordinates.x);
-	CCLOG("%i", pointPosition.x <= rectCoordinates.x + rectSize.x);
-
-	CCLOG("%i",pointPosition.y <= rectCoordinates.y);
-
-	CCLOG("%i", pointPosition.y >= rectCoordinates.y - rectSize.y);
-
 	if (
 		pointPosition.x >= rectCoordinates.x &&
 		pointPosition.x <= rectCoordinates.x + rectSize.x &&
