@@ -901,9 +901,11 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\Resources\lemming_selector.png" />
     <Image Include="..\Resources\main_menu.jpg" />
     <Image Include="..\Resources\map_cursor.png" />
     <Image Include="..\Resources\map_level.png" />
+    <Image Include="C:\Users\thoma\Downloads\lemming_selector.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

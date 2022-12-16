@@ -15,6 +15,7 @@ Lemming* Lemming::create(const char* filePath, cocos2d::Vec2 pos)
 		_ret->setName(lemming_name_template + std::to_string(_ret->m_id));
 		_ret->m_currentState = SPAWNING;
 		_ret->m_currentAcceleration = 1;
+		_ret->m_lemmingSpriteSize = { 195 * 0.5, 270 * 0.5 };
 
 		cocos2d::Sprite* _sp = cocos2d::Sprite::create(filePath);
 		if (_sp == nullptr) throw ERROR_BAD_PATHNAME;
@@ -47,5 +48,5 @@ bool Lemming::init()
 void Lemming::checkIfFalling()
 {
 	const cocos2d::Vec2 _curVelocity = this->getPhysicsBody()->getVelocity();
-	if(!isFloatNull(_curVelocity.y) && m_currentState != FALLING) m_currentState = FALLING;
+	if (!isFloatNull(_curVelocity.y) && m_currentState != FALLING) m_currentState = FALLING;
 }

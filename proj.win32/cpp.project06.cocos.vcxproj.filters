@@ -141,5 +141,11 @@
     <Image Include="..\Resources\map_cursor.png">
       <Filter>Resources</Filter>
     </Image>
+    <Image Include="C:\Users\thoma\Downloads\lemming_selector.png">
+      <Filter>Ressources</Filter>
+    </Image>
+    <Image Include="..\Resources\lemming_selector.png">
+      <Filter>Ressources</Filter>
+    </Image>
   </ItemGroup>
 </Project>

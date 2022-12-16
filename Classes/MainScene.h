@@ -30,6 +30,13 @@ public:
 	void update(float delta) override;
 
 	/**
+	 * \brief Callback called when a mouse button is clicked
+	 * \param event The current event
+	 * \return true if we make something of the event
+	 */
+	bool OnMouseClick(cocos2d::Event *event);
+
+	/**
 	 * \brief Callback called when a collision occurs in this scene.
 	 * \return true if the collision is acknowledged.
 	 */
@@ -47,6 +54,8 @@ public:
 	 */
 	static void lemmingContactWithWindowBordersCallback(Lemming* l);
 
+	Lemming* MouseLeftClickCallBack(cocos2d::Vec2 mouseCoordinates);
+
 	/**
 	 * \brief Finds the Lemming corresponding to a given [lemming_name_template] name 
 	 * \return The found lemming or nullptr if no Lemming was found.
@@ -59,19 +68,15 @@ private:
 	TileMap* m_pMap;
 	std::vector<Lemming*> m_lemmings;
 	std::map<std::string, Lemming*> m_indexedLemmings;
+	Lemming* m_pSelectedLemming;
+	cocos2d::Sprite* m_pLemmingPointer;
 
     cocos2d::Size m_visibleSize;
 	cocos2d::Vec2 m_visibleOrigin;
 
-	/**
-	 * \brief Creates a collision box with the window borders
-	 */
 	void addWindowsEdgesCollider();
 
-	/**
-	 * \brief Creates a Lemming with physics.
-	 * \param positionX X Position of the Lemming (cannot be greater than the ScreenWidth)
-	 * \param positionY Y Position of the Lemming (cannot be greater than the ScreenHeight)
-	 */
 	void addLemming(float positionX, float positionY);
+
+	void CreateLemmingSelector();
 };
