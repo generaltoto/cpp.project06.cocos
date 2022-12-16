@@ -2,8 +2,6 @@
 
 USING_NS_CC;
 
-Scene* LevelMenu::createScene() { return create(); }
-
 bool LevelMenu::init()
 {
 	if (!Scene::init()) return false;
@@ -22,8 +20,8 @@ void LevelMenu::onEnter()
 	Scene::onEnter();
 
 	createTitle();
-	createBackground();
-	createSelectionMenu();
+	createBackground(menu_levelMenu_background_path, 1.1f);
+	createDynamicMenu();
 }
 
 void LevelMenu::runLevelScene(cocos2d::Ref* pSender) const
@@ -41,22 +39,6 @@ void LevelMenu::updateSelectedLevel(cocos2d::Ref* pSender, cocos2d::Vec2 coordin
 	m_idLvl = index;
 }
 
-void LevelMenu::goBackToMenu(cocos2d::Ref* pSender) { Director::getInstance()->popScene(); }
-
-cocos2d::MenuItemImage* LevelMenu::createCloseGameButton()
-{
-	cocos2d::MenuItemImage* _closeItem = MenuItemImage::create(
-		menu_closeButton_path,
-		menu_closeButton_selected_path,
-		CC_CALLBACK_1(LevelMenu::closeGameCallback, this)
-	);
-	assert(_closeItem);
-	const float x = m_visibleOrigin.x + m_visibleSize.width - _closeItem->getContentSize().width / 2;
-	const float y = m_visibleOrigin.y + _closeItem->getContentSize().height / 2;
-	_closeItem->setPosition(Vec2(x, y));
-	return _closeItem;
-}
-
 cocos2d::Sprite* LevelMenu::createLevelSelectorCursor()
 {
 	cocos2d::Sprite* _cursor = Sprite::create(menu_levelMenu_cursor_path);
@@ -68,31 +50,7 @@ cocos2d::Sprite* LevelMenu::createLevelSelectorCursor()
 	return _cursor;
 }
 
-void LevelMenu::createTitle()
-{
-	cocos2d::Label* _label = Label::createWithTTF("Save the Steves", font_path, 80);
-	assert(_label);
-	_label->setPosition(Vec2(m_visibleOrigin.x + m_visibleSize.width / 2,
-		m_visibleOrigin.y + m_visibleSize.height - _label->getContentSize().height));
-	_label->setTextColor(Color4B(0, 0, 0, 255));
-	_label->enableOutline(Color4B(245, 245, 245, 255), 4);
-	addChild(_label, 1);
-}
-
-void LevelMenu::createBackground()
-{
-	cocos2d::Sprite* _bg = Sprite::create(menu_levelMenu_background_path);
-	assert(_bg);
-	_bg->setPosition(Vec2(
-		m_visibleSize.width / 2 + m_visibleOrigin.x,
-		m_visibleSize.height / 2 + m_visibleOrigin.y)
-	);
-	_bg->setScale(1.1f);
-	_bg->setOpacity(200);
-	addChild(_bg, 0);
-}
-
-void LevelMenu::createSelectionMenu()
+void LevelMenu::createDynamicMenu()
 {
 	cocos2d::DrawNode* _draw = DrawNode::create();
 	_draw->drawSolidRect(
@@ -136,20 +94,8 @@ void LevelMenu::createSelectionMenu()
 	_playButt->setPosition(Vec2((m_visibleSize.width / 5) * 4.5, (m_visibleSize.height / 12) * 4));
 	_playButt->setFontSizeObj(40);
 
-	cocos2d::MenuItemFont* _menuQuit = MenuItemFont::create(
-		"Quit",
-		CC_CALLBACK_1(LevelMenu::goBackToMenu, this)
-	);
-	assert(_menuQuit);
-	_menuQuit->setPosition(Vec2((m_visibleSize.width / 5) * 4.5, m_visibleSize.height / 12));
-	_menuQuit->setFontSizeObj(40);
-
-	cocos2d::Menu* _menu = Menu::create(createCloseGameButton(), _lvl1, _lvl2, _playButt, _menuQuit, NULL);
+	cocos2d::Menu* _menu = Menu::create(createCloseItem(), createReturnButton(cocos2d::Vec2((m_visibleSize.width / 5) * 4.5, (m_visibleSize.height / 12) * 3)), _lvl1, _lvl2, _playButt, NULL);
 	assert(_menu);
 	_menu->setPosition(Vec2::ZERO);
 	addChild(_menu, 1);
 }
-
-void LevelMenu::update(float delta) { Node::update(delta); }
-
-void LevelMenu::closeGameCallback(Ref* pSender) { Director::getInstance()->end(); }

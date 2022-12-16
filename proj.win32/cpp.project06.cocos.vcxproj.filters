@@ -29,6 +29,12 @@
     <ClCompile Include="..\Classes\SettingMenu.cpp">
       <Filter>Source Files\Classes\Scenes\Menu</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\ModelMenuScene.cpp">
+      <Filter>Source Files\Classes\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PauseMenu.cpp">
+      <Filter>Source Files\Classes\Scenes\Menu</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="T:\cpp.project06.cocos\CMakeLists.txt" />
@@ -97,6 +103,12 @@
       <Filter>Source Files\Classes\Scenes\Menu</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\SettingMenu.h">
+      <Filter>Source Files\Classes\Scenes\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ModelMenuScene.h">
+      <Filter>Source Files\Classes\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PauseMenu.h">
       <Filter>Source Files\Classes\Scenes\Menu</Filter>
     </ClInclude>
   </ItemGroup>

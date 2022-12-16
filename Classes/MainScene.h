@@ -2,6 +2,7 @@
 
 #include "Entities/Lemming.h"
 #include "TileMap/TileMap.h"
+#include "PauseMenu.h"
 
 class MainScene : public cocos2d::Scene
 {
@@ -76,12 +77,19 @@ private:
 	Lemming* m_pSelectedLemming;
 	cocos2d::Sprite* m_pLemmingPointer;
 
-    cocos2d::Size m_visibleSize;
+   cocos2d::Size m_visibleSize;
 	cocos2d::Vec2 m_visibleOrigin;
 
+	std::vector<cocos2d::EventKeyboard::KeyCode> keys;
+
+	/**
+	 * \brief Creates a collision box with the window borders
+	 */
 	void addWindowsEdgesCollider();
 
 	void addLemming(float positionX, float positionY);
 
 	void CreateLemmingSelector();
+
+	bool isKeyPressed(cocos2d::EventKeyboard::KeyCode);
 };
