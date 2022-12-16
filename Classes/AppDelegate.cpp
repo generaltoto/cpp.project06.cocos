@@ -63,7 +63,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     register_all_packages();
 
-    Scene* _mainScene = MainMenu::createScene();
+    Scene* _mainScene = MainMenu::create();
     director->runWithScene(_mainScene);
 
     return true;
