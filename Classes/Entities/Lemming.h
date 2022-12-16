@@ -9,6 +9,7 @@ enum LemmingState { SPAWNING, FALLING, WALKING };
 class Lemming : public cocos2d::Node
 {
 public:
+
 	/**
 	 * \brief Id of this Lemming
 	 */
@@ -32,7 +33,13 @@ public:
 	/**
 	 * \brief The Lemming's velocity
 	 */
-	const float m_lemmingVelocity = 35;
+	const float m_lemmingVelocity = 10;
+
+	/**
+	 * \brief Get the lemming's sprite size
+	 * \return A vector with the sprite size (x for width and y for height)
+	 */
+	cocos2d::Vec2 getSpriteSize() const { return m_lemmingSpriteSize; }
 
 	/**
 	 * \brief Creates the lemming
@@ -50,4 +57,7 @@ public:
 	 * \brief Checks if the Lemming in currently in the air to modify its [currentState]
 	 */
 	void checkIfFalling();
+
+private:
+	cocos2d::Vec2 m_lemmingSpriteSize;
 };
