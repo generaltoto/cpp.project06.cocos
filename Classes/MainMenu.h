@@ -15,6 +15,18 @@ public:
 	void onEnter() override;
 
 	/**
+	 * \brief Creates a play button.
+	 * \return The menu item to go in the level selection.
+	 */
+	cocos2d::MenuItemFont* createPlayButton();
+
+	/**
+	 * \brief Creates a settings button.
+	 * \return The menu item to in the setting menu.
+	 */
+	cocos2d::MenuItemFont* createSettingsButton();
+
+	/**
 	 * \brief Switches scene to the LevelMenu one.
 	 */
 	void RunPlayScene(cocos2d::Ref*) const;
@@ -24,12 +36,10 @@ public:
 	 */
 	void RunSettingsScene(cocos2d::Ref*) const;
 
+	/**
+	 *brief Creates the menu with all buttons.
+	 */
 	void createDynamicMenu() override;
 
 	CREATE_FUNC(MainMenu);
-
-private:
-	cocos2d::MenuItemFont* createPlayButton();
-
-	cocos2d::MenuItemFont* createSettingsButton();
 };

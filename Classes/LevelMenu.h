@@ -24,10 +24,19 @@ public:
 	void runLevelScene(cocos2d::Ref*) const;
 
 	/**
+	 * \brief Creates the level cursor to see the level selected.
+	 * \return The sprite of the level selector.
+	 */
+	cocos2d::Sprite* createLevelSelectorCursor();
+
+	/**
 	 * \brief Changes the current selected level and updates the cursor on the map.
 	 */
 	void updateSelectedLevel(cocos2d::Ref*, cocos2d::Vec2, int);
 
+	/**
+	 *brief Creates the menu with all buttons.
+	 */
 	void createDynamicMenu() override;
 
 	CREATE_FUNC(LevelMenu);
@@ -35,6 +44,4 @@ public:
 private:
 	cocos2d::Sprite* m_levelCursor;
 	int m_idLvl;
-
-	cocos2d::Sprite* createLevelSelectorCursor();
 };

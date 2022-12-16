@@ -4,11 +4,6 @@
 
 USING_NS_CC;
 
-Scene* ModelMenuScene::createScene()
-{
-	return create();
-}
-
 bool ModelMenuScene::init()
 {
 	if (!Scene::init()) { return false; }

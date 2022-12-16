@@ -10,20 +10,6 @@ public:
 	cocos2d::Vec2 m_visibleOrigin;
 
 	/**
-	 * \brief Creates the scenes.
-	 * \return The create Scene.
-	 */
-	static cocos2d::Scene* createScene();
-
-	/**
-	 * \brief Creates the close button.
-	 * \return The menu item to close the window.
-	 */
-	cocos2d::MenuItemImage* createCloseItem();
-
-	cocos2d::MenuItemFont* createReturnButton(cocos2d::Vec2);
-
-	/**
 	 * \brief Inits the different elements of the scene.
 	 * \return True if good init or false if bad init.
 	 */
@@ -34,18 +20,43 @@ public:
 	 */
 	void update(float) override;
 
+
+	/**
+	 * \brief Creates the close button.
+	 * \return The menu item to close the window.
+	 */
+	cocos2d::MenuItemImage* createCloseItem();
+
+	/**
+	 * \brief Creates a return button to the last scene.
+	 * \return The menu item to go back.
+	 */
+	cocos2d::MenuItemFont* createReturnButton(cocos2d::Vec2);
+
 	/**
 	 * \brief Closes the window.
 	 */
 	void menuCloseCallback(cocos2d::Ref*);
 
+	/**
+	 * \brief Returns to the last scene.
+	 */
 	void returnToScene(cocos2d::Ref*);
 
-	virtual void createDynamicMenu();
-
+	/**
+	 * \brief Creates the game's title on menus.
+	 */
 	void createTitle();
 
+	/**
+	 * \brief Sets the background of the scene with a given path and scale.
+	 */
 	void createBackground(const char*, float);
+
+	/**
+	 * \brief Creates the menu with all buttons.
+	 */
+	virtual void createDynamicMenu();
 
 	CREATE_FUNC(ModelMenuScene);
 };

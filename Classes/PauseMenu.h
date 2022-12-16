@@ -14,21 +14,31 @@ public:
 	void onEnter() override;
 
 	/**
- * \brief Switches scene to the LevelMenu one.
- */
+	 * \brief Creates a resume button to go back to the game.
+	 * \return The menu item to resume.
+	 */
+	cocos2d::MenuItemFont* createResumeButton();
+
+	/**
+	 * \brief Creates a return button to the main menu scene.
+	 * \return The menu item to quit.
+	 */
+	cocos2d::MenuItemFont* createQuitButton();
+
+	/**
+	 * \brief Switches scene to the play one.
+	 */
 	void resume(cocos2d::Ref*) const;
 
 	/**
-	 * \brief Switches scene to the SettingMenu one.
+	 * \brief Switches scene to the main menu one.
 	 */
 	void returnMainMenu(cocos2d::Ref*) const;
 
+	/**
+	 *brief Creates the menu with all buttons.
+	 */
 	void createDynamicMenu() override;
 
 	CREATE_FUNC(PauseMenu);
-
-private:
-	cocos2d::MenuItemFont* createResumeButton();
-
-	cocos2d::MenuItemFont* createQuitButton();
 };
