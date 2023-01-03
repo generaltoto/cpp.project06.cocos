@@ -52,12 +52,12 @@ cocos2d::Sprite* LevelMenu::createLevelSelectorCursor()
 
 void LevelMenu::createDynamicMenu()
 {
-	cocos2d::DrawNode* _draw = DrawNode::create();
+	cocos2d::DrawNode* _draw = cocos2d::DrawNode::create();
 	_draw->drawSolidRect(
-		Vec2((m_visibleSize.width / 4.5) * 3.5, (m_visibleSize.height / 12) * 11),
-		Vec2(
+		cocos2d::Vec2((m_visibleSize.width / 4.5) * 3.5, (m_visibleSize.height / 12) * 11),
+		cocos2d::Vec2(
 			m_visibleSize.width,
-			(m_visibleSize.height / 12) * 2), Color4F(255, 255, 255, 50
+			(m_visibleSize.height / 12) * 2), cocos2d::Color4F(255, 255, 255, 50
 			)
 	);
 	addChild(_draw, 1);

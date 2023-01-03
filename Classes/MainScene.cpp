@@ -69,6 +69,7 @@ void MainScene::onEnter()
 	CreateLemmingSelector();
 
 	addWindowsEdgesCollider();
+	createDynamicMenu();
 }
 
 bool MainScene::isKeyPressed(cocos2d::EventKeyboard::KeyCode code) {
@@ -96,6 +97,23 @@ void MainScene::update(float delta)
 		return;
 	}
 	m_pLemmingPointer->setVisible(false);
+}
+
+void MainScene::createDynamicMenu() 
+{
+	cocos2d::DrawNode* _draw = cocos2d::DrawNode::create();
+	_draw->drawSolidRect(
+		cocos2d::Vec2(
+			0,
+			0
+		),
+		cocos2d::Vec2(
+			m_visibleSize.width,
+			m_visibleSize.height / 7
+		), 
+		cocos2d::Color4F(255, 255, 255, 50)
+	);
+	addChild(_draw);
 }
 
 bool MainScene::OnMouseClick(cocos2d::Event* event)

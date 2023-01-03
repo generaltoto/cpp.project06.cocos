@@ -3,8 +3,9 @@
 #include "Entities/Lemming.h"
 #include "TileMap/TileMap.h"
 #include "PauseMenu.h"
+#include "ModelMenuScene.h"
 
-class MainScene : public cocos2d::Scene
+class MainScene : public ModelMenuScene
 {
 public:
 	/**
@@ -29,6 +30,11 @@ public:
 	 * \param delta advancement in the framerate render
 	 */
 	void update(float delta) override;
+
+	/**
+	 *brief Creates the menu with all buttons.
+	 */
+	void createDynamicMenu() override;
 
 	/**
 	 * \brief Callback called when a mouse button is clicked
