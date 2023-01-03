@@ -909,7 +909,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <Image Include="..\Resources\main_menu.jpg" />
     <Image Include="..\Resources\map_cursor.png" />
     <Image Include="..\Resources\map_level.png" />
-    <Image Include="C:\Users\thoma\Downloads\lemming_selector.png" />
+    <Image Include="C:\Users\thoma\workspaces\GTECH2\cpp.project06.cocos\Resources\lemming-sprite-sheet.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

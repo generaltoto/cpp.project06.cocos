@@ -69,6 +69,8 @@ void MainScene::onEnter()
 	CreateLemmingSelector();
 
 	addWindowsEdgesCollider();
+
+	// getPhysicsWorld()->setDebugDrawMask(cocos2d::PhysicsWorld::DEBUGDRAW_ALL);
 }
 
 bool MainScene::isKeyPressed(cocos2d::EventKeyboard::KeyCode code) {

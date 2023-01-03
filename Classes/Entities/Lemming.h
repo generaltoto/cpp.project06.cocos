@@ -6,6 +6,9 @@
 
 enum LemmingState { SPAWNING, FALLING, WALKING };
 
+const float spriteScale = 3.0;
+const int lemmingSpriteSize = 21;
+
 class Lemming : public cocos2d::Node
 {
 public:
@@ -53,11 +56,29 @@ public:
 	 */
 	bool init() override;
 
+	void update(float delta) override;
+
 	/**
 	 * \brief Checks if the Lemming in currently in the air to modify its [currentState]
 	 */
 	void checkIfFalling();
 
 private:
+
 	cocos2d::Vec2 m_lemmingSpriteSize;
+
+	cocos2d::Sprite* m_pIdleSpriteFrame;
+	cocos2d::Vector<cocos2d::SpriteFrame*> m_pFallingSpriteFrames;
+	cocos2d::Vector<cocos2d::SpriteFrame*> m_pWalkingSpriteFrames;
+	cocos2d::Vector<cocos2d::SpriteFrame*> m_pMiningSpriteFrames;
+
+	static void CreateSpriteFrames(Lemming*, const char* filePath);
+
+	static cocos2d::Vector<cocos2d::SpriteFrame*> CreateSpriteFramesFromImage(
+		cocos2d::Vec2 startingPoint,
+		int nbFrames,
+		const char* filePath
+	);
+
+	void RunWithAnimation(const cocos2d::Vector<cocos2d::SpriteFrame*> &frames);
 };
