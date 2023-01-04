@@ -199,8 +199,6 @@ bool MainScene::MouseLeftClickCallBack(Vec2 mouseCoordinates)
 
 bool MainScene::MouseRightClickCallback() const
 {
-	if (m_pMap->getTileUnder(m_pSelectedLemming->getPosition() + m_pSelectedLemming->getSpriteSize() / 2) == nullptr)
-		return false;
 	m_pMap->removeTileUnder(m_pSelectedLemming->getPosition() + m_pSelectedLemming->getSpriteSize() / 2);
 	return true;
 }

@@ -18,10 +18,10 @@ void TileMap::initMap(std::string tileMapPath)
     {
         for (int j = 0; j < m_pCollision->getLayerSize().height; j++)
         {
-            if (m_pCollision->getTileAt(cocos2d::Vec2(i,j)) == nullptr) continue;
-            cocos2d::PhysicsBody* pB = cocos2d::PhysicsBody::createBox(
-                cocos2d::Size(m_pCollision->getTileSet()->_tileSize) - cocos2d::Size(7, 7),
-                cocos2d::PhysicsMaterial(cocos2d::PHYSICSBODY_MATERIAL_DEFAULT));
+            if (m_pCollision->getTileAt(Vec2(i,j)) == nullptr) continue;
+            PhysicsBody* pB = PhysicsBody::createBox(
+                Size(m_pCollision->getTileSet()->_tileSize) - Size(7, 7),
+                PhysicsMaterial(PHYSICSBODY_MATERIAL_DEFAULT));
 
             pB->setCategoryBitmask(window_collision_mask_id);
             pB->setDynamic(false);
@@ -32,7 +32,7 @@ void TileMap::initMap(std::string tileMapPath)
     
     m_spawnPoint = { m_pEntities->getObject("Player")["x"].asFloat(), m_pEntities->getObject("Player")["y"].asFloat() };
 
-    m_pCollision->setTileGID(0, cocos2d::Vec2(12, 11));
+    m_pCollision->setTileGID(0, Vec2(12, 11));
 }
 // #### Private functions #### //
 
@@ -56,29 +56,14 @@ Vec2 TileMap::getSpawnPoint()
     return m_spawnPoint;
 }
 
-cocos2d::Sprite* TileMap::getTileUnder(cocos2d::Vec2 lemmingPosition)
+bool TileMap::removeTileUnder(Vec2 lemmingPosition)
 {
-    cocos2d::Vec2 tileSize = m_pMap->getTileSize();
+    Vec2 tileSize = m_pMap->getTileSize();
     auto collideLayerSize = m_pCollision->getLayerSize();
 
-    auto tilePos = cocos2d::Vec2((lemmingPosition.x / tileSize.x), (lemmingPosition.y / tileSize.y));
-    //tilePos.x += 1;
-    //tilePos.y = collideLayerSize.height - tilePos.y;
-
-    if (tilePos.x >= collideLayerSize.width || tilePos.y >= collideLayerSize.height
-        || tilePos.x < 0 || tilePos.y < 0) return nullptr;
-
-    return m_pCollision->getTileAt(tilePos);
-}
-
-bool TileMap::removeTileUnder(cocos2d::Vec2 lemmingPosition)
-{
-    cocos2d::Vec2 tileSize = m_pMap->getTileSize();
-    auto collideLayerSize = m_pCollision->getLayerSize();
-
-    auto tilePos = cocos2d::Vec2((lemmingPosition.x / tileSize.x), (lemmingPosition.y / tileSize.y));
-    //tilePos.x += 1;
-    //tilePos.y = collideLayerSize.height - tilePos.y;
+    auto tilePos = Vec2(floor(lemmingPosition.x / tileSize.x), round(lemmingPosition.y / tileSize.y));
+    tilePos.x += 1;
+    tilePos.y = collideLayerSize.height - tilePos.y;
 
     if (tilePos.x >= collideLayerSize.width || tilePos.y >= collideLayerSize.height
         || tilePos.x < 0 || tilePos.y < 0) return false;
