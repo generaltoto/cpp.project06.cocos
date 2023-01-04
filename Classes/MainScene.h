@@ -5,7 +5,7 @@
 #include "PauseMenu.h"
 #include "ModelMenuScene.h"
 
-enum Actions {MINING, BUILDING, RESET};
+enum Actions { MINING, BUILDING, RESET };
 
 class MainScene : public ModelMenuScene
 {
@@ -14,7 +14,7 @@ public:
 	 * \brief Creates the scene
 	 * \return The scene created with physics
 	 */
-	static cocos2d::Scene* createScene();
+	static Scene* createScene();
 
 	/**
 	 * \brief Initiates all members
@@ -33,56 +33,29 @@ public:
 	 */
 	void update(float delta) override;
 
-	/**
-	 *brief Creates the menu with all buttons.
-	 */
-	void createDynamicMenu() override;
-
-	/**
-	 * \brief Callback called when a mouse button is clicked
-	 * \param event The current event
-	 * \return true if we make something of the event
-	 */
-	bool OnMouseClick(cocos2d::Event *event);
-
-	/**
-	 * \brief Callback to be called when we want to take the Left Click event into account.
-	 * \param mouseCoordinates The mouse coordinates
-	 * \return The selected Lemming
-	 */
-	Lemming* MouseLeftClickCallBack(cocos2d::Vec2 mouseCoordinates);
-
-	/**
-	 * \brief Finds the Lemming corresponding to a given [lemming_name_template] name 
-	 * \return The found lemming or nullptr if no Lemming was found.
-	 */
-	Lemming* getLemmingWithName(const std::string&) const;
-
-    CREATE_FUNC(MainScene)
+	CREATE_FUNC(MainScene)
 
 private:
-	TileMap* m_pMap;
+	TileMap* m_pMap{};
 	std::vector<Lemming*> m_lemmings;
 	std::map<std::string, Lemming*> m_indexedLemmings;
-	Lemming* m_pSelectedLemming;
-	cocos2d::Sprite* m_pLemmingPointer;
+	Lemming* m_pSelectedLemming{};
+	Sprite* m_pLemmingPointer{};
 	Actions actionState;
 
-   cocos2d::Size m_visibleSize;
-	cocos2d::Vec2 m_visibleOrigin;
+	void CreateDynamicMenu() override;
 
-	std::vector<cocos2d::EventKeyboard::KeyCode> keys;
+	void AddWindowsEdgesCollider();
 
-	/**
-	 * \brief Creates a collision box with the window borders
-	 */
-	void addWindowsEdgesCollider();
-
-	void addLemming(float positionX, float positionY);
+	void AddLemming(float positionX, float positionY);
 
 	void CreateLemmingSelector();
 
-	bool isKeyPressed(cocos2d::EventKeyboard::KeyCode);
+	bool OnKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
 
-	void capaAction(Actions);
+	bool OnMouseClick(Event* event);
+
+	Lemming* MouseLeftClickCallBack(Vec2 mouseCoordinates);
+
+	void CapacityAction(Actions);
 };

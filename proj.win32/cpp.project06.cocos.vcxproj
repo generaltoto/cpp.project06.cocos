@@ -818,8 +818,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="..\Classes\PauseMenu.cpp" />
     <ClCompile Include="UtilityFunctions.cpp" />
     <ClInclude Include="..\Classes\Entities\Lemming.h" />
-    <ClInclude Include="Constants.h" />
+    <ClInclude Include="Bitmasks.h" />
     <ClInclude Include="..\Classes\TileMap\TileMap.h" />
+    <ClInclude Include="Paths.h" />
+    <ClInclude Include="ScreenSizes.h" />
     <ClInclude Include="T:\cpp.project06.cocos\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\MainScene.h" />
     <ClInclude Include="T:\cpp.project06.cocos\proj.win32\main.h" />

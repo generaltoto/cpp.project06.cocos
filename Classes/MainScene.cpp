@@ -1,6 +1,6 @@
 #include "MainScene.h"
 
-cocos2d::Scene* MainScene::createScene()
+Scene* MainScene::createScene()
 {
 	MainScene* _sceneWithPhysics = create();
 	_sceneWithPhysics->initWithPhysics();
@@ -15,66 +15,43 @@ bool MainScene::init()
 	m_visibleOrigin = { 0, 0 };
 
 	m_pMap = new TileMap(tileMap_path);
+	addChild(m_pMap->getMap());
 
 	m_pSelectedLemming = nullptr;
 	m_pLemmingPointer = nullptr;
 
-	addChild(m_pMap->getMap());
-
-
-	cocos2d::EventListenerMouse* _mouseEventListener = cocos2d::EventListenerMouse::create();
+	EventListenerMouse* _mouseEventListener = EventListenerMouse::create();
 	_mouseEventListener->onMouseDown = CC_CALLBACK_1(MainScene::OnMouseClick, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(_mouseEventListener, this);
 
-	scheduleUpdate();
-
-	//region Keyboard Listener
-	auto keyboardListener = cocos2d::EventListenerKeyboard::create();
-	cocos2d::Director::getInstance()->getOpenGLView()->setIMEKeyboardState(true);
-
-	keyboardListener->onKeyPressed = [=](cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
-		keys.push_back(keyCode);
-		if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_ESCAPE) {
-			cocos2d::Scene* _pauseScene = PauseMenu::create();
-			cocos2d::Director::getInstance()->pushScene(_pauseScene);
-		}
-	};
-	keyboardListener->onKeyReleased = [=](cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
-		// remove the key.
-		keys.erase(std::remove(keys.begin(), keys.end(), keyCode), keys.end());
-	};
+	EventListenerKeyboard* keyboardListener = EventListenerKeyboard::create();
+	Director::getInstance()->getOpenGLView()->setIMEKeyboardState(true);
+	keyboardListener->onKeyPressed = CC_CALLBACK_2(MainScene::OnKeyPressed, this);
 	this->_eventDispatcher->addEventListenerWithSceneGraphPriority(keyboardListener, this);
-	//endregion
+
+	scheduleUpdate();
 
 	return true;
 }
 
 void MainScene::onEnter()
 {
-	cocos2d::Scene::onEnter();
+	Scene::onEnter();
 
-	const cocos2d::Vec2 _middleScreen = { m_visibleSize.width / 2, m_visibleSize.height / 2 };
-
-	cocos2d::Sprite* _sp = cocos2d::Sprite::create(tileMap_netherPortal_asset_path);
+	Sprite* _sp = Sprite::create(tileMap_netherPortal_asset_path);
 	assert(_sp);
 	_sp->setPosition(m_pMap->getSpawnPoint());
 	addChild(_sp);
 
-	for (int i = 0; i < 3; i++) addLemming(_middleScreen.x + (300.f * i), _middleScreen.y);
+	const Vec2 _middleScreen = { m_visibleSize.width / 2, m_visibleSize.height / 2 };
+	for (int i = 0; i < 3; i++) AddLemming(_middleScreen.x + (300.f * i), _middleScreen.y);
 	m_pSelectedLemming = m_lemmings[0];
 	CreateLemmingSelector();
 
-	addWindowsEdgesCollider();
-	createDynamicMenu();
+	AddWindowsEdgesCollider();
+	CreateDynamicMenu();
 
-	this->getPhysicsWorld()->setDebugDrawMask(cocos2d::PhysicsWorld::DEBUGDRAW_ALL);
-}
-
-bool MainScene::isKeyPressed(cocos2d::EventKeyboard::KeyCode code) {
-	// Check if the key is pressed
-	if (std::find(keys.begin(), keys.end(), code) != keys.end())
-		return true;
-	return false;
+	this->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 }
 
 void MainScene::update(float delta)
@@ -83,7 +60,7 @@ void MainScene::update(float delta)
 
 	if (m_pSelectedLemming != nullptr)
 	{
-		const cocos2d::Vec2 _targetLemmingPos = m_pSelectedLemming->getPosition();
+		const Vec2 _targetLemmingPos = m_pSelectedLemming->getPosition();
 		m_pLemmingPointer->setPosition({
 			_targetLemmingPos.x, _targetLemmingPos.y
 			});
@@ -94,65 +71,75 @@ void MainScene::update(float delta)
 	m_pLemmingPointer->setVisible(false);
 }
 
-void MainScene::createDynamicMenu() 
+void MainScene::CreateDynamicMenu()
 {
-	cocos2d::DrawNode* _draw = cocos2d::DrawNode::create();
+	DrawNode* _draw = DrawNode::create();
 	_draw->drawSolidRect(
-		cocos2d::Vec2(
+		Vec2(
 			0,
 			0
 		),
-		cocos2d::Vec2(
+		Vec2(
 			m_visibleSize.width,
 			m_visibleSize.height / 7
-		), 
-		cocos2d::Color4F(255, 255, 255, 50)
+		),
+		Color4F(255, 255, 255, 50)
 	);
 	addChild(_draw);
 
-	cocos2d::MenuItemImage* _action1 = cocos2d::MenuItemImage::create(
+	MenuItemImage* _action1 = MenuItemImage::create(
 		menu_closeButton_path,
 		menu_closeButton_selected_path,
-		CC_CALLBACK_0(MainScene::capaAction, this, MINING)
+		CC_CALLBACK_0(MainScene::CapacityAction, this, MINING)
 	);
 	assert(_action1);
-	_action1->setAnchorPoint(cocos2d::Vec2(0,0));
-	_action1->setPosition(cocos2d::Vec2(
+	_action1->setAnchorPoint(Vec2(0, 0));
+	_action1->setPosition(Vec2(
 		m_visibleOrigin.x,
 		m_visibleOrigin.y)
 	);
 	_action1->setScale(4);
 
-	cocos2d::Menu* _menu = cocos2d::Menu::create(_action1, NULL);
-	_menu->setPosition(cocos2d::Vec2::ZERO);
+	Menu* _menu = Menu::create(_action1, NULL);
+	_menu->setPosition(Vec2::ZERO);
 	addChild(_menu, 1);
 }
 
-bool MainScene::OnMouseClick(cocos2d::Event* event)
+bool MainScene::OnKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 {
-	const auto* _mouseEvent = dynamic_cast<cocos2d::EventMouse*>(event);
+	if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE) {
+		Scene* _pauseScene = PauseMenu::create();
+		Director::getInstance()->pushScene(_pauseScene);
+		return true;
+	}
+	return false;
+}
 
-	const cocos2d::Vec2 _cursorPos = { _mouseEvent->getCursorX(), _mouseEvent->getCursorY() };
 
-	if (_mouseEvent->getMouseButton() == cocos2d::EventMouse::MouseButton::BUTTON_LEFT)
+bool MainScene::OnMouseClick(Event* event)
+{
+	const auto* _mouseEvent = dynamic_cast<EventMouse*>(event);
+
+	const Vec2 _cursorPos = { _mouseEvent->getCursorX(), _mouseEvent->getCursorY() };
+
+	if (_mouseEvent->getMouseButton() == EventMouse::MouseButton::BUTTON_LEFT)
 		m_pSelectedLemming = MouseLeftClickCallBack(_cursorPos);
 
 	return false;
 }
 
-void MainScene::addWindowsEdgesCollider()
+void MainScene::AddWindowsEdgesCollider()
 {
-	cocos2d::PhysicsBody* _body = cocos2d::PhysicsBody::createEdgeBox(
+	PhysicsBody* _body = PhysicsBody::createEdgeBox(
 		{ m_visibleSize.width, m_visibleSize.height + 2 },
-		cocos2d::PhysicsMaterial(cocos2d::PHYSICSBODY_MATERIAL_DEFAULT),
+		PhysicsMaterial(PHYSICSBODY_MATERIAL_DEFAULT),
 		1
 	);
 	_body->setCategoryBitmask(window_collision_mask_id);
 	_body->setCollisionBitmask(lemming_collision_mask_id);
 	_body->setContactTestBitmask(test_collision_mask_id);
-	_body->setName(window_collision_name_template);
 
-	cocos2d::Node* _edgeShape = cocos2d::Node::create();
+	Node* _edgeShape = Node::create();
 	_edgeShape->setPhysicsBody(_body);
 	_edgeShape->setPosition(
 		m_visibleOrigin.x + m_visibleSize.width / 2,
@@ -161,7 +148,7 @@ void MainScene::addWindowsEdgesCollider()
 	addChild(_edgeShape);
 }
 
-void MainScene::addLemming(float positionX, float positionY)
+void MainScene::AddLemming(float positionX, float positionY)
 {
 	Lemming* _l = Lemming::create(lemming_asset_filePath, { positionX, positionY });
 	addChild(_l);
@@ -171,10 +158,10 @@ void MainScene::addLemming(float positionX, float positionY)
 
 void MainScene::CreateLemmingSelector()
 {
-	cocos2d::Sprite* _sp = cocos2d::Sprite::create(lemming_selector_asset_path);
+	Sprite* _sp = Sprite::create(lemming_selector_asset_path);
 	assert(_sp);
-	const cocos2d::Vec2 _targetLemmingPos = m_pSelectedLemming->getPosition();
-	const cocos2d::Vec2 _targetLemmingSize = m_pSelectedLemming->getSpriteSize();
+	const Vec2 _targetLemmingPos = m_pSelectedLemming->getPosition();
+	const Vec2 _targetLemmingSize = m_pSelectedLemming->getSpriteSize();
 	_sp->setPosition({
 		_targetLemmingPos.x, _targetLemmingPos.y
 		});
@@ -183,11 +170,11 @@ void MainScene::CreateLemmingSelector()
 	addChild(m_pLemmingPointer);
 }
 
-Lemming* MainScene::MouseLeftClickCallBack(cocos2d::Vec2 mouseCoordinates)
+Lemming* MainScene::MouseLeftClickCallBack(Vec2 mouseCoordinates)
 {
 	for (Lemming*& _l : m_lemmings)
 	{
-		if (isInRectCoordinates(_l->getPosition(), _l->getSpriteSize(), mouseCoordinates))
+		if (_l->getPhysicsBody()->getShape(0)->containsPoint(mouseCoordinates))
 		{
 			m_pLemmingPointer->setVisible(true);
 			return _l;
@@ -196,14 +183,7 @@ Lemming* MainScene::MouseLeftClickCallBack(cocos2d::Vec2 mouseCoordinates)
 	return nullptr;
 }
 
-Lemming* MainScene::getLemmingWithName(const std::string& name) const
-{
-	const auto it = m_indexedLemmings.find(name);
-	if (it == m_indexedLemmings.end()) return nullptr;
-	return it->second;
-}
-
-void MainScene::capaAction(Actions actionState)
+void MainScene::CapacityAction(Actions actionState)
 {
 	switch (actionState)
 	{
