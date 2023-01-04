@@ -14,9 +14,6 @@
     <ClCompile Include="..\Classes\Entities\Lemming.cpp">
       <Filter>Source Files\Classes\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="UtilityFunctions.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\TileMap\TileMap.cpp">
       <Filter>Source Files\Classes\TileMap</Filter>
     </ClCompile>
@@ -34,6 +31,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\PauseMenu.cpp">
       <Filter>Source Files\Classes\Scenes\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="UtilityFunctions.cpp">
+      <Filter>Source Files\Utility</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -58,6 +58,9 @@
     <Filter Include="Source Files\Classes\Scenes\Menu">
       <UniqueIdentifier>{99030b8e-443c-4635-9c2e-9dc2f5b6354e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Utility">
+      <UniqueIdentifier>{8530b858-f0f3-41e2-931b-7ed7ada8a4ee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="T:\cpp.project06.cocos\proj.win32\main.h" />
@@ -74,12 +77,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Entities\Lemming.h">
       <Filter>Source Files\Classes\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="Constants.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="UtilityFunctions.h">
-      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\TileMap\TileMap.h">
       <Filter>Source Files\Classes\TileMap</Filter>
@@ -110,6 +107,18 @@
     </ClInclude>
     <ClInclude Include="T:\cpp.project06.cocos\Resources\CloseSelected.png">
       <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="UtilityFunctions.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Paths.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="ScreenSizes.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Bitmasks.h">
+      <Filter>Source Files\Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

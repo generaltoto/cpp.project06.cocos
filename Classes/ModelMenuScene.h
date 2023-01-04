@@ -2,7 +2,12 @@
 
 #include "2d/CCScene.h"
 #include "2d/CCMenuItem.h"
-#include "../proj.win32/Constants.h"
+#include "2d/CCSprite.h"
+#include "2d/CCLabel.h"
+#include "2d/CCMenu.h"
+#include "CCDirector.h"
+#include "../proj.win32/Paths.h"
+#include "../proj.win32/ScreenSizes.h"
 
 USING_NS_CC;
 

@@ -5,7 +5,8 @@
 #include "2d/CCSprite.h"
 #include "2d/CCSpriteFrame.h"
 #include "../proj.win32/UtilityFunctions.h"
-#include "../proj.win32/Constants.h"
+#include "../proj.win32/Paths.h"
+#include "../proj.win32/Bitmasks.h"
 
 USING_NS_CC;
 

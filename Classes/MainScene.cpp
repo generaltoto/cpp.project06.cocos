@@ -138,7 +138,6 @@ void MainScene::AddWindowsEdgesCollider()
 	_body->setCategoryBitmask(window_collision_mask_id);
 	_body->setCollisionBitmask(lemming_collision_mask_id);
 	_body->setContactTestBitmask(test_collision_mask_id);
-	_body->setName(window_collision_name_template);
 
 	Node* _edgeShape = Node::create();
 	_edgeShape->setPhysicsBody(_body);

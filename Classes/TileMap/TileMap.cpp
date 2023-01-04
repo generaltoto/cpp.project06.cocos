@@ -9,7 +9,7 @@ void TileMap::initVariables()
 
 void TileMap::initMap(std::string tileMapPath)
 {
-    m_pMap = cocos2d::TMXTiledMap::create(tileMapPath);
+    m_pMap = TMXTiledMap::create(tileMapPath);
     m_pBackground = m_pMap->getLayer("Background");
     m_pCollision = m_pMap->getLayer("Collision");
     auto tt = m_pCollision->getTiles()[599];
@@ -19,14 +19,14 @@ void TileMap::initMap(std::string tileMapPath)
     {
         for (int j = 0; j < m_pCollision->getLayerSize().height; j++)
         {
-            if (m_pCollision->getTileAt(cocos2d::Vec2(i,j)) == nullptr) continue;
-            cocos2d::PhysicsBody* pB = cocos2d::PhysicsBody::createBox(
-                cocos2d::Size(m_pCollision->getTileSet()->_tileSize) - cocos2d::Size(4, 4),
-                cocos2d::PhysicsMaterial(cocos2d::PHYSICSBODY_MATERIAL_DEFAULT));
+            if (m_pCollision->getTileAt(Vec2(i,j)) == nullptr) continue;
+            PhysicsBody* pB = PhysicsBody::createBox(
+                Size(m_pCollision->getTileSet()->_tileSize) - Size(4, 4),
+                PhysicsMaterial(PHYSICSBODY_MATERIAL_DEFAULT));
 
             pB->setCategoryBitmask(window_collision_mask_id);
             pB->setDynamic(false);
-            m_pCollision->getTileAt(cocos2d::Vec2(i,j))->setPhysicsBody(pB);
+            m_pCollision->getTileAt(Vec2(i,j))->setPhysicsBody(pB);
         }
     }
     m_pEntities = m_pMap->getObjectGroup("Entities");
@@ -45,12 +45,12 @@ TileMap::~TileMap()
 {
 }
 
-cocos2d::TMXTiledMap* TileMap::getMap()
+TMXTiledMap* TileMap::getMap()
 {
     return m_pMap;
 }
 
-cocos2d::Vec2 TileMap::getSpawnPoint()
+Vec2 TileMap::getSpawnPoint()
 {
     return m_spawnPoint;
 }

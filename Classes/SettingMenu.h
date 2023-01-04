@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../proj.win32/Constants.h"
 #include "ModelMenuScene.h"
 
 class SettingMenu : public ModelMenuScene

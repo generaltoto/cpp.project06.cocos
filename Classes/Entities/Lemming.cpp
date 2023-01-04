@@ -11,7 +11,6 @@ Lemming* Lemming::create(const char* filePath, Vec2 pos)
 		_ret->setAnchorPoint({ 0,0 });
 		_ret->setPosition(pos.x, pos.y);
 		_ret->m_id = m_nextId++;
-		_ret->setName(lemming_name_template + std::to_string(_ret->m_id));
 		_ret->m_currentState = SPAWNING;
 		_ret->m_currentAcceleration = 1;
 		_ret->m_lemmingSpriteSize = { 21, 21 };
@@ -32,7 +31,6 @@ Lemming* Lemming::create(const char* filePath, Vec2 pos)
 		_lemmingPhysicBody->setCategoryBitmask(lemming_collision_mask_id);
 		_lemmingPhysicBody->setCollisionBitmask(window_collision_mask_id);
 		_lemmingPhysicBody->setContactTestBitmask(test_collision_mask_id);
-		_lemmingPhysicBody->setName(lemming_name_template + std::to_string(_ret->m_id));
 		_ret->setPhysicsBody(_lemmingPhysicBody);
 	}
 	else CC_SAFE_DELETE(_ret);
