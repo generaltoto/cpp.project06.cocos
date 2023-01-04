@@ -11,6 +11,13 @@ bool MainScene::init()
 {
 	if (!initWithPhysics()) return false;
 
+	// DEBUG
+	m_mouseText = cocos2d::Label::createWithTTF("TEST", "fonts/arial.ttf", 24);
+	m_mouseText->setPosition(cocos2d::Vec2(100, 100));
+	m_mouseText->setAnchorPoint(cocos2d::Vec2::ANCHOR_TOP_LEFT);
+	addChild(m_mouseText, 999);
+	// DEBUG
+
 	m_visibleSize = designResolutionSize;
 	m_visibleOrigin = { 0, 0 };
 
@@ -135,7 +142,15 @@ bool MainScene::OnMouseClick(cocos2d::Event* event)
 	const cocos2d::Vec2 _cursorPos = { _mouseEvent->getCursorX(), _mouseEvent->getCursorY() };
 
 	if (_mouseEvent->getMouseButton() == cocos2d::EventMouse::MouseButton::BUTTON_LEFT)
-		m_pSelectedLemming = MouseLeftClickCallBack(_cursorPos);
+	{
+		//m_pSelectedLemming = MouseLeftClickCallBack(_cursorPos);
+
+		if (m_pMap->getTileUnder(m_pSelectedLemming->getPosition() + m_pSelectedLemming->getSpriteSize() / 2) == nullptr) return false;
+		m_mouseText->setPosition(m_pSelectedLemming->getPosition() + m_pSelectedLemming->getSpriteSize() / 2);
+		m_mouseText->setString(std::to_string(round(m_pSelectedLemming->getPosition().y / 64)));
+		
+		m_pMap->removeTileUnder(m_pSelectedLemming->getPosition() + m_pSelectedLemming->getSpriteSize() / 2);
+	}
 
 	return false;
 }

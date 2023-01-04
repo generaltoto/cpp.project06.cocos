@@ -73,6 +73,9 @@ private:
 
 	std::vector<cocos2d::EventKeyboard::KeyCode> keys;
 
+	// DEBUG
+	cocos2d::Label* m_mouseText;
+
 	/**
 	 * \brief Creates a collision box with the window borders
 	 */

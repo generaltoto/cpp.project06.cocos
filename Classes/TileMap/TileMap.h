@@ -14,6 +14,9 @@ public:
     cocos2d::TMXLayer* GetCollisions() const { return m_pCollision; }
     void updateCollisions(cocos2d::TMXLayer* col) { m_pCollision = col; }
 
+    cocos2d::Sprite* getTileUnder(cocos2d::Vec2 lemmingPosition);
+    bool removeTileUnder(cocos2d::Vec2 lemmingPosition);
+
 private:
     cocos2d::TMXTiledMap* m_pMap;
     cocos2d::TMXLayer* m_pBackground;
