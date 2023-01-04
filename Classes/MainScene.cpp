@@ -40,8 +40,10 @@ bool MainScene::init()
 
 	keyboardListener->onKeyPressed = [=](cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
 		keys.push_back(keyCode);
-		cocos2d::Scene* _pauseScene = PauseMenu::create();
-		cocos2d::Director::getInstance()->pushScene(_pauseScene);
+		if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_ESCAPE) {
+			cocos2d::Scene* _pauseScene = PauseMenu::create();
+			cocos2d::Director::getInstance()->pushScene(_pauseScene);
+		}
 	};
 	keyboardListener->onKeyReleased = [=](cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
 		// remove the key.
