@@ -61,6 +61,9 @@ public:
     CREATE_FUNC(MainScene)
 
 private:
+	bool m_loaded;
+	time_t m_nextSpawn;
+
 	TileMap* m_pMap;
 	std::vector<Lemming*> m_lemmings;
 	std::map<std::string, Lemming*> m_indexedLemmings;
@@ -68,7 +71,7 @@ private:
 	cocos2d::Sprite* m_pLemmingPointer;
 	Actions actionState;
 
-   cocos2d::Size m_visibleSize;
+    cocos2d::Size m_visibleSize;
 	cocos2d::Vec2 m_visibleOrigin;
 
 	std::vector<cocos2d::EventKeyboard::KeyCode> keys;
