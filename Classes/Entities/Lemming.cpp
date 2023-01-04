@@ -24,10 +24,13 @@ Lemming* Lemming::create(const char* filePath, cocos2d::Vec2 pos)
 			cocos2d::Size(_sp->getContentSize()),
 			cocos2d::PhysicsMaterial(cocos2d::PHYSICSBODY_MATERIAL_DEFAULT)
 		);
+		_lemmingPhysicBody->setRotationEnable(false);
 		_lemmingPhysicBody->setDynamic(true);
 		_lemmingPhysicBody->setGravityEnable(true);
 		_lemmingPhysicBody->getShape(0)->setRestitution(0);
-		_lemmingPhysicBody->setVelocity({ 0,0 });
+		_lemmingPhysicBody->setVelocity({ 10,0 });
+		_lemmingPhysicBody->setLinearDamping(0);
+		_lemmingPhysicBody->setAngularDamping(0);
 		_lemmingPhysicBody->setCategoryBitmask(lemming_collision_mask_id);
 		_lemmingPhysicBody->setCollisionBitmask(window_collision_mask_id);
 		_lemmingPhysicBody->setContactTestBitmask(test_collision_mask_id);
@@ -46,6 +49,10 @@ bool Lemming::init()
 
 void Lemming::checkIfFalling()
 {
-	const cocos2d::Vec2 _curVelocity = this->getPhysicsBody()->getVelocity();
-	if(!isFloatNull(_curVelocity.y) && m_currentState != FALLING) m_currentState = FALLING;
+	const cocos2d::Vec2 _curVelocity = getPhysicsBody()->getVelocity();
+	if (!isFloatNull(_curVelocity.y) && m_currentState != FALLING)
+	{
+		m_currentState = FALLING;
+		getPhysicsBody()->setVelocity({ 0, _curVelocity.y });
+	}
 }

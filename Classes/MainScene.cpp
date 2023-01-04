@@ -4,7 +4,6 @@ cocos2d::Scene* MainScene::createScene()
 {
 	MainScene* _sceneWithPhysics = create();
 	_sceneWithPhysics->initWithPhysics();
-	_sceneWithPhysics->getPhysicsWorld()->setDebugDrawMask(cocos2d::PhysicsWorld::DEBUGDRAW_ALL);
 	return _sceneWithPhysics;
 }
 
@@ -42,16 +41,22 @@ void MainScene::onEnter()
     _sp->setPosition(m_pMap->getSpawnPoint());
     addChild(_sp);
 
-	for (int i = 0; i < 3; i++) addLemming(_middleScreen.x + (300.f * i), _middleScreen.y);
+	for (int i = 0; i < 3; i++) addLemming(_middleScreen.x + (320.f * i), _middleScreen.y);
 
 	addWindowsEdgesCollider();
+
+	this->getPhysicsWorld()->setDebugDrawMask(cocos2d::PhysicsWorld::DEBUGDRAW_ALL);
 }
 
 void MainScene::update(float delta)
 {
 	Node::update(delta);
 
-	for (const auto& lem : m_lemmings) lem->checkIfFalling();
+	for (const auto& lem : m_lemmings)
+	{
+		lem->getPhysicsBody()->setVelocity({ 10, lem->getPhysicsBody()->getVelocity().y});
+		lem->checkIfFalling();
+	}
 }
 
 bool MainScene::onContactPreSolve(cocos2d::PhysicsContact& contact) const
