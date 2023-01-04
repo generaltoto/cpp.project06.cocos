@@ -36,17 +36,23 @@ public:
 	static Lemming* create(const char* filePath, cocos2d::Vec2 pos);
 
 	/**
-	 * \brief Initiates all members
+	 * \brief Initiates all members, inherited from cocos.
 	 * \return true if succeeded
 	 */
 	bool init() override;
 
+	/**
+	 * \brief Update function inherited from cocos
+	 * \param delta ms between each frames
+	 */
 	void update(float delta) override;
 
 private:
 
 	const float m_lemmingVelocity = 130;
+
 	LemmingState m_currentState;
+
 	int m_currentAcceleration;
 
 	cocos2d::Vec2 m_lemmingSpriteSize;
@@ -58,15 +64,11 @@ private:
 
 	static void CreateSpriteFrames(Lemming*, const char* filePath);
 
-	static cocos2d::Vector<cocos2d::SpriteFrame*> CreateSpriteFramesFromImage(
-		cocos2d::Vec2 startingPoint,
-		int nbFrames,
-		const char* filePath
-	);
+	static cocos2d::Vector<cocos2d::SpriteFrame*> CreateSpriteFramesFromImage(cocos2d::Vec2 startingPoint, int nbFrames, const char* filePath);
 
 	void Move() const;
 
-	void UpdateMovementState();
+	void UpdateMovementStateAndAnimation();
 
 	void RunWithAnimation(const cocos2d::Vector<cocos2d::SpriteFrame*> &frames, bool isFlipped);
 };

@@ -46,7 +46,7 @@ void Lemming::update(float delta)
 {
 	Node::update(delta);
 
-	UpdateMovementState();
+	UpdateMovementStateAndAnimation();
 
 	Move();
 }
@@ -70,7 +70,7 @@ void Lemming::Move() const
 	}
 }
 
-void Lemming::UpdateMovementState()
+void Lemming::UpdateMovementStateAndAnimation()
 {
 	const cocos2d::Vec2 _velocity = getPhysicsBody()->getVelocity();
 

@@ -38,12 +38,6 @@ public:
 	bool OnMouseClick(cocos2d::Event *event);
 
 	/**
-	 * \brief Callback called when a collision occurs in this scene.
-	 * \return true if the collision is acknowledged.
-	 */
-	bool onContactPreSolve(cocos2d::PhysicsContact&) const;
-
-	/**
 	 * \brief Callback to be called when we want to take the Left Click event into account.
 	 * \param mouseCoordinates The mouse coordinates
 	 * \return The selected Lemming
