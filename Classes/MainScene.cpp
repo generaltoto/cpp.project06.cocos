@@ -29,7 +29,6 @@ bool MainScene::init()
 
 	cocos2d::EventListenerPhysicsContact* _contactListener = cocos2d::EventListenerPhysicsContact::create();
 	_contactListener->onContactPreSolve = CC_CALLBACK_1(MainScene::onContactPreSolve, this);
-	_contactListener->onContactPostSolve = CC_CALLBACK_1(MainScene::onContactPostSolve, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(_contactListener, this);
 
 	scheduleUpdate();
@@ -84,12 +83,9 @@ void MainScene::update(float delta)
 {
 	Node::update(delta);
 
-	for (const auto& lem : m_lemmings) lem->checkIfFalling();
-
 	if (m_pSelectedLemming != nullptr)
 	{
 		const cocos2d::Vec2 _targetLemmingPos = m_pSelectedLemming->getPosition();
-		const cocos2d::Vec2 _targetLemmingSize = m_pSelectedLemming->getSpriteSize();
 		m_pLemmingPointer->setPosition({
 			_targetLemmingPos.x, _targetLemmingPos.y
 			});
@@ -117,46 +113,17 @@ bool MainScene::onContactPreSolve(cocos2d::PhysicsContact& contact) const
 	cocos2d::PhysicsBody* _shapeA = contact.getShapeA()->getBody();
 	cocos2d::PhysicsBody* _shapeB = contact.getShapeB()->getBody();
 
-	// Saving velocity to restore it at the end of collide (prevent from friction slow down)
-	const auto _velocityData = new float[2];
-	_velocityData[0] = _shapeA->getVelocity().length();
-	_velocityData[1] = _shapeB->getVelocity().length();
-	contact.setData(_velocityData);
-	// See MainScene::onContactPostSolve for use of saved data
-
 	// Checking if a Lemming collided with a window border
 	if (_shapeA->getCollisionBitmask() == lemming_collision_mask_id && _shapeB->getCollisionBitmask() == window_collision_mask_id
 		|| _shapeA->getCollisionBitmask() == window_collision_mask_id && _shapeB->getCollisionBitmask() == lemming_collision_mask_id
 		)
 	{
-		Lemming* _l = getLemmingWithName(_shapeB->getName());
+		/*Lemming* _l = getLemmingWithName(_shapeB->getName());
 		if (_l == nullptr) return false;
-		lemmingContactWithWindowBordersCallback(_l);
+		_l->UpdateMovementState();*/
 		return true;
 	}
 	return false;
-}
-
-bool MainScene::onContactPostSolve(const cocos2d::PhysicsContact& contact) const
-{
-	cocos2d::PhysicsBody* _shapeA = contact.getShapeA()->getBody();
-	cocos2d::PhysicsBody* _shapeB = contact.getShapeB()->getBody();
-
-	/*
-	 * Restoring the velocity, keeping the direction of the velocity.
-	 * Does not restore the y velocity. You you want to, replace '{ va.x * v[0], 0 }' by 'va.x * v[0]'.
-	 */
-	cocos2d::Vec2 _va = _shapeA->getVelocity();
-	cocos2d::Vec2 _vb = _shapeB->getVelocity();
-	_va.normalize();
-	_vb.normalize();
-
-	const auto _v = static_cast<float*>(contact.getData());
-	_shapeA->setVelocity({ _va.x * _v[0], 0 });
-	_shapeB->setVelocity({ _vb.x * _v[1], 0 });
-	delete _v;
-
-	return true;
 }
 
 void MainScene::addWindowsEdgesCollider()
@@ -200,23 +167,6 @@ void MainScene::CreateLemmingSelector()
 	m_pLemmingPointer = _sp;
 	m_pLemmingPointer->setVisible(false);
 	addChild(m_pLemmingPointer);
-}
-
-void MainScene::lemmingContactWithWindowBordersCallback(Lemming* lemming)
-{
-	cocos2d::PhysicsBody* _body = lemming->getPhysicsBody();
-	cocos2d::Vec2 _curVelocity = _body->getVelocity();
-
-	if (isFloatNull(_curVelocity.x) && isFloatNull(_curVelocity.y) && lemming->m_currentState == WALKING)
-	{
-		lemming->m_currentAcceleration *= -1;
-		_body->setVelocity({ _curVelocity.x * lemming->m_currentAcceleration, _curVelocity.y });
-	}
-	if (isFloatNull(_curVelocity.y) && lemming->m_currentState == FALLING)
-	{
-		_body->setVelocity({ lemming->m_lemmingVelocity,0 });
-		lemming->m_currentState = WALKING;
-	}
 }
 
 Lemming* MainScene::MouseLeftClickCallBack(cocos2d::Vec2 mouseCoordinates)
