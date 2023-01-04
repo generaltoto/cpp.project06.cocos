@@ -44,18 +44,6 @@ public:
 	bool onContactPreSolve(cocos2d::PhysicsContact&) const;
 
 	/**
-	 * \brief Callback called when a collision occurs and has been managed in this scene.
-	 * \return true if the collision is acknowledged.
-	 */
-	bool onContactPostSolve(const cocos2d::PhysicsContact&) const;
-
-	/**
-	 * \brief Callback called if the collision concerns a Lemming and the window border or wall.
-	 * \param l The concerned lemming.
-	 */
-	static void lemmingContactWithWindowBordersCallback(Lemming* l);
-
-	/**
 	 * \brief Callback to be called when we want to take the Left Click event into account.
 	 * \param mouseCoordinates The mouse coordinates
 	 * \return The selected Lemming
