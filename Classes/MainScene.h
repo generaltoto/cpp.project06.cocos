@@ -59,7 +59,5 @@ private:
 
 	bool MouseLeftClickCallBack(Vec2 mouseCoordinates);
 
-	bool MouseRightClickCallback() const;
-
 	void CapacityAction(Actions);
 };

@@ -20,7 +20,9 @@ public:
     TMXLayer* GetCollisions() const { return m_pCollision; }
     void updateCollisions(TMXLayer* col) { m_pCollision = col; }
 
-    bool removeTileUnder(cocos2d::Vec2 lemmingPosition);
+    bool removeTileUnder(Vec2 lemmingPosition) const;
+    bool removeTileLeft(Vec2 lemmingPosition) const;
+    bool removeTileRight(Vec2 lemmingPosition) const;
 
 private:
     TMXTiledMap* m_pMap;

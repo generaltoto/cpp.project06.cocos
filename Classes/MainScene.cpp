@@ -176,7 +176,11 @@ bool MainScene::OnMouseClick(Event* event)
 	case EventMouse::MouseButton::BUTTON_LEFT:
 		return MouseLeftClickCallBack(_cursorPos);
 	case EventMouse::MouseButton::BUTTON_RIGHT:
-		return MouseRightClickCallback();
+		return m_pMap->removeTileUnder(m_pSelectedLemming->getPosition() + m_pSelectedLemming->getSpriteSize() / 2);
+	case EventMouse::MouseButton::BUTTON_4:
+		return m_pMap->removeTileRight(m_pSelectedLemming->getPosition() + m_pSelectedLemming->getSpriteSize() / 2);
+	case EventMouse::MouseButton::BUTTON_5:
+		return m_pMap->removeTileLeft(m_pSelectedLemming->getPosition() + m_pSelectedLemming->getSpriteSize() / 2);
 	default:
 		return false;
 	}
@@ -195,12 +199,6 @@ bool MainScene::MouseLeftClickCallBack(Vec2 mouseCoordinates)
 	}
 	m_pSelectedLemming = nullptr;
 	return false;
-}
-
-bool MainScene::MouseRightClickCallback() const
-{
-	m_pMap->removeTileUnder(m_pSelectedLemming->getPosition() + m_pSelectedLemming->getSpriteSize() / 2);
-	return true;
 }
 
 void MainScene::CapacityAction(Actions actionState)

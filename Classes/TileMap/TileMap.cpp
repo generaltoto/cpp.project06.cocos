@@ -56,7 +56,7 @@ Vec2 TileMap::getSpawnPoint()
     return m_spawnPoint;
 }
 
-bool TileMap::removeTileUnder(Vec2 lemmingPosition)
+bool TileMap::removeTileUnder(Vec2 lemmingPosition) const
 {
     Vec2 tileSize = m_pMap->getTileSize();
     auto collideLayerSize = m_pCollision->getLayerSize();
@@ -64,6 +64,41 @@ bool TileMap::removeTileUnder(Vec2 lemmingPosition)
     auto tilePos = Vec2(floor(lemmingPosition.x / tileSize.x), round(lemmingPosition.y / tileSize.y));
     tilePos.x += 1;
     tilePos.y = collideLayerSize.height - tilePos.y;
+
+    if (tilePos.x >= collideLayerSize.width || tilePos.y >= collideLayerSize.height
+        || tilePos.x < 0 || tilePos.y < 0) return false;
+
+    if (!m_pCollision->getTileAt(tilePos)) return false;
+
+    m_pCollision->setTileGID(0, tilePos);
+    return true;
+}
+
+bool TileMap::removeTileLeft(Vec2 lemmingPosition) const
+{
+    Vec2 tileSize = m_pMap->getTileSize();
+    auto collideLayerSize = m_pCollision->getLayerSize();
+
+    auto tilePos = Vec2(floor(lemmingPosition.x / tileSize.x), round(lemmingPosition.y / tileSize.y));
+    tilePos.y = collideLayerSize.height - tilePos.y - 1;
+
+    if (tilePos.x >= collideLayerSize.width || tilePos.y >= collideLayerSize.height
+        || tilePos.x < 0 || tilePos.y < 0) return false;
+
+    if (!m_pCollision->getTileAt(tilePos)) return false;
+
+    m_pCollision->setTileGID(0, tilePos);
+    return true;
+}
+
+bool TileMap::removeTileRight(Vec2 lemmingPosition) const
+{
+    Vec2 tileSize = m_pMap->getTileSize();
+    auto collideLayerSize = m_pCollision->getLayerSize();
+
+    auto tilePos = Vec2(floor(lemmingPosition.x / tileSize.x), round(lemmingPosition.y / tileSize.y));
+    tilePos.x += 2;
+    tilePos.y = collideLayerSize.height - tilePos.y - 1;
 
     if (tilePos.x >= collideLayerSize.width || tilePos.y >= collideLayerSize.height
         || tilePos.x < 0 || tilePos.y < 0) return false;
