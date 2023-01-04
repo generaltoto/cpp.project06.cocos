@@ -10,7 +10,8 @@ Scene* MainScene::createScene()
 bool MainScene::init()
 {
 	if (!initWithPhysics()) return false;
-
+	m_loaded = false;
+	m_nextSpawn = std::time(nullptr);
 	m_visibleSize = designResolutionSize;
 	m_visibleOrigin = { 0, 0 };
 
@@ -43,21 +44,39 @@ void MainScene::onEnter()
 	_sp->setPosition(m_pMap->getSpawnPoint());
 	addChild(_sp);
 
-	const Vec2 _middleScreen = { m_visibleSize.width / 2, m_visibleSize.height / 2 };
-	for (int i = 0; i < 3; i++) AddLemming(_middleScreen.x + (300.f * i), _middleScreen.y);
-	m_pSelectedLemming = m_lemmings[0];
-	CreateLemmingSelector();
-
 	AddWindowsEdgesCollider();
 	CreateDynamicMenu();
 
-	this->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 }
 
 void MainScene::update(float delta)
 {
 	Node::update(delta);
 
+	if (!m_loaded)
+	{
+		const time_t time = std::time(nullptr);
+
+		if (time < m_nextSpawn) goto next;
+
+		AddLemming(m_pMap->getSpawnPoint().x, m_pMap->getSpawnPoint().y);
+		m_nextSpawn = time + 5;
+
+		switch (m_lemmings.size())
+		{
+		case 1:
+			m_pSelectedLemming = m_lemmings[0];
+			CreateLemmingSelector();
+			break;
+		case 3:
+			m_loaded = true;
+			break;
+		default:
+			break;
+		}
+	}
+next:
 	if (m_pSelectedLemming != nullptr)
 	{
 		const Vec2 _targetLemmingPos = m_pSelectedLemming->getPosition();
@@ -75,14 +94,8 @@ void MainScene::CreateDynamicMenu()
 {
 	DrawNode* _draw = DrawNode::create();
 	_draw->drawSolidRect(
-		Vec2(
-			0,
-			0
-		),
-		Vec2(
-			m_visibleSize.width,
-			m_visibleSize.height / 7
-		),
+		Vec2(0, 0),
+		Vec2(m_visibleSize.width, m_visibleSize.height / 7),
 		Color4F(255, 255, 255, 50)
 	);
 	addChild(_draw);
@@ -115,19 +128,6 @@ bool MainScene::OnKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	return false;
 }
 
-
-bool MainScene::OnMouseClick(Event* event)
-{
-	const auto* _mouseEvent = dynamic_cast<EventMouse*>(event);
-
-	const Vec2 _cursorPos = { _mouseEvent->getCursorX(), _mouseEvent->getCursorY() };
-
-	if (_mouseEvent->getMouseButton() == EventMouse::MouseButton::BUTTON_LEFT)
-		m_pSelectedLemming = MouseLeftClickCallBack(_cursorPos);
-
-	return false;
-}
-
 void MainScene::AddWindowsEdgesCollider()
 {
 	PhysicsBody* _body = PhysicsBody::createEdgeBox(
@@ -153,34 +153,56 @@ void MainScene::AddLemming(float positionX, float positionY)
 	Lemming* _l = Lemming::create(lemming_asset_filePath, { positionX, positionY });
 	addChild(_l);
 	m_lemmings.push_back(_l);
-	m_indexedLemmings.insert(std::make_pair(_l->getName(), _l));
 }
 
 void MainScene::CreateLemmingSelector()
 {
 	Sprite* _sp = Sprite::create(lemming_selector_asset_path);
 	assert(_sp);
-	const Vec2 _targetLemmingPos = m_pSelectedLemming->getPosition();
-	const Vec2 _targetLemmingSize = m_pSelectedLemming->getSpriteSize();
-	_sp->setPosition({
-		_targetLemmingPos.x, _targetLemmingPos.y
-		});
+	_sp->setPosition(m_pSelectedLemming->getPosition());
 	m_pLemmingPointer = _sp;
 	m_pLemmingPointer->setVisible(false);
 	addChild(m_pLemmingPointer);
 }
 
-Lemming* MainScene::MouseLeftClickCallBack(Vec2 mouseCoordinates)
+bool MainScene::OnMouseClick(Event* event)
+{
+	const auto* _mouseEvent = dynamic_cast<EventMouse*>(event);
+
+	const Vec2 _cursorPos = { _mouseEvent->getCursorX(), _mouseEvent->getCursorY() };
+
+	switch (_mouseEvent->getMouseButton())
+	{
+	case EventMouse::MouseButton::BUTTON_LEFT:
+		return MouseLeftClickCallBack(_cursorPos);
+	case EventMouse::MouseButton::BUTTON_RIGHT:
+		return MouseRightClickCallback();
+	default:
+		return false;
+	}
+}
+
+bool MainScene::MouseLeftClickCallBack(Vec2 mouseCoordinates)
 {
 	for (Lemming*& _l : m_lemmings)
 	{
 		if (_l->getPhysicsBody()->getShape(0)->containsPoint(mouseCoordinates))
 		{
 			m_pLemmingPointer->setVisible(true);
-			return _l;
+			m_pSelectedLemming = _l;
+			return true;
 		}
 	}
-	return nullptr;
+	m_pSelectedLemming = nullptr;
+	return false;
+}
+
+bool MainScene::MouseRightClickCallback() const
+{
+	if (m_pMap->getTileUnder(m_pSelectedLemming->getPosition() + m_pSelectedLemming->getSpriteSize() / 2) == nullptr)
+		return false;
+	m_pMap->removeTileUnder(m_pSelectedLemming->getPosition() + m_pSelectedLemming->getSpriteSize() / 2);
+	return true;
 }
 
 void MainScene::CapacityAction(Actions actionState)

@@ -12,7 +12,7 @@ USING_NS_CC;
 
 enum LemmingState { SPAWNING, FALLING, WALKING_RIGHT, WALKING_LEFT };
 
-constexpr float spriteScale = 3.0;
+constexpr float spriteScale = 2.0;
 constexpr int lemmingSpriteSize = 21;
 
 class Lemming : public Node
@@ -57,13 +57,13 @@ private:
 
 	const float m_lemmingVelocity = 130;
 
-	LemmingState m_currentState;
+	LemmingState m_currentState{};
 
-	int m_currentAcceleration;
+	int m_currentAcceleration{};
 
 	Vec2 m_lemmingSpriteSize;
 
-	Sprite* m_pIdleSpriteFrame;
+	Sprite* m_pIdleSpriteFrame{};
 	Vector<SpriteFrame*> m_pFallingSpriteFrames;
 	Vector<SpriteFrame*> m_pWalkingSpriteFrames;
 	Vector<SpriteFrame*> m_pMiningSpriteFrames;

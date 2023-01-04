@@ -36,9 +36,11 @@ public:
 	CREATE_FUNC(MainScene)
 
 private:
+	bool m_loaded;
+	time_t m_nextSpawn;
+
 	TileMap* m_pMap{};
 	std::vector<Lemming*> m_lemmings;
-	std::map<std::string, Lemming*> m_indexedLemmings;
 	Lemming* m_pSelectedLemming{};
 	Sprite* m_pLemmingPointer{};
 	Actions actionState;
@@ -55,7 +57,9 @@ private:
 
 	bool OnMouseClick(Event* event);
 
-	Lemming* MouseLeftClickCallBack(Vec2 mouseCoordinates);
+	bool MouseLeftClickCallBack(Vec2 mouseCoordinates);
+
+	bool MouseRightClickCallback() const;
 
 	void CapacityAction(Actions);
 };
