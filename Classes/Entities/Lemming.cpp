@@ -2,7 +2,7 @@
 
 int Lemming::m_nextId = 1;
 
-Lemming* Lemming::create(const char* filePath, cocos2d::Vec2 pos)
+Lemming* Lemming::create(const char* filePath, Vec2 pos)
 {
 	auto* _ret = new (std::nothrow) Lemming();
 	if (_ret && _ret->init())
@@ -18,9 +18,9 @@ Lemming* Lemming::create(const char* filePath, cocos2d::Vec2 pos)
 
 		_ret->CreateSpriteFrames(_ret, filePath);
 
-		cocos2d::PhysicsBody* _lemmingPhysicBody = cocos2d::PhysicsBody::createBox(
-			cocos2d::Size(_ret->m_pIdleSpriteFrame->getContentSize() * spriteScale),
-			cocos2d::PhysicsMaterial(cocos2d::PHYSICSBODY_MATERIAL_DEFAULT)
+		PhysicsBody* _lemmingPhysicBody = PhysicsBody::createBox(
+			Size(_ret->m_pIdleSpriteFrame->getContentSize() * spriteScale),
+			PhysicsMaterial(PHYSICSBODY_MATERIAL_DEFAULT)
 		);
 		_lemmingPhysicBody->setRotationEnable(false);
 		_lemmingPhysicBody->setDynamic(true);
@@ -75,7 +75,7 @@ void Lemming::Move() const
 
 void Lemming::UpdateMovementStateAndAnimation()
 {
-	const cocos2d::Vec2 _velocity = getPhysicsBody()->getVelocity();
+	const Vec2 _velocity = getPhysicsBody()->getVelocity();
 
 	// Check if the lemming is stuck in a wall 
 	if (isFloatNull(_velocity.x) && isFloatNull(_velocity.y))
@@ -110,31 +110,31 @@ void Lemming::UpdateMovementStateAndAnimation()
 	}
 }
 
-void Lemming::CreateSpriteFrames(Lemming* _ret, const char* filePath)
+void Lemming::CreateSpriteFrames(Lemming* _l, const char* filePath)
 {
 	// Create idle Sprite Frame
-	_ret->m_pIdleSpriteFrame = cocos2d::Sprite::create(
+	_l->m_pIdleSpriteFrame = Sprite::create(
 		filePath,
-		cocos2d::Rect(23, 46, _ret->m_lemmingSpriteSize.x, _ret->m_lemmingSpriteSize.y)
+		Rect(23, 46, _l->m_lemmingSpriteSize.x, _l->m_lemmingSpriteSize.y)
 	);
-	assert(_ret->m_pIdleSpriteFrame);
-	_ret->m_pIdleSpriteFrame->setScale(spriteScale);
-	_ret->addChild(_ret->m_pIdleSpriteFrame);
+	assert(_l->m_pIdleSpriteFrame);
+	_l->m_pIdleSpriteFrame->setScale(spriteScale);
+	_l->addChild(_l->m_pIdleSpriteFrame);
 
 	// Create falling sprite frame
-	_ret->m_pFallingSpriteFrames = CreateSpriteFramesFromImage({ 23,137 }, 2, filePath);
-	_ret->m_pWalkingSpriteFrames = CreateSpriteFramesFromImage({ 22.80,90.5 }, 4, filePath);
-	_ret->m_pMiningSpriteFrames = CreateSpriteFramesFromImage({ 23,210 }, 4, filePath);
+	_l->m_pFallingSpriteFrames = CreateSpriteFramesFromImage({ 23,137 }, 2, filePath);
+	_l->m_pWalkingSpriteFrames = CreateSpriteFramesFromImage({ 22.80,90.5 }, 4, filePath);
+	_l->m_pMiningSpriteFrames = CreateSpriteFramesFromImage({ 23,210 }, 4, filePath);
 }
 
-cocos2d::Vector<cocos2d::SpriteFrame*> Lemming::CreateSpriteFramesFromImage(cocos2d::Vec2 startingPoint, int nbFrames, const char* filePath)
+Vector<SpriteFrame*> Lemming::CreateSpriteFramesFromImage(Vec2 startingPoint, int nbFrames, const char* filePath)
 {
-	cocos2d::Vector<cocos2d::SpriteFrame*> _frames;
+	Vector<SpriteFrame*> _frames;
 	for (int i = 1; i <= nbFrames; i++)
 	{
-		cocos2d::SpriteFrame* _frame = cocos2d::SpriteFrame::create(
+		SpriteFrame* _frame = SpriteFrame::create(
 			filePath,
-			cocos2d::Rect(startingPoint.x * i, startingPoint.y, lemmingSpriteSize, lemmingSpriteSize)
+			Rect(startingPoint.x * i, startingPoint.y, lemmingSpriteSize, lemmingSpriteSize)
 		);
 		assert(_frame);
 		_frames.pushBack(_frame);
@@ -142,14 +142,14 @@ cocos2d::Vector<cocos2d::SpriteFrame*> Lemming::CreateSpriteFramesFromImage(coco
 	return _frames;
 }
 
-void Lemming::RunWithAnimation(const cocos2d::Vector<cocos2d::SpriteFrame*>& frames, bool isFlipped)
+void Lemming::RunWithAnimation(const Vector<SpriteFrame*>& frames, bool isFlipped)
 {
-	cocos2d::Animation* _animation = cocos2d::Animation::createWithSpriteFrames(frames, 0.1f);
-	cocos2d::Animate* _animate = cocos2d::Animate::create(_animation);
+	Animation* _animation = Animation::createWithSpriteFrames(frames, 0.1f);
+	Animate* _animate = Animate::create(_animation);
 
-	cocos2d::Sprite* _sprite = cocos2d::Sprite::createWithSpriteFrame(frames.front());
+	Sprite* _sprite = Sprite::createWithSpriteFrame(frames.front());
 	_sprite->setScale(spriteScale);
 	_sprite->setFlippedX(isFlipped);
 	addChild(_sprite);
-	_sprite->runAction(cocos2d::RepeatForever::create(_animate));
+	_sprite->runAction(RepeatForever::create(_animate));
 }

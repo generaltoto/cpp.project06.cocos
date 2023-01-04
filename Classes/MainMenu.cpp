@@ -9,7 +9,7 @@ void MainMenu::onEnter()
 
 	createTitle();
 	createBackground(menu_mainMenu_background_path, 1.6f);
-	createDynamicMenu();
+	CreateDynamicMenu();
 }
 
 cocos2d::MenuItemFont* MainMenu::createPlayButton()
@@ -40,7 +40,7 @@ void MainMenu::RunSettingsScene(cocos2d::Ref* pSender) const
 	Director::getInstance()->pushScene(_settingScene);
 }
 
-void MainMenu::createDynamicMenu()
+void MainMenu::CreateDynamicMenu()
 {
 	cocos2d::Menu* _menu = Menu::create(createCloseItem(), createPlayButton(), createSettingsButton(), NULL);
 	_menu->setPosition(Vec2::ZERO);

@@ -9,7 +9,7 @@ void PauseMenu::onEnter()
 
 	createTitle();
 	createBackground(menu_mainMenu_background_path, 1.6f);
-	createDynamicMenu();
+	CreateDynamicMenu();
 }
 
 cocos2d::MenuItemFont* PauseMenu::createResumeButton()
@@ -36,7 +36,7 @@ void PauseMenu::returnMainMenu(cocos2d::Ref* pSender) const
 	Director::getInstance()->replaceScene(TransitionFade::create(0.5, _playScene, Color3B(255, 255, 255)));
 }
 
-void PauseMenu::createDynamicMenu()
+void PauseMenu::CreateDynamicMenu()
 {
 	cocos2d::Menu* _menu = Menu::create(createResumeButton(), createQuitButton(), createCloseItem(), NULL);
 	_menu->setPosition(Vec2::ZERO);

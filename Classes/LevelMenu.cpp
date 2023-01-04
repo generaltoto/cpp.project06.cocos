@@ -21,7 +21,7 @@ void LevelMenu::onEnter()
 
 	createTitle();
 	createBackground(menu_levelMenu_background_path, 1.1f);
-	createDynamicMenu();
+	CreateDynamicMenu();
 }
 
 void LevelMenu::runLevelScene(cocos2d::Ref* pSender) const
@@ -50,7 +50,7 @@ cocos2d::Sprite* LevelMenu::createLevelSelectorCursor()
 	return _cursor;
 }
 
-void LevelMenu::createDynamicMenu()
+void LevelMenu::CreateDynamicMenu()
 {
 	cocos2d::DrawNode* _draw = cocos2d::DrawNode::create();
 	_draw->drawSolidRect(

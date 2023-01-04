@@ -38,7 +38,7 @@ public:
 	/**
 	 *brief Creates the menu with all buttons.
 	 */
-	void createDynamicMenu() override;
+	void CreateDynamicMenu() override;
 
 	CREATE_FUNC(PauseMenu);
 };

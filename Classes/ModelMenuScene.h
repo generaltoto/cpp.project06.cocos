@@ -1,13 +1,16 @@
 #pragma once
 
-#include "cocos2d.h"
+#include "2d/CCScene.h"
+#include "2d/CCMenuItem.h"
 #include "../proj.win32/Constants.h"
 
-class ModelMenuScene : public cocos2d::Scene
+USING_NS_CC;
+
+class ModelMenuScene : public Scene
 {
 public:
-	cocos2d::Size m_visibleSize;
-	cocos2d::Vec2 m_visibleOrigin;
+	Size m_visibleSize;
+	Vec2 m_visibleOrigin;
 
 	/**
 	 * \brief Inits the different elements of the scene.
@@ -20,43 +23,21 @@ public:
 	 */
 	void update(float) override;
 
+	CREATE_FUNC(ModelMenuScene);
 
-	/**
-	 * \brief Creates the close button.
-	 * \return The menu item to close the window.
-	 */
-	cocos2d::MenuItemImage* createCloseItem();
+protected:
 
-	/**
-	 * \brief Creates a return button to the last scene.
-	 * \return The menu item to go back.
-	 */
-	cocos2d::MenuItemFont* createReturnButton(cocos2d::Vec2);
+	MenuItemImage* createCloseItem();
 
-	/**
-	 * \brief Closes the window.
-	 */
-	void menuCloseCallback(cocos2d::Ref*);
+	MenuItemFont* createReturnButton(Vec2);
 
-	/**
-	 * \brief Returns to the last scene.
-	 */
-	void returnToScene(cocos2d::Ref*);
+	void menuCloseCallback(Ref*);
 
-	/**
-	 * \brief Creates the game's title on menus.
-	 */
+	void returnToScene(Ref*);
+
 	void createTitle();
 
-	/**
-	 * \brief Sets the background of the scene with a given path and scale.
-	 */
 	void createBackground(const char*, float);
 
-	/**
-	 * \brief Creates the menu with all buttons.
-	 */
-	virtual void createDynamicMenu();
-
-	CREATE_FUNC(ModelMenuScene);
+	virtual void CreateDynamicMenu();
 };
