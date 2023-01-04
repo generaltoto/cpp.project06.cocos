@@ -29,6 +29,12 @@
     <ClCompile Include="..\Classes\SettingMenu.cpp">
       <Filter>Source Files\Classes\Scenes\Menu</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\ModelMenuScene.cpp">
+      <Filter>Source Files\Classes\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PauseMenu.cpp">
+      <Filter>Source Files\Classes\Scenes\Menu</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="T:\cpp.project06.cocos\CMakeLists.txt" />
@@ -63,19 +69,7 @@
     <ClInclude Include="T:\cpp.project06.cocos\Classes\AppDelegate.h">
       <Filter>Source Files\Classes</Filter>
     </ClInclude>
-    <ClInclude Include="T:\cpp.project06.cocos\Resources\CloseNormal.png">
-      <Filter>Ressources</Filter>
-    </ClInclude>
-    <ClInclude Include="T:\cpp.project06.cocos\Resources\CloseSelected.png">
-      <Filter>Ressources</Filter>
-    </ClInclude>
     <ClInclude Include="T:\cpp.project06.cocos\Resources\HelloWorld.png">
-      <Filter>Ressources</Filter>
-    </ClInclude>
-    <ClInclude Include="T:\cpp.project06.cocos\Resources\fonts\Marker Felt.ttf">
-      <Filter>Ressources</Filter>
-    </ClInclude>
-    <ClInclude Include="T:\cpp.project06.cocos\Resources\fonts\arial.ttf">
       <Filter>Ressources</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Entities\Lemming.h">
@@ -98,6 +92,24 @@
     </ClInclude>
     <ClInclude Include="..\Classes\SettingMenu.h">
       <Filter>Source Files\Classes\Scenes\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ModelMenuScene.h">
+      <Filter>Source Files\Classes\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PauseMenu.h">
+      <Filter>Source Files\Classes\Scenes\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="T:\cpp.project06.cocos\Resources\fonts\arial.ttf">
+      <Filter>Resources\fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="T:\cpp.project06.cocos\Resources\fonts\Marker Felt.ttf">
+      <Filter>Resources\fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="T:\cpp.project06.cocos\Resources\CloseNormal.png">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="T:\cpp.project06.cocos\Resources\CloseSelected.png">
+      <Filter>Resources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +151,12 @@
       <Filter>Resources</Filter>
     </Image>
     <Image Include="..\Resources\map_cursor.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\lemming_selector.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="C:\Users\thoma\workspaces\GTECH2\cpp.project06.cocos\Resources\lemming-sprite-sheet.png">
       <Filter>Resources</Filter>
     </Image>
   </ItemGroup>

@@ -1,41 +1,47 @@
 #pragma once
 
-#ifndef __LEVELMENU_SCENE_H__
-#define __LEVELMENU_SCENE_H__
-
 #include "cocos2d.h"
+#include "ModelMenuScene.h"
 #include "MainScene.h"
 
-class LevelMenu : public cocos2d::Scene
+class LevelMenu : public ModelMenuScene
 {
-private:
-   cocos2d::Sprite* m_levelCursor;
-   int m_idLvl;
-
 public:
-   /// Creates the scene.
-   static cocos2d::Scene* createScene();
+	/**
+	 * \brief Inits the different elements of the scene.
+	 * \return True if good init or false if bad init.
+	 */
+	bool init() override;
 
-   /// Inits the different elements of the scene.
-   virtual bool init();
+	/**
+	 * \brief Executed when entering the scene. Creates all the needed components.
+	 */
+	void onEnter() override;
 
-   /// Updates the scene with a given time.
-   void update(float) override;
+	/**
+	 * \brief Launches a new playing scene with the level index selected.
+	 */
+	void runLevelScene(cocos2d::Ref*) const;
 
-   /// Closes the window.
-   void menuCloseCallback(cocos2d::Ref*);
+	/**
+	 * \brief Creates the level cursor to see the level selected.
+	 * \return The sprite of the level selector.
+	 */
+	cocos2d::Sprite* createLevelSelectorCursor();
 
-   /// Lunchs a new playing scene with the level index selected.
-   void playLevel(cocos2d::Ref*);
+	/**
+	 * \brief Changes the current selected level and updates the cursor on the map.
+	 */
+	void updateSelectedLevel(cocos2d::Ref*, cocos2d::Vec2, int);
 
-   /// Changes the current selected level and updates the cursor on the map.
-   void selectLevel(cocos2d::Ref*, cocos2d::Vec2, int);
+	/**
+	 *brief Creates the menu with all buttons.
+	 */
+	void createDynamicMenu() override;
 
-   /// Changes the scene to return to the main one.
-   void returnToMain(cocos2d::Ref*);
+	CREATE_FUNC(LevelMenu);
 
-   // implement the "static create()" method manually
-   CREATE_FUNC(LevelMenu);
+private:
+	cocos2d::Sprite* m_levelCursor;
+	int m_idLvl;
 };
-
-#endif // __LEVELMENU_SCENE_H__

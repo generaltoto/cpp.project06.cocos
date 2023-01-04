@@ -1,30 +1,20 @@
 #pragma once
 
-#ifndef __SETTINGMENU_SCENE_H__
-#define __SETTINGMENU_SCENE_H__
+#include "../proj.win32/Constants.h"
+#include "ModelMenuScene.h"
 
-#include "cocos2d.h"
-
-class SettingMenu : public cocos2d::Scene
+class SettingMenu : public ModelMenuScene
 {
 public:
-   /// Creates the scenes.
-   static cocos2d::Scene* createScene();
+	/**
+	 * \brief Executed when we enter the scene. Initializes all components
+	 */
+	void onEnter() override;
 
-   /// Inits the different elements of the scene.
-   virtual bool init();
+	/**
+	 *brief Creates the menu with all buttons.
+	 */
+	void createDynamicMenu() override;
 
-   /// Updates the scene with a given time.
-   void update(float) override;
-
-   /// Closes the window.
-   void menuCloseCallback(cocos2d::Ref*);
-
-   /// Changes the scene to return to the main one.
-   void returnToMain(cocos2d::Ref*);
-
-   // implement the "static create()" method manually
-   CREATE_FUNC(SettingMenu);
+	CREATE_FUNC(SettingMenu);
 };
-
-#endif // __SETTINGMENU_SCENE_H__

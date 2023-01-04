@@ -2,6 +2,7 @@
 
 #include "Entities/Lemming.h"
 #include "TileMap/TileMap.h"
+#include "PauseMenu.h"
 
 class MainScene : public cocos2d::Scene
 {
@@ -30,22 +31,18 @@ public:
 	void update(float delta) override;
 
 	/**
-	 * \brief Callback called when a collision occurs in this scene.
-	 * \return true if the collision is acknowledged.
+	 * \brief Callback called when a mouse button is clicked
+	 * \param event The current event
+	 * \return true if we make something of the event
 	 */
-	bool onContactPreSolve(cocos2d::PhysicsContact&) const;
+	bool OnMouseClick(cocos2d::Event *event);
 
 	/**
-	 * \brief Callback called when a collision occurs and has been managed in this scene.
-	 * \return true if the collision is acknowledged.
+	 * \brief Callback to be called when we want to take the Left Click event into account.
+	 * \param mouseCoordinates The mouse coordinates
+	 * \return The selected Lemming
 	 */
-	bool onContactPostSolve(const cocos2d::PhysicsContact&) const;
-
-	/**
-	 * \brief Callback called if the collision concerns a Lemming and the window border or wall.
-	 * \param l The concerned lemming.
-	 */
-	static void lemmingContactWithWindowBordersCallback(Lemming* l);
+	Lemming* MouseLeftClickCallBack(cocos2d::Vec2 mouseCoordinates);
 
 	/**
 	 * \brief Finds the Lemming corresponding to a given [lemming_name_template] name 
@@ -59,19 +56,22 @@ private:
 	TileMap* m_pMap;
 	std::vector<Lemming*> m_lemmings;
 	std::map<std::string, Lemming*> m_indexedLemmings;
+	Lemming* m_pSelectedLemming;
+	cocos2d::Sprite* m_pLemmingPointer;
 
-    cocos2d::Size m_visibleSize;
+   cocos2d::Size m_visibleSize;
 	cocos2d::Vec2 m_visibleOrigin;
+
+	std::vector<cocos2d::EventKeyboard::KeyCode> keys;
 
 	/**
 	 * \brief Creates a collision box with the window borders
 	 */
 	void addWindowsEdgesCollider();
 
-	/**
-	 * \brief Creates a Lemming with physics.
-	 * \param positionX X Position of the Lemming (cannot be greater than the ScreenWidth)
-	 * \param positionY Y Position of the Lemming (cannot be greater than the ScreenHeight)
-	 */
 	void addLemming(float positionX, float positionY);
+
+	void CreateLemmingSelector();
+
+	bool isKeyPressed(cocos2d::EventKeyboard::KeyCode);
 };

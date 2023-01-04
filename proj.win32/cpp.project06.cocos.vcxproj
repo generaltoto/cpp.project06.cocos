@@ -811,7 +811,11 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   <ItemGroup>
     <ClInclude Include="..\Classes\LevelMenu.h" />
     <ClInclude Include="..\Classes\MainMenu.h" />
+    <ClInclude Include="..\Classes\ModelMenuScene.h" />
+    <ClInclude Include="..\Classes\PauseMenu.h" />
     <ClInclude Include="..\Classes\SettingMenu.h" />
+    <ClCompile Include="..\Classes\ModelMenuScene.cpp" />
+    <ClCompile Include="..\Classes\PauseMenu.cpp" />
     <ClCompile Include="UtilityFunctions.cpp" />
     <ClInclude Include="..\Classes\Entities\Lemming.h" />
     <ClInclude Include="Constants.h" />
@@ -901,9 +905,11 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\Resources\lemming_selector.png" />
     <Image Include="..\Resources\main_menu.jpg" />
     <Image Include="..\Resources\map_cursor.png" />
     <Image Include="..\Resources\map_level.png" />
+    <Image Include="C:\Users\thoma\workspaces\GTECH2\cpp.project06.cocos\Resources\lemming-sprite-sheet.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
