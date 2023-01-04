@@ -11,6 +11,9 @@ bool MainScene::init()
 {
 	if (!initWithPhysics()) return false;
 
+	m_loaded = false;
+	m_nextSpawn = std::time(nullptr);
+
 	// DEBUG
 	m_mouseText = cocos2d::Label::createWithTTF("TEST", "fonts/arial.ttf", 24);
 	m_mouseText->setPosition(cocos2d::Vec2(100, 100));
@@ -67,9 +70,6 @@ void MainScene::onEnter()
 	_sp->setPosition(m_pMap->getSpawnPoint());
 	addChild(_sp);
 
-	for (int i = 0; i < 3; i++) addLemming(_middleScreen.x + (300.f * i), _middleScreen.y);
-	m_pSelectedLemming = m_lemmings[0];
-	CreateLemmingSelector();
 
 	addWindowsEdgesCollider();
 	createDynamicMenu();
@@ -88,6 +88,29 @@ void MainScene::update(float delta)
 {
 	Node::update(delta);
 
+	if (!m_loaded)
+	{
+		time_t time = std::time(nullptr);
+
+		if (time < m_nextSpawn) goto next;
+
+		addLemming(m_pMap->getSpawnPoint().x, m_pMap->getSpawnPoint().y);
+		m_nextSpawn = time + 5;
+
+		switch (m_lemmings.size())
+		{
+		case 1:
+			m_pSelectedLemming = m_lemmings[0];
+			CreateLemmingSelector();
+			break;
+		case 3:
+			m_loaded = true;
+			break;
+		default:
+			break;
+		}
+	}
+	next:
 	if (m_pSelectedLemming != nullptr)
 	{
 		const cocos2d::Vec2 _targetLemmingPos = m_pSelectedLemming->getPosition();
@@ -101,7 +124,7 @@ void MainScene::update(float delta)
 	m_pLemmingPointer->setVisible(false);
 }
 
-void MainScene::createDynamicMenu() 
+void MainScene::createDynamicMenu()
 {
 	cocos2d::DrawNode* _draw = cocos2d::DrawNode::create();
 	_draw->drawSolidRect(
@@ -112,7 +135,7 @@ void MainScene::createDynamicMenu()
 		cocos2d::Vec2(
 			m_visibleSize.width,
 			m_visibleSize.height / 7
-		), 
+		),
 		cocos2d::Color4F(255, 255, 255, 50)
 	);
 	addChild(_draw);
@@ -123,7 +146,7 @@ void MainScene::createDynamicMenu()
 		CC_CALLBACK_0(MainScene::capaAction, this, MINING)
 	);
 	assert(_action1);
-	_action1->setAnchorPoint(cocos2d::Vec2(0,0));
+	_action1->setAnchorPoint(cocos2d::Vec2(0, 0));
 	_action1->setPosition(cocos2d::Vec2(
 		m_visibleOrigin.x,
 		m_visibleOrigin.y)

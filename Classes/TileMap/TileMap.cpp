@@ -12,7 +12,6 @@ void TileMap::initMap(std::string tileMapPath)
     m_pMap = cocos2d::TMXTiledMap::create(tileMapPath);
     m_pBackground = m_pMap->getLayer("Background");
     m_pCollision = m_pMap->getLayer("Collision");
-    auto tt = m_pCollision->getTiles()[599];
     
 
     for (int i = 0; i < m_pCollision->getLayerSize().width; i++)
@@ -21,7 +20,7 @@ void TileMap::initMap(std::string tileMapPath)
         {
             if (m_pCollision->getTileAt(cocos2d::Vec2(i,j)) == nullptr) continue;
             cocos2d::PhysicsBody* pB = cocos2d::PhysicsBody::createBox(
-                cocos2d::Size(m_pCollision->getTileSet()->_tileSize) - cocos2d::Size(4, 4),
+                cocos2d::Size(m_pCollision->getTileSet()->_tileSize) - cocos2d::Size(6, 6),
                 cocos2d::PhysicsMaterial(cocos2d::PHYSICSBODY_MATERIAL_DEFAULT));
 
             pB->setCategoryBitmask(window_collision_mask_id);
