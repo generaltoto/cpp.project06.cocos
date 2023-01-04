@@ -1,7 +1,5 @@
 #pragma once
 
-#include "cocos2d.h"
-#include "../proj.win32/Constants.h"
 #include "ModelMenuScene.h"
 #include "MainMenu.h"
 
@@ -13,32 +11,17 @@ public:
 	 */
 	void onEnter() override;
 
-	/**
-	 * \brief Creates a resume button to go back to the game.
-	 * \return The menu item to resume.
-	 */
-	cocos2d::MenuItemFont* createResumeButton();
+	CREATE_FUNC(PauseMenu);
 
-	/**
-	 * \brief Creates a return button to the main menu scene.
-	 * \return The menu item to quit.
-	 */
-	cocos2d::MenuItemFont* createQuitButton();
+private:
 
-	/**
-	 * \brief Switches scene to the play one.
-	 */
-	void resume(cocos2d::Ref*) const;
-
-	/**
-	 * \brief Switches scene to the main menu one.
-	 */
-	void returnMainMenu(cocos2d::Ref*) const;
-
-	/**
-	 *brief Creates the menu with all buttons.
-	 */
 	void CreateDynamicMenu() override;
 
-	CREATE_FUNC(PauseMenu);
+	MenuItemFont* createResumeButton();
+
+	MenuItemFont* createQuitButton();
+
+	void resume(Ref*) const;
+
+	void returnMainMenu(Ref*) const;
 };

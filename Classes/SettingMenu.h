@@ -11,9 +11,8 @@ public:
 	 */
 	void onEnter() override;
 
-	/**
-	 *brief Creates the menu with all buttons.
-	 */
+private:
+
 	void CreateDynamicMenu() override;
 
 	CREATE_FUNC(SettingMenu);
