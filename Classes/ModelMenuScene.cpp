@@ -22,9 +22,10 @@ cocos2d::MenuItemImage* ModelMenuScene::createCloseItem()
 		CC_CALLBACK_1(ModelMenuScene::menuCloseCallback, this)
 	);
 	assert(_closeItem);
-	const float x = m_visibleOrigin.x + m_visibleSize.width - _closeItem->getContentSize().width / 2;
-	const float y = m_visibleOrigin.y + _closeItem->getContentSize().height / 2;
-	_closeItem->setPosition(Vec2(x, y));
+	_closeItem->setPosition(Vec2(
+		m_visibleOrigin.x + m_visibleSize.width - _closeItem->getContentSize().width / 2, 
+		m_visibleOrigin.y + _closeItem->getContentSize().height / 2)
+	);
 	return _closeItem;
 }
 

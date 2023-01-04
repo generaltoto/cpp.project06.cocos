@@ -5,6 +5,8 @@
 #include "PauseMenu.h"
 #include "ModelMenuScene.h"
 
+enum Actions {MINING, BUILDING, RESET};
+
 class MainScene : public ModelMenuScene
 {
 public:
@@ -82,6 +84,7 @@ private:
 	std::map<std::string, Lemming*> m_indexedLemmings;
 	Lemming* m_pSelectedLemming;
 	cocos2d::Sprite* m_pLemmingPointer;
+	Actions actionState;
 
    cocos2d::Size m_visibleSize;
 	cocos2d::Vec2 m_visibleOrigin;
@@ -98,4 +101,6 @@ private:
 	void CreateLemmingSelector();
 
 	bool isKeyPressed(cocos2d::EventKeyboard::KeyCode);
+
+	void capaAction(Actions);
 };

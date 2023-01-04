@@ -114,6 +114,23 @@ void MainScene::createDynamicMenu()
 		cocos2d::Color4F(255, 255, 255, 50)
 	);
 	addChild(_draw);
+
+	cocos2d::MenuItemImage* _action1 = cocos2d::MenuItemImage::create(
+		menu_closeButton_path,
+		menu_closeButton_selected_path,
+		CC_CALLBACK_0(MainScene::capaAction, this, MINING)
+	);
+	assert(_action1);
+	_action1->setAnchorPoint(cocos2d::Vec2(0,0));
+	_action1->setPosition(cocos2d::Vec2(
+		m_visibleOrigin.x,
+		m_visibleOrigin.y)
+	);
+	_action1->setScale(4);
+
+	cocos2d::Menu* _menu = cocos2d::Menu::create(_action1, NULL);
+	_menu->setPosition(cocos2d::Vec2::ZERO);
+	addChild(_menu, 1);
 }
 
 bool MainScene::OnMouseClick(cocos2d::Event* event)
@@ -253,4 +270,21 @@ Lemming* MainScene::getLemmingWithName(const std::string& name) const
 	const auto it = m_indexedLemmings.find(name);
 	if (it == m_indexedLemmings.end()) return nullptr;
 	return it->second;
+}
+
+void MainScene::capaAction(Actions actionState)
+{
+	switch (actionState)
+	{
+	case MINING:
+		CCLOG("Je mine");
+		break;
+	case BUILDING:
+		CCLOG("Je construis");
+		break;
+	case RESET:
+		break;
+	default:
+		break;
+	}
 }

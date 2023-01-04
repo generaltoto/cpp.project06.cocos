@@ -10,7 +10,7 @@ bool LevelMenu::init()
 	m_visibleOrigin = Director::getInstance()->getVisibleOrigin();
 
 	m_levelCursor = createLevelSelectorCursor();
-	m_idLvl = 1;
+	m_idLvl = 0;
 
 	return true;
 }
