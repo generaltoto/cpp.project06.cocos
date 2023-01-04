@@ -10,12 +10,12 @@ bool ModelMenuScene::init()
 	return true;
 }
 
-MenuItemImage* ModelMenuScene::createCloseItem()
+MenuItemImage* ModelMenuScene::CreateCloseItem()
 {
 	MenuItemImage* _closeItem = MenuItemImage::create(
 		menu_closeButton_path,
 		menu_closeButton_selected_path,
-		CC_CALLBACK_1(ModelMenuScene::menuCloseCallback, this)
+		CC_CALLBACK_1(ModelMenuScene::MenuCloseCallback, this)
 	);
 	assert(_closeItem);
 	_closeItem->setPosition(Vec2(
@@ -25,15 +25,15 @@ MenuItemImage* ModelMenuScene::createCloseItem()
 	return _closeItem;
 }
 
-MenuItemFont* ModelMenuScene::createReturnButton(Vec2 position)
+MenuItemFont* ModelMenuScene::CreateReturnButton(Vec2 position)
 {
-	MenuItemFont* _menuQuit = MenuItemFont::create("Quit",CC_CALLBACK_1(ModelMenuScene::returnToScene, this));
+	MenuItemFont* _menuQuit = MenuItemFont::create("Quit",CC_CALLBACK_1(ModelMenuScene::ReturnToScene, this));
 	_menuQuit->setPosition(position);
 	_menuQuit->setFontSizeObj(40);
 	return _menuQuit;
 }
 
-void ModelMenuScene::createTitle()
+void ModelMenuScene::CreateTitle()
 {
 	Label* _label = Label::createWithTTF("Save the Steves", font_path, 80);
 	assert(_label);
@@ -45,7 +45,7 @@ void ModelMenuScene::createTitle()
 	addChild(_label, 1);
 }
 
-void ModelMenuScene::createBackground(const char* path, float scale)
+void ModelMenuScene::CreateBackground(const char* path, float scale)
 {
 	Sprite* _bg = Sprite::create(path);
 	assert(_bg);
@@ -56,13 +56,13 @@ void ModelMenuScene::createBackground(const char* path, float scale)
 
 void ModelMenuScene::CreateDynamicMenu()
 {
-	Menu* _menu = Menu::create(createCloseItem(), NULL);
+	Menu* _menu = Menu::create(CreateCloseItem(), NULL);
 	_menu->setPosition(Vec2::ZERO);
 	addChild(_menu, 1);
 }
 
-void ModelMenuScene::returnToScene(Ref* pSender) { Director::getInstance()->popScene(); }
+void ModelMenuScene::ReturnToScene(Ref* pSender) { Director::getInstance()->popScene(); }
 
 void ModelMenuScene::update(float delta) { Node::update(delta); }
 
-void ModelMenuScene::menuCloseCallback(Ref* pSender) { Director::getInstance()->end(); }
+void ModelMenuScene::MenuCloseCallback(Ref* pSender) { Director::getInstance()->end(); }

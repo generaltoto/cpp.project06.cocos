@@ -11,9 +11,9 @@ public:
 	 */
 	void onEnter() override;
 
+	CREATE_FUNC(SettingMenu);
+
 private:
 
 	void CreateDynamicMenu() override;
-
-	CREATE_FUNC(SettingMenu);
 };

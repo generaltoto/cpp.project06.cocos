@@ -9,9 +9,6 @@ USING_NS_CC;
 class ModelMenuScene : public Scene
 {
 public:
-	Size m_visibleSize;
-	Vec2 m_visibleOrigin;
-
 	/**
 	 * \brief Inits the different elements of the scene.
 	 * \return True if good init or false if bad init.
@@ -27,17 +24,20 @@ public:
 
 protected:
 
-	MenuItemImage* createCloseItem();
+	Size m_visibleSize;
+	Vec2 m_visibleOrigin;
 
-	MenuItemFont* createReturnButton(Vec2);
+	MenuItemImage* CreateCloseItem();
 
-	void menuCloseCallback(Ref*);
+	MenuItemFont* CreateReturnButton(Vec2);
 
-	void returnToScene(Ref*);
+	void MenuCloseCallback(Ref*);
 
-	void createTitle();
+	void ReturnToScene(Ref*);
 
-	void createBackground(const char*, float);
+	void CreateTitle();
+
+	void CreateBackground(const char*, float);
 
 	virtual void CreateDynamicMenu();
 };

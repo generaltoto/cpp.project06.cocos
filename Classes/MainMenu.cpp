@@ -7,8 +7,8 @@ void MainMenu::onEnter()
 {
 	Scene::onEnter();
 
-	createTitle();
-	createBackground(menu_mainMenu_background_path, 1.6f);
+	CreateTitle();
+	CreateBackground(menu_mainMenu_background_path, 1.6f);
 	CreateDynamicMenu();
 }
 
@@ -42,7 +42,7 @@ void MainMenu::RunSettingsScene(Ref* pSender) const
 
 void MainMenu::CreateDynamicMenu()
 {
-	Menu* _menu = Menu::create(createCloseItem(), CreatePlayButton(), CreateSettingsButton(), NULL);
+	Menu* _menu = Menu::create(CreateCloseItem(), CreatePlayButton(), CreateSettingsButton(), NULL);
 	_menu->setPosition(Vec2::ZERO);
 	addChild(_menu, 1);
 }

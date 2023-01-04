@@ -16,8 +16,8 @@ void LevelMenu::onEnter()
 {
 	Scene::onEnter();
 
-	createTitle();
-	createBackground(menu_levelMenu_background_path, 1.1f);
+	CreateTitle();
+	CreateBackground(menu_levelMenu_background_path, 1.1f);
 	CreateDynamicMenu();
 }
 
@@ -91,7 +91,7 @@ void LevelMenu::CreateDynamicMenu()
 	_playButt->setPosition(Vec2((m_visibleSize.width / 5) * 4.5, (m_visibleSize.height / 12) * 4));
 	_playButt->setFontSizeObj(40);
 
-	Menu* _menu = Menu::create(createCloseItem(), createReturnButton(Vec2((m_visibleSize.width / 5) * 4.5, (m_visibleSize.height / 12) * 3)), _lvl1, _lvl2, _playButt, NULL);
+	Menu* _menu = Menu::create(CreateCloseItem(), CreateReturnButton(Vec2((m_visibleSize.width / 5) * 4.5, (m_visibleSize.height / 12) * 3)), _lvl1, _lvl2, _playButt, NULL);
 	assert(_menu);
 	_menu->setPosition(Vec2::ZERO);
 	addChild(_menu, 1);

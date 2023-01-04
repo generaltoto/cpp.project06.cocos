@@ -1,17 +1,11 @@
 #include "AppDelegate.h"
-#include "MainMenu.h"
-#include "LevelMenu.h"
-#include "SettingMenu.h"
-#include "MainScene.h"
 
 // #define USE_AUDIO_ENGINE 1
 
 #if USE_AUDIO_ENGINE
 #include "audio/include/AudioEngine.h"
-using namespace cocos2d::experimental;
+using namespace experimental;
 #endif
-
-USING_NS_CC;
 
 
 AppDelegate::AppDelegate() = default;

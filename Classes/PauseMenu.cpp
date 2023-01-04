@@ -4,8 +4,8 @@ void PauseMenu::onEnter()
 {
 	Scene::onEnter();
 
-	createTitle();
-	createBackground(menu_mainMenu_background_path, 1.6f);
+	CreateTitle();
+	CreateBackground(menu_mainMenu_background_path, 1.6f);
 	CreateDynamicMenu();
 }
 
@@ -35,7 +35,7 @@ void PauseMenu::returnMainMenu(Ref* pSender) const
 
 void PauseMenu::CreateDynamicMenu()
 {
-	Menu* _menu = Menu::create(createResumeButton(), createQuitButton(), createCloseItem(), NULL);
+	Menu* _menu = Menu::create(createResumeButton(), createQuitButton(), CreateCloseItem(), NULL);
 	_menu->setPosition(Vec2::ZERO);
 	addChild(_menu, 1);
 }
