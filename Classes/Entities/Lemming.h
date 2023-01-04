@@ -6,7 +6,7 @@
 
 enum LemmingState { SPAWNING, FALLING, WALKING_RIGHT, WALKING_LEFT };
 
-constexpr float spriteScale = 3.0;
+constexpr float spriteScale = 2.0;
 constexpr int lemmingSpriteSize = 21;
 
 class Lemming : public cocos2d::Node
