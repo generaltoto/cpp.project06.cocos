@@ -27,7 +27,7 @@ bool MainScene::init()
 	m_pMap = new TileMap(tileMap_path);
 	addChild(m_pMap->getMap());
 
-	m_pSelectedLemming = nullptr;
+	m_pPreviousSelectedLemming = m_pSelectedLemming = nullptr;
 	m_pLemmingPointer = nullptr;
 
 	EventListenerMouse* _mouseEventListener = EventListenerMouse::create();
@@ -56,11 +56,12 @@ void MainScene::onEnter()
 	AddWindowsEdgesCollider();
 	CreateDynamicMenu();
 
-	getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	//getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 }
 
 void MainScene::update(float delta)
 {
+	ModelMenuScene::update(delta);
 	Node::update(delta);
 	if (timer != m_lemmings.size())
 	{
@@ -68,41 +69,12 @@ void MainScene::update(float delta)
 		countDisp->setString(std::to_string(timer));
 	}
 
-	if (!m_loaded)
-	{
-		const time_t time = std::time(nullptr);
+	if (!m_loaded) SpawnLemmings();
 
-		if (time < m_nextSpawn) goto next;
+	if (m_pSelectedLemming == nullptr) m_pLemmingPointer->setVisible(false);
+	else UpdateLemmingCursorPos();
 
-		AddLemming(m_pMap->getSpawnPoint().x, m_pMap->getSpawnPoint().y);
-		m_nextSpawn = time + 5;
-
-		switch (m_lemmings.size())
-		{
-		case 1:
-			m_pSelectedLemming = m_lemmings[0];
-			CreateLemmingSelector();
-			break;
-		case 3:
-			m_loaded = true;
-			break;
-		default:
-			break;
-		}
-	}
-next:
-
-	if (m_pSelectedLemming != nullptr)
-	{
-		const Vec2 _targetLemmingPos = m_pSelectedLemming->getPosition();
-		m_pLemmingPointer->setPosition({
-			_targetLemmingPos.x, _targetLemmingPos.y
-			});
-		m_pLemmingPointer->setRotation(m_pLemmingPointer->getRotation() + 1);
-		m_pLemmingPointer->setVisible(true);
-		return;
-	}
-	m_pLemmingPointer->setVisible(false);
+	UpdatePreviousSelectedLemming();
 }
 
 void MainScene::CreateDynamicMenu()
@@ -120,8 +92,7 @@ void MainScene::CreateDynamicMenu()
 	_label->setAnchorPoint(Vec2(0.5, 0.5));
 	_label->setPosition(Vec2(
 		m_visibleSize.width / 2,
-		m_visibleSize.height / 16 * 15)
-	);
+		m_visibleSize.height / 16 * 15));
 	addChild(_label, 3);
 
 	Label* _timer = Label::createWithTTF(std::to_string(timer), font_path, 40);
@@ -144,12 +115,12 @@ void MainScene::CreateDynamicMenu()
 	addChild(_menu, 3);
 }
 
-MenuItemImage* MainScene::CreateActionMenu(Actions action, const char* path, const char* selected_path, int id)
+MenuItemImage* MainScene::CreateActionMenu(LemmingActionState action, const char* path, const char* selected_path, int id)
 {
 	MenuItemImage* _action = MenuItemImage::create(
 		path,
 		selected_path,
-		CC_CALLBACK_0(MainScene::CapacityAction, this, action)
+		CC_CALLBACK_0(MainScene::UpdateSelectedLemmingActionState, this, action)
 	);
 	assert(_action);
 	_action->setAnchorPoint(Vec2(0, 0.5));
@@ -178,9 +149,8 @@ void MainScene::AddWindowsEdgesCollider()
 		PhysicsMaterial(PHYSICSBODY_MATERIAL_DEFAULT),
 		1
 	);
-	_body->setCategoryBitmask(window_collision_mask_id);
+	_body->setCategoryBitmask(collider_mask_id);
 	_body->setCollisionBitmask(lemming_collision_mask_id);
-	_body->setContactTestBitmask(test_collision_mask_id);
 
 	Node* _edgeShape = Node::create();
 	_edgeShape->setPhysicsBody(_body);
@@ -191,11 +161,56 @@ void MainScene::AddWindowsEdgesCollider()
 	addChild(_edgeShape);
 }
 
+void MainScene::SpawnLemmings()
+{
+	const time_t time = std::time(nullptr);
+
+	if (time < m_nextSpawn) return;
+
+	AddLemming(m_pMap->getSpawnPoint().x, m_pMap->getSpawnPoint().y);
+	m_nextSpawn = time + 5;
+
+	switch (m_lemmings.size())
+	{
+	case 1:
+		m_pSelectedLemming = m_lemmings.front();
+		CreateLemmingSelector();
+		break;
+	case 3:
+		m_loaded = true;
+		break;
+	default:
+		break;
+	}
+}
+
 void MainScene::AddLemming(float positionX, float positionY)
 {
 	Lemming* _l = Lemming::create(lemming_asset_filePath, { positionX, positionY });
 	addChild(_l);
 	m_lemmings.push_back(_l);
+}
+
+void MainScene::UpdatePreviousSelectedLemming()
+{
+	if ((m_pPreviousSelectedLemming != m_pSelectedLemming) && (m_pSelectedLemming != nullptr))
+		m_pPreviousSelectedLemming = m_pSelectedLemming;
+}
+
+void MainScene::UpdateLemmingCursorPos() const
+{
+	Vec2 _targetLemmingPos;
+	if (m_pSelectedLemming == nullptr) _targetLemmingPos = m_pPreviousSelectedLemming->getPosition();
+	else _targetLemmingPos = m_pSelectedLemming->getPosition();
+
+	m_pLemmingPointer->setPosition({ _targetLemmingPos.x, _targetLemmingPos.y });
+	m_pLemmingPointer->setRotation(m_pLemmingPointer->getRotation() + 1);
+	m_pLemmingPointer->setVisible(true);
+}
+
+void MainScene::UpdateSelectedLemmingActionState(LemmingActionState state) const
+{
+	if (m_pPreviousSelectedLemming != nullptr) m_pPreviousSelectedLemming->UpdateActionState(state);
 }
 
 void MainScene::CreateLemmingSelector()
@@ -242,19 +257,4 @@ bool MainScene::MouseLeftClickCallBack(Vec2 mouseCoordinates)
 	}
 	m_pSelectedLemming = nullptr;
 	return false;
-}
-
-void MainScene::CapacityAction(Actions actionState)
-{
-	switch (actionState)
-	{
-	case MINING:
-		CCLOG("Je mine");
-		break;
-	case BUILDING:
-		CCLOG("Je construis");
-		break;
-	default:
-		break;
-	}
 }

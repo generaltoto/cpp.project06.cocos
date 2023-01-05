@@ -5,8 +5,6 @@
 #include "PauseMenu.h"
 #include "ModelMenuScene.h"
 
-enum Actions { MINING, BUILDING, JUMPING, EXPLODING, BLOCKING };
-
 class MainScene : public ModelMenuScene
 {
 public:
@@ -36,24 +34,33 @@ public:
 	CREATE_FUNC(MainScene)
 
 private:
-	bool m_loaded;
-	time_t m_nextSpawn;
+	bool m_loaded{};
+	time_t m_nextSpawn{};
 	int timer;
 	Label* countDisp;
 
 	TileMap* m_pMap{};
+
 	std::vector<Lemming*> m_lemmings;
 	Lemming* m_pSelectedLemming{};
+	Lemming* m_pPreviousSelectedLemming{};
 	Sprite* m_pLemmingPointer{};
-	Actions actionState;
 
 	void CreateDynamicMenu() override;
 
-	MenuItemImage* CreateActionMenu(Actions, const char*, const char*, int);
+	MenuItemImage* CreateActionMenu(LemmingActionState, const char*, const char*, int);
 
 	void AddWindowsEdgesCollider();
 
+	void SpawnLemmings();
+
 	void AddLemming(float positionX, float positionY);
+
+	void UpdatePreviousSelectedLemming();
+
+	void UpdateLemmingCursorPos() const;
+
+	void UpdateSelectedLemmingActionState(LemmingActionState state) const;
 
 	void CreateLemmingSelector();
 
@@ -62,6 +69,4 @@ private:
 	bool OnMouseClick(Event* event);
 
 	bool MouseLeftClickCallBack(Vec2 mouseCoordinates);
-
-	void CapacityAction(Actions);
 };

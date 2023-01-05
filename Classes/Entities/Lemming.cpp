@@ -12,6 +12,7 @@ Lemming* Lemming::create(const char* filePath, Vec2 pos)
 		_ret->setPosition(pos.x, pos.y);
 		_ret->m_id = m_nextId++;
 		_ret->m_currentState = SPAWNING;
+		_ret->m_actionState = CHILLING;
 		_ret->m_currentAcceleration = 1;
 		_ret->m_lemmingSpriteSize = { 21, 21 };
 
@@ -26,15 +27,25 @@ Lemming* Lemming::create(const char* filePath, Vec2 pos)
 		_lemmingPhysicBody->setGravityEnable(true);
 		_lemmingPhysicBody->getShape(0)->setRestitution(0);
 		_lemmingPhysicBody->setVelocity({ 0,0 });
-		_lemmingPhysicBody->setLinearDamping(0);
-		_lemmingPhysicBody->setAngularDamping(0);
 		_lemmingPhysicBody->setCategoryBitmask(lemming_collision_mask_id);
-		_lemmingPhysicBody->setCollisionBitmask(window_collision_mask_id);
-		_lemmingPhysicBody->setContactTestBitmask(test_collision_mask_id);
+		_lemmingPhysicBody->setCollisionBitmask(collider_mask_id);
 		_ret->setPhysicsBody(_lemmingPhysicBody);
 	}
 	else CC_SAFE_DELETE(_ret);
 	return _ret;
+}
+
+void Lemming::UpdateActionState(LemmingActionState state)
+{
+	// Cancel action and go back to chilling mode
+	if (m_actionState == state)
+	{
+		ReturnToDefaultActionState();
+		return;
+	}
+
+	if((state == BLOCKING || state == MINING) && isFloatNull(getPhysicsBody()->getVelocity().y))
+		m_actionState = state;
 }
 
 bool Lemming::init()
@@ -50,6 +61,52 @@ void Lemming::update(float delta)
 	UpdateMovementStateAndAnimation();
 
 	Move();
+
+	DoAction();
+}
+
+void Lemming::CreateSpriteFrames(Lemming* _l, const char* filePath) const 
+{
+	// Create idle Sprite 
+	_l->m_pIdleSpriteFrame = Sprite::create(
+		filePath,
+		Rect(23, 46, _l->m_lemmingSpriteSize.x, _l->m_lemmingSpriteSize.y)
+	);
+	assert(_l->m_pIdleSpriteFrame);
+	_l->m_pIdleSpriteFrame->setScale(spriteScale);
+	_l->addChild(_l->m_pIdleSpriteFrame);
+
+	// Create all animations frames
+	_l->m_pFallingSpriteFrames = CreateSpriteFramesFromImage({ 23,137 }, 2, filePath);
+	_l->m_pWalkingSpriteFrames = CreateSpriteFramesFromImage({ 22.80,90.5 }, 4, filePath);
+	_l->m_pMiningSpriteFrames = CreateSpriteFramesFromImage({ 23,210 }, 4, filePath);
+}
+
+Vector<SpriteFrame*> Lemming::CreateSpriteFramesFromImage(Vec2 startingPoint, int nbFrames, const char* filePath) const
+{
+	Vector<SpriteFrame*> _frames;
+	for (int i = 1; i <= nbFrames; i++)
+	{
+		SpriteFrame* _frame = SpriteFrame::create(
+			filePath,
+			Rect(startingPoint.x * i, startingPoint.y, lemmingSpriteSize, lemmingSpriteSize)
+		);
+		assert(_frame);
+		_frames.pushBack(_frame);
+	}
+	return _frames;
+}
+
+void Lemming::RunWithAnimation(const Vector<SpriteFrame*>& frames, bool isFlipped)
+{
+	Animation* _animation = Animation::createWithSpriteFrames(frames, 0.1f);
+	Animate* _animate = Animate::create(_animation);
+
+	Sprite* _sprite = Sprite::createWithSpriteFrame(frames.front());
+	_sprite->setScale(spriteScale);
+	_sprite->setFlippedX(isFlipped);
+	addChild(_sprite);
+	_sprite->runAction(RepeatForever::create(_animate));
 }
 
 void Lemming::Move() const
@@ -108,46 +165,38 @@ void Lemming::UpdateMovementStateAndAnimation()
 	}
 }
 
-void Lemming::CreateSpriteFrames(Lemming* _l, const char* filePath)
+void Lemming::DoAction() const
 {
-	// Create idle Sprite Frame
-	_l->m_pIdleSpriteFrame = Sprite::create(
-		filePath,
-		Rect(23, 46, _l->m_lemmingSpriteSize.x, _l->m_lemmingSpriteSize.y)
-	);
-	assert(_l->m_pIdleSpriteFrame);
-	_l->m_pIdleSpriteFrame->setScale(spriteScale);
-	_l->addChild(_l->m_pIdleSpriteFrame);
-
-	// Create falling sprite frame
-	_l->m_pFallingSpriteFrames = CreateSpriteFramesFromImage({ 23,137 }, 2, filePath);
-	_l->m_pWalkingSpriteFrames = CreateSpriteFramesFromImage({ 22.80,90.5 }, 4, filePath);
-	_l->m_pMiningSpriteFrames = CreateSpriteFramesFromImage({ 23,210 }, 4, filePath);
-}
-
-Vector<SpriteFrame*> Lemming::CreateSpriteFramesFromImage(Vec2 startingPoint, int nbFrames, const char* filePath)
-{
-	Vector<SpriteFrame*> _frames;
-	for (int i = 1; i <= nbFrames; i++)
+	switch (m_actionState)
 	{
-		SpriteFrame* _frame = SpriteFrame::create(
-			filePath,
-			Rect(startingPoint.x * i, startingPoint.y, lemmingSpriteSize, lemmingSpriteSize)
-		);
-		assert(_frame);
-		_frames.pushBack(_frame);
+	case BLOCKING:
+		// TODO Clean animation and sprite
+		Block();
+		// TODO Run with animation
+		break;
+	case MINING:
+	case BUILDING:
+	case JUMPING:
+	case EXPLODING:
+	case CHILLING:
+		break;
 	}
-	return _frames;
 }
 
-void Lemming::RunWithAnimation(const Vector<SpriteFrame*>& frames, bool isFlipped)
+void Lemming::Block() const
 {
-	Animation* _animation = Animation::createWithSpriteFrames(frames, 0.1f);
-	Animate* _animate = Animate::create(_animation);
+	PhysicsBody* _body = getPhysicsBody();
+	_body->setVelocity({0,0});
+	_body->setCategoryBitmask(collider_mask_id);
+	_body->setCollisionBitmask(lemming_collision_mask_id);
+	_body->addMass(3000);
+}
 
-	Sprite* _sprite = Sprite::createWithSpriteFrame(frames.front());
-	_sprite->setScale(spriteScale);
-	_sprite->setFlippedX(isFlipped);
-	addChild(_sprite);
-	_sprite->runAction(RepeatForever::create(_animate));
+void Lemming::ReturnToDefaultActionState()
+{
+	PhysicsBody* _body = getPhysicsBody();
+	m_actionState = CHILLING;
+	_body->setCategoryBitmask(lemming_collision_mask_id);
+	_body->setCollisionBitmask(collider_mask_id);
+	_body->addMass(-3000);
 }
