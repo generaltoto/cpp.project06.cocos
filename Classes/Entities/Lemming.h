@@ -70,9 +70,9 @@ private:
 	Vector<SpriteFrame*> m_pWalkingSpriteFrames;
 	Vector<SpriteFrame*> m_pMiningSpriteFrames;
 
-	static void CreateSpriteFrames(Lemming*, const char* filePath);
+	void CreateSpriteFrames(Lemming*, const char* filePath);
 
-	static Vector<SpriteFrame*> CreateSpriteFramesFromImage(Vec2 startingPoint, int nbFrames, const char* filePath);
+	Vector<SpriteFrame*> CreateSpriteFramesFromImage(Vec2 startingPoint, int nbFrames, const char* filePath);
 
 	void Move() const;
 
