@@ -109,7 +109,6 @@ void MainScene::AddWindowsEdgesCollider()
 	);
 	_body->setCategoryBitmask(collider_mask_id);
 	_body->setCollisionBitmask(lemming_collision_mask_id);
-	_body->setContactTestBitmask(test_collision_mask_id);
 
 	Node* _edgeShape = Node::create();
 	_edgeShape->setPhysicsBody(_body);
@@ -158,7 +157,10 @@ void MainScene::UpdatePreviousSelectedLemming()
 
 void MainScene::UpdateLemmingCursorPos() const
 {
-	const Vec2 _targetLemmingPos = m_pSelectedLemming->getPosition();
+	Vec2 _targetLemmingPos;
+	if (m_pSelectedLemming == nullptr) _targetLemmingPos = m_pPreviousSelectedLemming->getPosition();
+	else _targetLemmingPos = m_pSelectedLemming->getPosition();
+
 	m_pLemmingPointer->setPosition({ _targetLemmingPos.x, _targetLemmingPos.y });
 	m_pLemmingPointer->setRotation(m_pLemmingPointer->getRotation() + 1);
 	m_pLemmingPointer->setVisible(true);

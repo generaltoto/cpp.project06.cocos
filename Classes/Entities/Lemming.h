@@ -33,7 +33,11 @@ public:
 	 */
 	static Lemming* create(const char* filePath, ::Vec2 pos);
 
-	void UpdateActionState(LemmingActionState action);
+	/**
+	 * \brief Updates the lemming action state with given state
+	 * \param state The lemming's new state
+	 */
+	void UpdateActionState(LemmingActionState state);
 
 	/**
 	 * \brief Get the lemming's sprite size
@@ -70,19 +74,19 @@ private:
 	Vector<SpriteFrame*> m_pWalkingSpriteFrames;
 	Vector<SpriteFrame*> m_pMiningSpriteFrames;
 
-	void CreateSpriteFrames(Lemming*, const char* filePath);
+	void CreateSpriteFrames(Lemming*, const char* filePath) const;
 
-	Vector<SpriteFrame*> CreateSpriteFramesFromImage(Vec2 startingPoint, int nbFrames, const char* filePath);
+	Vector<SpriteFrame*> CreateSpriteFramesFromImage(Vec2 startingPoint, int nbFrames, const char* filePath) const;
+
+	void RunWithAnimation(const Vector<SpriteFrame*>& frames, bool isFlipped);
 
 	void Move() const;
 
 	void UpdateMovementStateAndAnimation();
 
-	void RunWithAnimation(const Vector<SpriteFrame*>& frames, bool isFlipped);
+	void DoAction() const;
 
-	void DoAction();
+	void Block() const;
 
-	void Block();
-
-	void ReturnToDefaultState();
+	void ReturnToDefaultActionState();
 };
