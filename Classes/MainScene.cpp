@@ -100,6 +100,15 @@ void MainScene::CreateDynamicMenu()
 	);
 	addChild(_draw,2);
 
+	Label* _label = Label::createWithTTF("Lemmings : " + m_lemmings.size(), font_path, 40);
+	assert(_label);
+	_label->setAnchorPoint(Vec2(0.5, 0.5));
+	_label->setPosition(Vec2(
+		m_visibleSize.width / 2,
+		m_visibleSize.height / 16 * 15)
+	);
+	addChild(_label, 3);
+
 	Menu* _menu = Menu::create(
 		CreateActionMenu(BUILDING,action_build_path, action_build_selected_path, 0), 
 		CreateActionMenu(JUMPING, action_jump_path, action_jump_selected_path, 1),
