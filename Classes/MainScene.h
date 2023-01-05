@@ -38,6 +38,8 @@ public:
 private:
 	bool m_loaded;
 	time_t m_nextSpawn;
+	int timer;
+	Label* countDisp;
 
 	TileMap* m_pMap{};
 	std::vector<Lemming*> m_lemmings;

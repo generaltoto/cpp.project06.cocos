@@ -12,8 +12,17 @@ bool MainScene::init()
 	if (!initWithPhysics()) return false;
 	m_loaded = false;
 	m_nextSpawn = std::time(nullptr);
+	timer = 0;
 	m_visibleSize = designResolutionSize;
 	m_visibleOrigin = { 0, 0 };
+
+	countDisp = Label::createWithTTF("", font_path, 40);
+	countDisp->setAnchorPoint(Vec2(0.5, 0.5));
+	countDisp->setPosition(Vec2(
+		m_visibleSize.width / 2 + 100,
+		m_visibleSize.height / 16 * 15)
+	);
+	addChild(countDisp, 3);
 
 	m_pMap = new TileMap(tileMap_path);
 	addChild(m_pMap->getMap());
@@ -53,6 +62,11 @@ void MainScene::onEnter()
 void MainScene::update(float delta)
 {
 	Node::update(delta);
+	if (timer != m_lemmings.size())
+	{
+		timer = m_lemmings.size();
+		countDisp->setString(std::to_string(timer));
+	}
 
 	if (!m_loaded)
 	{
@@ -77,6 +91,7 @@ void MainScene::update(float delta)
 		}
 	}
 next:
+
 	if (m_pSelectedLemming != nullptr)
 	{
 		const Vec2 _targetLemmingPos = m_pSelectedLemming->getPosition();
@@ -100,7 +115,7 @@ void MainScene::CreateDynamicMenu()
 	);
 	addChild(_draw,2);
 
-	Label* _label = Label::createWithTTF("Lemmings : " + m_lemmings.size(), font_path, 40);
+	Label* _label = Label::createWithTTF("Lemmings : ", font_path, 40);
 	assert(_label);
 	_label->setAnchorPoint(Vec2(0.5, 0.5));
 	_label->setPosition(Vec2(
@@ -108,6 +123,15 @@ void MainScene::CreateDynamicMenu()
 		m_visibleSize.height / 16 * 15)
 	);
 	addChild(_label, 3);
+
+	Label* _timer = Label::createWithTTF(std::to_string(timer), font_path, 40);
+	assert(_timer);
+	_timer->setAnchorPoint(Vec2(0.5, 0.5));
+	_timer->setPosition(Vec2(
+		m_visibleSize.width / 4 * 3,
+		m_visibleSize.height / 16 * 15)
+	);
+	addChild(_timer, 4);
 
 	Menu* _menu = Menu::create(
 		CreateActionMenu(BUILDING,action_build_path, action_build_selected_path, 0), 
