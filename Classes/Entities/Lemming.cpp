@@ -12,6 +12,7 @@ Lemming* Lemming::create(const char* filePath, Vec2 pos)
 		_ret->setPosition(pos.x, pos.y);
 		_ret->m_id = m_nextId++;
 		_ret->m_currentState = SPAWNING;
+		_ret->m_actionState = CHILLING;
 		_ret->m_currentAcceleration = 1;
 		_ret->m_lemmingSpriteSize = { 21, 21 };
 
@@ -26,15 +27,42 @@ Lemming* Lemming::create(const char* filePath, Vec2 pos)
 		_lemmingPhysicBody->setGravityEnable(true);
 		_lemmingPhysicBody->getShape(0)->setRestitution(0);
 		_lemmingPhysicBody->setVelocity({ 0,0 });
-		_lemmingPhysicBody->setLinearDamping(0);
-		_lemmingPhysicBody->setAngularDamping(0);
-		_lemmingPhysicBody->setCategoryBitmask(lemming_collision_mask_id);
-		_lemmingPhysicBody->setCollisionBitmask(window_collision_mask_id);
-		_lemmingPhysicBody->setContactTestBitmask(test_collision_mask_id);
+		_lemmingPhysicBody->setCollisionBitmask(collider_mask_id);
 		_ret->setPhysicsBody(_lemmingPhysicBody);
 	}
 	else CC_SAFE_DELETE(_ret);
 	return _ret;
+}
+
+void Lemming::UpdateActionState(LemmingActionState action)
+{
+	// Cancel action and go back to chilling mode
+	if (m_actionState == action)
+	{
+		ReturnToDefaultState();
+		return;
+	}
+
+	if((action == BLOCKING || action == MINING) && isFloatNull(getPhysicsBody()->getVelocity().y))
+		m_actionState = action;
+}
+
+void Lemming::DoAction()
+{
+	switch (m_actionState)
+	{
+	case BLOCKING:
+		// TODO Clean animation and sprite
+		Block();
+		// TODO Run with animation
+		break;
+	case MINING:
+	case BUILDING:
+	case JUMPING:
+	case EXPLODING:
+	case CHILLING:
+		break;
+	}
 }
 
 bool Lemming::init()
@@ -50,6 +78,8 @@ void Lemming::update(float delta)
 	UpdateMovementStateAndAnimation();
 
 	Move();
+
+	DoAction();
 }
 
 void Lemming::Move() const
@@ -150,4 +180,18 @@ void Lemming::RunWithAnimation(const Vector<SpriteFrame*>& frames, bool isFlippe
 	_sprite->setFlippedX(isFlipped);
 	addChild(_sprite);
 	_sprite->runAction(RepeatForever::create(_animate));
+}
+
+void Lemming::Block()
+{
+	PhysicsBody* _body = getPhysicsBody();
+	_body->setVelocity({0,0});
+	_body->addMass(3000);
+}
+
+void Lemming::ReturnToDefaultState()
+{
+	PhysicsBody* _body = getPhysicsBody();
+	m_actionState = CHILLING;
+	_body->addMass(-2700);
 }
