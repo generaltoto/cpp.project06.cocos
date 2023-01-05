@@ -28,14 +28,16 @@ MenuItemFont* MainMenu::CreateSettingsButton()
 	return _menuSettings;
 }
 
-void MainMenu::RunPlayScene(Ref* pSender) const
+void MainMenu::RunPlayScene(Ref* pSender) 
 {
+	//ModelMenuScene::PlayMenuSoundEffect();
 	Scene* _levelScene = LevelMenu::create();
 	Director::getInstance()->pushScene(TransitionFade::create(0.5, _levelScene, Color3B(255, 255, 255)));
 }
 
-void MainMenu::RunSettingsScene(Ref* pSender) const
+void MainMenu::RunSettingsScene(Ref* pSender)
 {
+	//ModelMenuScene::PlayMenuSoundEffect();
 	Scene* _settingScene = SettingMenu::create();
 	Director::getInstance()->pushScene(_settingScene);
 }

@@ -21,7 +21,7 @@ private:
 
 	MenuItemFont* createQuitButton();
 
-	void resume(Ref*) const;
+	void resume(Ref*);
 
-	void returnMainMenu(Ref*) const;
+	void returnMainMenu(Ref*);
 };

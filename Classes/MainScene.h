@@ -62,7 +62,7 @@ private:
 
 	void UpdateLemmingCursorPos() const;
 
-	void UpdateSelectedLemmingActionState(LemmingActionState state) const;
+	void UpdateSelectedLemmingActionState(LemmingActionState state);
 
 	void CreateLemmingSelector();
 

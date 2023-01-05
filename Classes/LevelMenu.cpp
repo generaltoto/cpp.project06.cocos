@@ -21,8 +21,9 @@ void LevelMenu::onEnter()
 	CreateDynamicMenu();
 }
 
-void LevelMenu::RunLevelScene(Ref* pSender) const
+void LevelMenu::RunLevelScene(Ref* pSender)
 {
+	//ModelMenuScene::PlayMenuSoundEffect();
 	if (m_idLvl != 0)
 	{
 		Scene* _playScene = MainScene::create();
@@ -32,6 +33,7 @@ void LevelMenu::RunLevelScene(Ref* pSender) const
 
 void LevelMenu::UpdateSelectedLevel(Ref* pSender, Vec2 coordinates, int index)
 {
+	//ModelMenuScene::PlayMenuSoundEffect();
 	m_levelCursor->setPosition(coordinates);
 	m_idLvl = index;
 }

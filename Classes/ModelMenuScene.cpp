@@ -61,8 +61,21 @@ void ModelMenuScene::CreateDynamicMenu()
 	addChild(_menu, 1);
 }
 
-void ModelMenuScene::ReturnToScene(Ref* pSender) { Director::getInstance()->popScene(); }
+void ModelMenuScene::PlayMenuSoundEffect()
+{
+	//AudioEngine::play2d(audio_menu_path, false, 1.0f);
+}
+
+void ModelMenuScene::ReturnToScene(Ref* pSender) 
+{ 
+	//PlayMenuSoundEffect();
+	Director::getInstance()->popScene(); 
+}
 
 void ModelMenuScene::update(float delta) { Scene::update(delta); }
 
-void ModelMenuScene::MenuCloseCallback(Ref* pSender) { Director::getInstance()->end(); }
+void ModelMenuScene::MenuCloseCallback(Ref* pSender) 
+{ 
+	//PlayMenuSoundEffect();
+	Director::getInstance()->end(); 
+}

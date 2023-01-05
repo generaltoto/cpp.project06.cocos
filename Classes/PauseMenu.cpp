@@ -25,10 +25,15 @@ MenuItemFont* PauseMenu::createQuitButton()
 	return _menuQuit;
 }
 
-void PauseMenu::resume(Ref* pSender) const { Director::getInstance()->popScene(); }
+void PauseMenu::resume(Ref* pSender) 
+{ 
+	//ModelMenuScene::PlayMenuSoundEffect();
+	Director::getInstance()->popScene(); 
+}
 
-void PauseMenu::returnMainMenu(Ref* pSender) const
+void PauseMenu::returnMainMenu(Ref* pSender) 
 {
+	//ModelMenuScene::PlayMenuSoundEffect();
 	Scene* _playScene = MainMenu::create();
 	Director::getInstance()->replaceScene(TransitionFade::create(0.5, _playScene, Color3B(255, 255, 255)));
 }

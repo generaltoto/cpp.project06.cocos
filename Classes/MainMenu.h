@@ -23,7 +23,7 @@ private:
 
 	MenuItemFont* CreateSettingsButton();
 
-	void RunPlayScene(Ref*) const;
+	void RunPlayScene(Ref*);
 
-	void RunSettingsScene(Ref*) const;
+	void RunSettingsScene(Ref*);
 };

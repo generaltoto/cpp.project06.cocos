@@ -219,8 +219,9 @@ void MainScene::UpdateLemmingCursorPos() const
 	m_pLemmingPointer->setVisible(true);
 }
 
-void MainScene::UpdateSelectedLemmingActionState(LemmingActionState state) const
+void MainScene::UpdateSelectedLemmingActionState(LemmingActionState state) 
 {
+	//ModelMenuScene::PlayMenuSoundEffect();
 	if (m_pPreviousSelectedLemming != nullptr) m_pPreviousSelectedLemming->UpdateActionState(state);
 }
 

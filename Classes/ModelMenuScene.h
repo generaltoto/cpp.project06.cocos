@@ -8,6 +8,7 @@
 #include "CCDirector.h"
 #include "../proj.win32/Paths.h"
 #include "../proj.win32/ScreenSizes.h"
+#include "audio/include/AudioEngine.h"
 
 USING_NS_CC;
 
@@ -45,4 +46,6 @@ protected:
 	void CreateBackground(const char*, float);
 
 	virtual void CreateDynamicMenu();
+
+	void PlayMenuSoundEffect();
 };

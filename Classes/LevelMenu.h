@@ -25,7 +25,7 @@ private:
 
 	void CreateDynamicMenu() override;
 
-	void RunLevelScene(Ref*) const;
+	void RunLevelScene(Ref*);
 
 	Sprite* CreateLevelSelectorCursor();
 
