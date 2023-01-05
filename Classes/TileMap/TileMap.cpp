@@ -23,7 +23,7 @@ void TileMap::initMap(std::string tileMapPath)
                 Size(m_pCollision->getTileSet()->_tileSize) - Size(7, 7),
                 PhysicsMaterial(PHYSICSBODY_MATERIAL_DEFAULT));
 
-            pB->setCategoryBitmask(window_collision_mask_id);
+            pB->setCategoryBitmask(collider_mask_id);
             pB->setDynamic(false);
             m_pCollision->getTileAt(Vec2(i,j))->setPhysicsBody(pB);
         }

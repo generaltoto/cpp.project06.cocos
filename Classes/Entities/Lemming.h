@@ -12,6 +12,8 @@ USING_NS_CC;
 
 enum LemmingState { SPAWNING, FALLING, WALKING_RIGHT, WALKING_LEFT };
 
+enum LemmingActionState { CHILLING, MINING, BUILDING, BLOCKING, JUMPING, EXPLODING };
+
 constexpr float spriteScale = 2.0;
 constexpr int lemmingSpriteSize = 21;
 
@@ -19,15 +21,23 @@ class Lemming : public Node
 {
 public:
 
-	/**
-	 * \brief Id of this Lemming
-	 */
+	/** \brief Id of this Lemming */
 	int m_id{};
 
-	/**
-	 * \brief Id of the next Lemming
-	 */
+	/** \brief Id of the next Lemming */
 	static int m_nextId;
+
+	/**
+	 * \brief Creates the lemming
+	 * \return The sprite created with physic body
+	 */
+	static Lemming* create(const char* filePath, ::Vec2 pos);
+
+	/**
+	 * \brief Updates the lemming action state with given state
+	 * \param state The lemming's new state
+	 */
+	void UpdateActionState(LemmingActionState state);
 
 	/**
 	 * \brief Get the lemming's sprite size
@@ -35,11 +45,6 @@ public:
 	 */
 	Vec2 getSpriteSize() const { return m_lemmingSpriteSize; }
 
-	/**
-	 * \brief Creates the lemming
-	 * \return The sprite created with physic body
-	 */
-	static Lemming* create(const char* filePath, ::Vec2 pos);
 
 	/**
 	 * \brief Initiates all members, inherited from cocos.
@@ -58,6 +63,7 @@ private:
 	const float m_lemmingVelocity = 130;
 
 	LemmingState m_currentState{};
+	LemmingActionState m_actionState{};
 
 	int m_currentAcceleration{};
 
@@ -68,13 +74,19 @@ private:
 	Vector<SpriteFrame*> m_pWalkingSpriteFrames;
 	Vector<SpriteFrame*> m_pMiningSpriteFrames;
 
-	static void CreateSpriteFrames(Lemming*, const char* filePath);
+	void CreateSpriteFrames(Lemming*, const char* filePath) const;
 
-	static Vector<SpriteFrame*> CreateSpriteFramesFromImage(Vec2 startingPoint, int nbFrames, const char* filePath);
+	Vector<SpriteFrame*> CreateSpriteFramesFromImage(Vec2 startingPoint, int nbFrames, const char* filePath) const;
+
+	void RunWithAnimation(const Vector<SpriteFrame*>& frames, bool isFlipped);
 
 	void Move() const;
 
 	void UpdateMovementStateAndAnimation();
 
-	void RunWithAnimation(const Vector<SpriteFrame*>& frames, bool isFlipped);
+	void DoAction() const;
+
+	void Block() const;
+
+	void ReturnToDefaultActionState();
 };

@@ -63,6 +63,6 @@ void ModelMenuScene::CreateDynamicMenu()
 
 void ModelMenuScene::ReturnToScene(Ref* pSender) { Director::getInstance()->popScene(); }
 
-void ModelMenuScene::update(float delta) { Node::update(delta); }
+void ModelMenuScene::update(float delta) { Scene::update(delta); }
 
 void ModelMenuScene::MenuCloseCallback(Ref* pSender) { Director::getInstance()->end(); }
