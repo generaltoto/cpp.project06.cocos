@@ -816,8 +816,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="..\Classes\SettingMenu.h" />
     <ClCompile Include="..\Classes\ModelMenuScene.cpp" />
     <ClCompile Include="..\Classes\PauseMenu.cpp" />
+    <ClCompile Include="..\Classes\WinMenu.cpp" />
     <ClCompile Include="UtilityFunctions.cpp" />
     <ClInclude Include="..\Classes\Entities\Lemming.h" />
+    <ClInclude Include="..\Classes\WinMenu.h" />
     <ClInclude Include="Bitmasks.h" />
     <ClInclude Include="..\Classes\TileMap\TileMap.h" />
     <ClInclude Include="Paths.h" />

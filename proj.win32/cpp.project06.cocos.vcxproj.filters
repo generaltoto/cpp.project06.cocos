@@ -35,6 +35,9 @@
     <ClCompile Include="UtilityFunctions.cpp">
       <Filter>Source Files\Utility</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\WinMenu.cpp">
+      <Filter>Source Files\Classes\Scenes\Menu</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="T:\cpp.project06.cocos\CMakeLists.txt" />
@@ -119,6 +122,9 @@
     </ClInclude>
     <ClInclude Include="Bitmasks.h">
       <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\WinMenu.h">
+      <Filter>Source Files\Classes\Scenes\Menu</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

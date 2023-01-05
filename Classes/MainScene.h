@@ -3,6 +3,7 @@
 #include "Entities/Lemming.h"
 #include "TileMap/TileMap.h"
 #include "PauseMenu.h"
+#include "WinMenu.h"
 #include "ModelMenuScene.h"
 
 enum Actions { MINING, BUILDING, RESET };
@@ -45,11 +46,17 @@ private:
 	Sprite* m_pLemmingPointer{};
 	Actions actionState;
 
+	int m_totalLemmings = 1;
+	int m_lemmingsSpawned = 0;
+	int m_lemmingsEnded = 0;
+
 	void CreateDynamicMenu() override;
 
 	void AddWindowsEdgesCollider();
 
 	void AddLemming(float positionX, float positionY);
+
+	bool OnLemmingContactBegin(const PhysicsContact& contact);
 
 	void CreateLemmingSelector();
 

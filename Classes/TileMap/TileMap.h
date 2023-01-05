@@ -28,6 +28,7 @@ private:
     TMXTiledMap* m_pMap;
     TMXLayer* m_pBackground;
     TMXLayer* m_pCollision;
+    TMXLayer* m_pEnd;
     TMXObjectGroup* m_pEntities;
 
     Vec2 m_spawnPoint;

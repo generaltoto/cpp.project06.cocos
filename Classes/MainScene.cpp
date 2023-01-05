@@ -28,8 +28,11 @@ bool MainScene::init()
 	EventListenerKeyboard* keyboardListener = EventListenerKeyboard::create();
 	Director::getInstance()->getOpenGLView()->setIMEKeyboardState(true);
 	keyboardListener->onKeyPressed = CC_CALLBACK_2(MainScene::OnKeyPressed, this);
-	this->_eventDispatcher->addEventListenerWithSceneGraphPriority(keyboardListener, this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 
+	EventListenerPhysicsContact* _endListener = EventListenerPhysicsContact::create();
+	_endListener->onContactBegin = CC_CALLBACK_1(MainScene::OnLemmingContactBegin, this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(_endListener, this);
 	scheduleUpdate();
 
 	return true;
@@ -61,20 +64,20 @@ void MainScene::update(float delta)
 		if (time < m_nextSpawn) goto next;
 
 		AddLemming(m_pMap->getSpawnPoint().x, m_pMap->getSpawnPoint().y);
-		m_nextSpawn = time + 5;
+		m_lemmingsSpawned += 1;
+		m_nextSpawn = time + 2;
 
-		switch (m_lemmings.size())
+		switch (m_lemmingsSpawned)
 		{
 		case 1:
 			m_pSelectedLemming = m_lemmings[0];
 			CreateLemmingSelector();
 			break;
-		case 3:
-			m_loaded = true;
-			break;
 		default:
 			break;
 		}
+
+		if (m_lemmingsSpawned == m_totalLemmings) m_loaded = true;
 	}
 next:
 	if (m_pSelectedLemming != nullptr)
@@ -88,6 +91,16 @@ next:
 		return;
 	}
 	m_pLemmingPointer->setVisible(false);
+
+	if (m_lemmingsEnded == m_totalLemmings)
+	{
+		Scene* _winScene = WinMenu::create();
+		std::map<std::string, int>* stats = new std::map<std::string, int>;
+		(*stats)["total"] = m_totalLemmings;
+		(*stats)["ended"] = m_lemmingsEnded;
+		_winScene->setUserData((void*)stats);
+		Director::getInstance()->pushScene(_winScene);
+	}
 }
 
 void MainScene::CreateDynamicMenu()
@@ -153,6 +166,38 @@ void MainScene::AddLemming(float positionX, float positionY)
 	Lemming* _l = Lemming::create(lemming_asset_filePath, { positionX, positionY });
 	addChild(_l);
 	m_lemmings.push_back(_l);
+}
+
+bool MainScene::OnLemmingContactBegin(const PhysicsContact& contact)
+{
+	PhysicsBody* _shapeA = contact.getShapeA()->getBody();
+	PhysicsBody* _shapeB = contact.getShapeB()->getBody();
+
+	if ((_shapeA->getCategoryBitmask() == lemming_collision_mask_id && _shapeB->getContactTestBitmask() == lemming_collision_mask_id) ||
+		(_shapeA->getContactTestBitmask() == lemming_collision_mask_id && _shapeB->getCategoryBitmask() == lemming_collision_mask_id)) {
+		m_lemmingsEnded += 1;
+
+		Node* _node = nullptr;
+		unsigned int _index = 0;
+
+		if (_shapeA->getCategoryBitmask() == lemming_collision_mask_id) _node = _shapeA->getNode();
+		else _node = _shapeB->getNode();
+
+		for (_index; _index < m_lemmings.size(); _index++)
+		{
+			if (m_lemmings[_index] != _node) continue;
+			if (m_pSelectedLemming == m_lemmings[_index]) m_pSelectedLemming = nullptr;
+			m_lemmings[_index]->removeFromParent();
+			m_lemmings[_index]->release();
+			break;
+		}
+
+		m_lemmings.erase(m_lemmings.begin() + _index);
+
+		return true;
+	}
+
+	return false;
 }
 
 void MainScene::CreateLemmingSelector()
