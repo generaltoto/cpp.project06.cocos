@@ -215,6 +215,38 @@ void MainScene::AddLemming(float positionX, float positionY)
 	m_lemmings.push_back(_l);
 }
 
+bool MainScene::OnLemmingContactBegin(const PhysicsContact& contact)
+{
+	PhysicsBody* _shapeA = contact.getShapeA()->getBody();
+	PhysicsBody* _shapeB = contact.getShapeB()->getBody();
+
+	if ((_shapeA->getCategoryBitmask() == lemming_collision_mask_id && _shapeB->getContactTestBitmask() == lemming_collision_mask_id) ||
+		(_shapeA->getContactTestBitmask() == lemming_collision_mask_id && _shapeB->getCategoryBitmask() == lemming_collision_mask_id)) {
+		m_lemmingsEnded += 1;
+
+		Node* _node = nullptr;
+		unsigned int _index = 0;
+
+		if (_shapeA->getCategoryBitmask() == lemming_collision_mask_id) _node = _shapeA->getNode();
+		else _node = _shapeB->getNode();
+
+		for (_index; _index < m_lemmings.size(); _index++)
+		{
+			if (m_lemmings[_index] != _node) continue;
+			if (m_pSelectedLemming == m_lemmings[_index]) m_pSelectedLemming = nullptr;
+			m_lemmings[_index]->removeFromParent();
+			m_lemmings[_index]->release();
+			break;
+		}
+
+		m_lemmings.erase(m_lemmings.begin() + _index);
+
+		return true;
+	}
+
+	return false;
+}
+
 void MainScene::CreateLemmingSelector()
 {
 	Sprite* _sp = Sprite::create(lemming_selector_asset_path);
