@@ -247,6 +247,29 @@ bool MainScene::OnLemmingContactBegin(const PhysicsContact& contact)
 	return false;
 }
 
+void MainScene::UpdatePreviousSelectedLemming()
+{
+	if ((m_pPreviousSelectedLemming != m_pSelectedLemming) && (m_pSelectedLemming != nullptr))
+		m_pPreviousSelectedLemming = m_pSelectedLemming;
+}
+
+void MainScene::UpdateLemmingCursorPos() const
+{
+	Vec2 _targetLemmingPos;
+	if (m_pSelectedLemming == nullptr) _targetLemmingPos = m_pPreviousSelectedLemming->getPosition();
+	else _targetLemmingPos = m_pSelectedLemming->getPosition();
+
+	m_pLemmingPointer->setPosition({ _targetLemmingPos.x, _targetLemmingPos.y });
+	m_pLemmingPointer->setRotation(m_pLemmingPointer->getRotation() + 1);
+	m_pLemmingPointer->setVisible(true);
+}
+
+void MainScene::UpdateSelectedLemmingActionState(LemmingActionState state)
+{
+	//ModelMenuScene::PlayMenuSoundEffect();
+	if (m_pPreviousSelectedLemming != nullptr) m_pPreviousSelectedLemming->UpdateActionState(state);
+}
+
 void MainScene::CreateLemmingSelector()
 {
 	Sprite* _sp = Sprite::create(lemming_selector_asset_path);
