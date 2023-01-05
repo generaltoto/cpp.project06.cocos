@@ -5,7 +5,7 @@
 #include "PauseMenu.h"
 #include "ModelMenuScene.h"
 
-enum Actions { MINING, BUILDING, RESET };
+enum Actions { MINING, BUILDING, JUMPING, EXPLODING, BLOCKING };
 
 class MainScene : public ModelMenuScene
 {
@@ -46,6 +46,8 @@ private:
 	Actions actionState;
 
 	void CreateDynamicMenu() override;
+
+	MenuItemImage* CreateActionMenu(Actions, const char*, const char*, int);
 
 	void AddWindowsEdgesCollider();
 

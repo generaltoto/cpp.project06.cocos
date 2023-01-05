@@ -907,11 +907,24 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\Resources\build.png" />
+    <Image Include="..\Resources\build_selected.png" />
+    <Image Include="..\Resources\jump.png" />
+    <Image Include="..\Resources\jump_selected.png" />
     <Image Include="..\Resources\lemming_selector.png" />
     <Image Include="..\Resources\main_menu.jpg" />
     <Image Include="..\Resources\map_cursor.png" />
     <Image Include="..\Resources\map_level.png" />
+    <Image Include="..\Resources\mining.png" />
+    <Image Include="..\Resources\mining_selected.png" />
+    <Image Include="..\Resources\tnt.png" />
+    <Image Include="..\Resources\tnt_selected.png" />
+    <Image Include="..\Resources\tpose.png" />
+    <Image Include="..\Resources\tpose_selected.png" />
     <Image Include="C:\Users\thoma\workspaces\GTECH2\cpp.project06.cocos\Resources\lemming-sprite-sheet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="..\Resources\audio\menu_sound.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

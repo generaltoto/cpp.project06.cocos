@@ -61,6 +61,9 @@
     <Filter Include="Source Files\Utility">
       <UniqueIdentifier>{8530b858-f0f3-41e2-931b-7ed7ada8a4ee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\audio">
+      <UniqueIdentifier>{5bd0bac4-1d28-4de3-bf85-100bb7b17ee5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="T:\cpp.project06.cocos\proj.win32\main.h" />
@@ -168,5 +171,40 @@
     <Image Include="C:\Users\thoma\workspaces\GTECH2\cpp.project06.cocos\Resources\lemming-sprite-sheet.png">
       <Filter>Resources</Filter>
     </Image>
+    <Image Include="..\Resources\build.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\build_selected.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\jump.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\jump_selected.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\mining.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\mining_selected.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\tnt.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\tnt_selected.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\tpose.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\tpose_selected.png">
+      <Filter>Resources</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="..\Resources\audio\menu_sound.wav">
+      <Filter>Resources\audio</Filter>
+    </Media>
   </ItemGroup>
 </Project>

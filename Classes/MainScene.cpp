@@ -94,28 +94,38 @@ void MainScene::CreateDynamicMenu()
 {
 	DrawNode* _draw = DrawNode::create();
 	_draw->drawSolidRect(
-		Vec2(0, 0),
-		Vec2(m_visibleSize.width, m_visibleSize.height / 7),
+		Vec2(0, m_visibleSize.height),
+		Vec2(m_visibleSize.width, m_visibleSize.height / 8 * 7),
 		Color4F(255, 255, 255, 50)
 	);
-	addChild(_draw);
+	addChild(_draw,2);
 
-	MenuItemImage* _action1 = MenuItemImage::create(
-		menu_closeButton_path,
-		menu_closeButton_selected_path,
-		CC_CALLBACK_0(MainScene::CapacityAction, this, MINING)
-	);
-	assert(_action1);
-	_action1->setAnchorPoint(Vec2(0, 0));
-	_action1->setPosition(Vec2(
-		m_visibleOrigin.x,
-		m_visibleOrigin.y)
-	);
-	_action1->setScale(4);
-
-	Menu* _menu = Menu::create(_action1, NULL);
+	Menu* _menu = Menu::create(
+		CreateActionMenu(BUILDING,action_build_path, action_build_selected_path, 0), 
+		CreateActionMenu(JUMPING, action_jump_path, action_jump_selected_path, 1),
+		CreateActionMenu(MINING, action_mining_path, action_mining_selected_path, 2),
+		CreateActionMenu(BLOCKING, action_tpose_path, action_tpose_selected_path, 3),
+		CreateActionMenu(EXPLODING, action_explode_path, action_explode_selected_path, 4),
+		NULL);
 	_menu->setPosition(Vec2::ZERO);
-	addChild(_menu, 1);
+	addChild(_menu, 3);
+}
+
+MenuItemImage* MainScene::CreateActionMenu(Actions action, const char* path, const char* selected_path, int id)
+{
+	MenuItemImage* _action = MenuItemImage::create(
+		path,
+		selected_path,
+		CC_CALLBACK_0(MainScene::CapacityAction, this, action)
+	);
+	assert(_action);
+	_action->setAnchorPoint(Vec2(0, 0.5));
+	_action->setScale(0.4);
+	_action->setPosition(Vec2(
+		m_visibleOrigin.x + 20 + (_action->getContentSize().width * _action->getScale()+20)  * id,
+		m_visibleSize.height / 16 * 15)
+	);
+	return _action;
 }
 
 bool MainScene::OnKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
@@ -210,8 +220,6 @@ void MainScene::CapacityAction(Actions actionState)
 		break;
 	case BUILDING:
 		CCLOG("Je construis");
-		break;
-	case RESET:
 		break;
 	default:
 		break;
