@@ -46,8 +46,11 @@ bool MainScene::init()
 	EventListenerKeyboard* keyboardListener = EventListenerKeyboard::create();
 	Director::getInstance()->getOpenGLView()->setIMEKeyboardState(true);
 	keyboardListener->onKeyPressed = CC_CALLBACK_2(MainScene::OnKeyPressed, this);
-	this->_eventDispatcher->addEventListenerWithSceneGraphPriority(keyboardListener, this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 
+	EventListenerPhysicsContact* _endListener = EventListenerPhysicsContact::create();
+	_endListener->onContactBegin = CC_CALLBACK_1(MainScene::OnLemmingContactBegin, this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(_endListener, this);
 	scheduleUpdate();
 
 	return true;
@@ -86,6 +89,16 @@ void MainScene::update(float delta)
 	else UpdateLemmingCursorPos();
 
 	UpdatePreviousSelectedLemming();
+
+	if (m_lemmingsEnded == m_totalLemmings)
+	{
+		Scene* _winScene = WinMenu::create();
+		std::map<std::string, int>* stats = new std::map<std::string, int>;
+		(*stats)["total"] = m_totalLemmings;
+		(*stats)["ended"] = m_lemmingsEnded;
+		_winScene->setUserData((void*)stats);
+		Director::getInstance()->pushScene(_winScene);
+	}
 }
 
 void MainScene::CreateDynamicMenu()
@@ -179,20 +192,20 @@ void MainScene::SpawnLemmings()
 	if (time < m_nextSpawn) return;
 
 	AddLemming(m_pMap->getSpawnPoint().x, m_pMap->getSpawnPoint().y);
-	m_nextSpawn = time + 5;
+	m_lemmingsSpawned += 1;
+	m_nextSpawn = time + 2;
 
-	switch (m_lemmings.size())
+	switch (m_lemmingsSpawned)
 	{
 	case 1:
-		m_pSelectedLemming = m_lemmings.front();
+		m_pSelectedLemming = m_lemmings[0];
 		CreateLemmingSelector();
-		break;
-	case 3:
-		m_loaded = true;
 		break;
 	default:
 		break;
 	}
+
+	if (m_lemmingsSpawned == m_totalLemmings) m_loaded = true;
 }
 
 void MainScene::AddLemming(float positionX, float positionY)
@@ -200,29 +213,6 @@ void MainScene::AddLemming(float positionX, float positionY)
 	Lemming* _l = Lemming::create(lemming_asset_filePath, { positionX, positionY });
 	addChild(_l);
 	m_lemmings.push_back(_l);
-}
-
-void MainScene::UpdatePreviousSelectedLemming()
-{
-	if ((m_pPreviousSelectedLemming != m_pSelectedLemming) && (m_pSelectedLemming != nullptr))
-		m_pPreviousSelectedLemming = m_pSelectedLemming;
-}
-
-void MainScene::UpdateLemmingCursorPos() const
-{
-	Vec2 _targetLemmingPos;
-	if (m_pSelectedLemming == nullptr) _targetLemmingPos = m_pPreviousSelectedLemming->getPosition();
-	else _targetLemmingPos = m_pSelectedLemming->getPosition();
-
-	m_pLemmingPointer->setPosition({ _targetLemmingPos.x, _targetLemmingPos.y });
-	m_pLemmingPointer->setRotation(m_pLemmingPointer->getRotation() + 1);
-	m_pLemmingPointer->setVisible(true);
-}
-
-void MainScene::UpdateSelectedLemmingActionState(LemmingActionState state) 
-{
-	//ModelMenuScene::PlayMenuSoundEffect();
-	if (m_pPreviousSelectedLemming != nullptr) m_pPreviousSelectedLemming->UpdateActionState(state);
 }
 
 void MainScene::CreateLemmingSelector()

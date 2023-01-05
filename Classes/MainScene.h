@@ -3,6 +3,7 @@
 #include "Entities/Lemming.h"
 #include "TileMap/TileMap.h"
 #include "PauseMenu.h"
+#include "WinMenu.h"
 #include "ModelMenuScene.h"
 
 class MainScene : public ModelMenuScene
@@ -48,6 +49,10 @@ private:
 	Lemming* m_pPreviousSelectedLemming{};
 	Sprite* m_pLemmingPointer{};
 
+	int m_totalLemmings = 1;
+	int m_lemmingsSpawned = 0;
+	int m_lemmingsEnded = 0;
+
 	void CreateDynamicMenu() override;
 
 	MenuItemImage* CreateActionMenu(LemmingActionState, const char*, const char*, int);
@@ -57,6 +62,8 @@ private:
 	void SpawnLemmings();
 
 	void AddLemming(float positionX, float positionY);
+
+	bool OnLemmingContactBegin(const PhysicsContact& contact);
 
 	void UpdatePreviousSelectedLemming();
 

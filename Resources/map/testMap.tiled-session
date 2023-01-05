@@ -10,10 +10,10 @@
     "fileStates": {
         "Test.tmx": {
             "scale": 0.6333333333333333,
-            "selectedLayer": 1,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 1623.157894736842,
-                "y": 533.6842105263157
+                "x": 1145.5263157894738,
+                "y": 501.31578947368416
             }
         },
         "Test.tsx": {
@@ -33,8 +33,8 @@
     ],
     "project": "testMap.tiled-project",
     "recentFiles": [
-        "Test.tsx",
-        "Test.tmx"
+        "Test.tmx",
+        "Test.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
