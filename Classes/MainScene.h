@@ -36,8 +36,10 @@ public:
 private:
 	bool m_loaded{};
 	time_t m_nextSpawn{};
-	int timer;
+	int lemCount;
 	Label* countDisp;
+	time_t timerStart;
+	Label* timerDisp;
 
 	TileMap* m_pMap{};
 

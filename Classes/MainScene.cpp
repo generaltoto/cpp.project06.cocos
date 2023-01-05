@@ -12,7 +12,8 @@ bool MainScene::init()
 	if (!initWithPhysics()) return false;
 	m_loaded = false;
 	m_nextSpawn = std::time(nullptr);
-	timer = 0;
+	timerStart = std::time(nullptr);
+	lemCount = 0;
 	m_visibleSize = designResolutionSize;
 	m_visibleOrigin = { 0, 0 };
 
@@ -23,6 +24,14 @@ bool MainScene::init()
 		m_visibleSize.height / 16 * 15)
 	);
 	addChild(countDisp, 3);
+
+	timerDisp = Label::createWithTTF("", font_path, 40);
+	timerDisp->setAnchorPoint(Vec2(0.5, 0.5));
+	timerDisp->setPosition(Vec2(
+		m_visibleSize.width / 4 * 3 + 100,
+		m_visibleSize.height / 16 * 15)
+	);
+	addChild(timerDisp, 3);
 
 	m_pMap = new TileMap(tileMap_path);
 	addChild(m_pMap->getMap());
@@ -62,12 +71,14 @@ void MainScene::onEnter()
 void MainScene::update(float delta)
 {
 	ModelMenuScene::update(delta);
-	Node::update(delta);
-	if (timer != m_lemmings.size())
+	if (lemCount != m_lemmings.size())
 	{
-		timer = m_lemmings.size();
-		countDisp->setString(std::to_string(timer));
+		lemCount = m_lemmings.size();
+		countDisp->setString(std::to_string(lemCount));
 	}
+
+	const time_t time = std::time(nullptr);
+	timerDisp->setString(std::to_string(time - timerStart) + "s");
 
 	if (!m_loaded) SpawnLemmings();
 
@@ -95,14 +106,14 @@ void MainScene::CreateDynamicMenu()
 		m_visibleSize.height / 16 * 15));
 	addChild(_label, 3);
 
-	Label* _timer = Label::createWithTTF(std::to_string(timer), font_path, 40);
+	Label* _timer = Label::createWithTTF("Timer : ", font_path, 40);
 	assert(_timer);
 	_timer->setAnchorPoint(Vec2(0.5, 0.5));
 	_timer->setPosition(Vec2(
 		m_visibleSize.width / 4 * 3,
 		m_visibleSize.height / 16 * 15)
 	);
-	addChild(_timer, 4);
+	addChild(_timer, 3);
 
 	Menu* _menu = Menu::create(
 		CreateActionMenu(BUILDING,action_build_path, action_build_selected_path, 0), 
