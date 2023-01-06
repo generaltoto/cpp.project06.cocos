@@ -190,6 +190,7 @@ void Lemming::Block() const
 	_body->setVelocity({0,0});
 	_body->setCategoryBitmask(collider_mask_id);
 	_body->setCollisionBitmask(lemming_collision_mask_id);
+	_body->setContactTestBitmask(0);
 	_body->addMass(3000);
 }
 
@@ -199,5 +200,6 @@ void Lemming::ReturnToDefaultActionState()
 	m_actionState = CHILLING;
 	_body->setCategoryBitmask(lemming_collision_mask_id);
 	_body->setCollisionBitmask(collider_mask_id);
+	_body->setContactTestBitmask(test_collision_mask_id);
 	_body->addMass(-3000);
 }

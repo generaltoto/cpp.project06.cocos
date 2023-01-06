@@ -23,10 +23,12 @@ public:
     bool removeTileUnder(Vec2 lemmingPosition) const;
     bool removeTileLeft(Vec2 lemmingPosition) const;
     bool removeTileRight(Vec2 lemmingPosition) const;
+    bool removeTileExplosion(Vec2 lemmingPosition) const;
 
 private:
     TMXTiledMap* m_pMap;
     TMXLayer* m_pBackground;
+    TMXLayer* m_pBorder;
     TMXLayer* m_pCollision;
     TMXLayer* m_pEnd;
     TMXObjectGroup* m_pEntities;

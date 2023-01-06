@@ -63,6 +63,7 @@ void MainScene::onEnter()
 	Sprite* _sp = Sprite::create(tileMap_netherPortal_asset_path);
 	assert(_sp);
 	_sp->setPosition(m_pMap->getSpawnPoint());
+	_sp->setScale(0.4f);
 	addChild(_sp);
 
 	AddWindowsEdgesCollider();
@@ -266,7 +267,11 @@ void MainScene::UpdateLemmingCursorPos() const
 void MainScene::UpdateSelectedLemmingActionState(LemmingActionState state)
 {
 	//ModelMenuScene::PlayMenuSoundEffect();
-	if (m_pPreviousSelectedLemming != nullptr) m_pPreviousSelectedLemming->UpdateActionState(state);
+	if (m_pPreviousSelectedLemming != nullptr)
+	{
+		if (state == EXPLODING) m_pMap->removeTileExplosion(m_pPreviousSelectedLemming->getPosition() + m_pPreviousSelectedLemming->getSpriteSize() / 2);
+		else m_pPreviousSelectedLemming->UpdateActionState(state);
+	}
 }
 
 void MainScene::CreateLemmingSelector()
@@ -290,11 +295,11 @@ bool MainScene::OnMouseClick(Event* event)
 	case EventMouse::MouseButton::BUTTON_LEFT:
 		return MouseLeftClickCallBack(_cursorPos);
 	case EventMouse::MouseButton::BUTTON_RIGHT:
-		return m_pMap->removeTileUnder(m_pSelectedLemming->getPosition() + m_pSelectedLemming->getSpriteSize() / 2);
+		return m_pMap->removeTileUnder(m_pPreviousSelectedLemming->getPosition() + m_pPreviousSelectedLemming->getSpriteSize() / 2);
 	case EventMouse::MouseButton::BUTTON_4:
-		return m_pMap->removeTileRight(m_pSelectedLemming->getPosition() + m_pSelectedLemming->getSpriteSize() / 2);
+		return m_pMap->removeTileRight(m_pPreviousSelectedLemming->getPosition() + m_pPreviousSelectedLemming->getSpriteSize() / 2);
 	case EventMouse::MouseButton::BUTTON_5:
-		return m_pMap->removeTileLeft(m_pSelectedLemming->getPosition() + m_pSelectedLemming->getSpriteSize() / 2);
+		return m_pMap->removeTileLeft(m_pPreviousSelectedLemming->getPosition() + m_pPreviousSelectedLemming->getSpriteSize() / 2);
 	default:
 		return false;
 	}

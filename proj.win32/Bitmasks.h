@@ -5,3 +5,4 @@ static constexpr int collider_mask_id = 0x02;
 static constexpr int test_collision_mask_id = 0x03;
 static constexpr int map_collision_mask_id = 0x04;
 static constexpr int map_end_mask_id = 0x05;
+static constexpr int border_mask_id = 0x06;
