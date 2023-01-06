@@ -29,6 +29,14 @@ void WinMenu::setData()
 	ended->setPosition({ m_visibleSize.width / 2, (m_visibleSize.height / 20) * 6 });
 
 	addChild(ended, 2);
+
+	std::stringstream ss_time;
+	ss_time << "TOTAL TIME: " << (*data)["time"];
+
+	Label* time = Label::createWithTTF(ss_time.str(), "fonts/arial.ttf", 40);
+	time->setPosition({ m_visibleSize.width / 2, (m_visibleSize.height / 20) * 7 });
+
+	addChild(time, 2);
 }
 
 MenuItemFont* WinMenu::createQuitButton()

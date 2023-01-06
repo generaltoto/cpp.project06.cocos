@@ -29,6 +29,7 @@ Lemming* Lemming::create(const char* filePath, Vec2 pos)
 		_lemmingPhysicBody->setVelocity({ 0,0 });
 		_lemmingPhysicBody->setCategoryBitmask(lemming_collision_mask_id);
 		_lemmingPhysicBody->setCollisionBitmask(collider_mask_id);
+		_lemmingPhysicBody->setContactTestBitmask(test_collision_mask_id);
 		_ret->setPhysicsBody(_lemmingPhysicBody);
 	}
 	else CC_SAFE_DELETE(_ret);

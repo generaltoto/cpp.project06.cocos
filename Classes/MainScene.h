@@ -49,7 +49,7 @@ private:
 	Lemming* m_pPreviousSelectedLemming{};
 	Sprite* m_pLemmingPointer{};
 
-	int m_totalLemmings = 1;
+	int m_totalLemmings = 3;
 	int m_lemmingsSpawned = 0;
 	int m_lemmingsEnded = 0;
 

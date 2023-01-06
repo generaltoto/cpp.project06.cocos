@@ -96,6 +96,7 @@ void MainScene::update(float delta)
 		std::map<std::string, int>* stats = new std::map<std::string, int>;
 		(*stats)["total"] = m_totalLemmings;
 		(*stats)["ended"] = m_lemmingsEnded;
+		(*stats)["time"] = time - timerStart;
 		_winScene->setUserData((void*)stats);
 		Director::getInstance()->pushScene(_winScene);
 	}
@@ -222,8 +223,6 @@ bool MainScene::OnLemmingContactBegin(const PhysicsContact& contact)
 
 	if ((_shapeA->getCategoryBitmask() == lemming_collision_mask_id && _shapeB->getContactTestBitmask() == lemming_collision_mask_id) ||
 		(_shapeA->getContactTestBitmask() == lemming_collision_mask_id && _shapeB->getCategoryBitmask() == lemming_collision_mask_id)) {
-		m_lemmingsEnded += 1;
-
 		Node* _node = nullptr;
 		unsigned int _index = 0;
 
@@ -234,12 +233,12 @@ bool MainScene::OnLemmingContactBegin(const PhysicsContact& contact)
 		{
 			if (m_lemmings[_index] != _node) continue;
 			if (m_pSelectedLemming == m_lemmings[_index]) m_pSelectedLemming = nullptr;
+			m_lemmingsEnded += 1;
 			m_lemmings[_index]->removeFromParent();
 			m_lemmings[_index]->release();
+			m_lemmings.erase(m_lemmings.begin() + _index);
 			break;
 		}
-
-		m_lemmings.erase(m_lemmings.begin() + _index);
 
 		return true;
 	}
